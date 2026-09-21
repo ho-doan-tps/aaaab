@@ -184,222 +184,12 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 }
 
 
-enum AutomationCapability: Int, CaseIterable {
-  case uiDump = 0
-  case semanticAction = 1
-  case pointerInput = 2
-  case keyboardInput = 3
-  case screenshot = 4
-  case clipboard = 5
-  case appLifecycle = 6
-  case windowManagement = 7
-  case systemAction = 8
-}
-
-enum AutomationPermission: Int, CaseIterable {
-  case accessibility = 0
-  case screenRecording = 1
-  case inputMonitoring = 2
-}
-
-enum PermissionState: Int, CaseIterable {
-  case unknown = 0
-  case denied = 1
-  case granted = 2
-  case restricted = 3
-}
-
-enum TargetType: Int, CaseIterable {
-  case application = 0
-  case window = 1
-  case systemUi = 2
-}
-
-enum UiRole: Int, CaseIterable {
-  case unknown = 0
-  case application = 1
-  case window = 2
-  case dialog = 3
-  case button = 4
-  case text = 5
-  case textField = 6
-  case image = 7
-  case checkbox = 8
-  case radio = 9
-  case switchControl = 10
-  case slider = 11
-  case list = 12
-  case listItem = 13
-  case menu = 14
-  case menuItem = 15
-  case tab = 16
-  case link = 17
-  case scrollView = 18
-}
-
 enum UiAction: Int, CaseIterable {
   case press = 0
   case focus = 1
   case setValue = 2
-  case increment = 3
-  case decrement = 4
-  case toggle = 5
-  case select = 6
-  case expand = 7
-  case collapse = 8
-  case dismiss = 9
-  case scrollForward = 10
-  case scrollBackward = 11
-}
-
-enum SystemAction: Int, CaseIterable {
-  case back = 0
-  case home = 1
-  case escape = 2
-  case appSwitcher = 3
-  case notificationCenter = 4
-  case quickSettings = 5
-}
-
-enum KeyAction: Int, CaseIterable {
-  case press = 0
-  case down = 1
-  case up = 2
-}
-
-enum ScreenshotFormat: Int, CaseIterable {
-  case png = 0
-  case jpeg = 1
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct PointData: Hashable, CustomStringConvertible {
-  var x: Double
-  var y: Double
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> PointData? {
-    let x = pigeonVar_list[0] as! Double
-    let y = pigeonVar_list[1] as! Double
-
-    return PointData(
-      x: x,
-      y: y
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      x,
-      y,
-    ]
-  }
-  static func == (lhs: PointData, rhs: PointData) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.x, rhs.x) && MessagesPigeonInternal.deepEquals(lhs.y, rhs.y)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("PointData")
-    MessagesPigeonInternal.deepHash(value: x, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: y, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "PointData(x: \(String(describing: x)), y: \(String(describing: y)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct RectData: Hashable, CustomStringConvertible {
-  var x: Double
-  var y: Double
-  var width: Double
-  var height: Double
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> RectData? {
-    let x = pigeonVar_list[0] as! Double
-    let y = pigeonVar_list[1] as! Double
-    let width = pigeonVar_list[2] as! Double
-    let height = pigeonVar_list[3] as! Double
-
-    return RectData(
-      x: x,
-      y: y,
-      width: width,
-      height: height
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      x,
-      y,
-      width,
-      height,
-    ]
-  }
-  static func == (lhs: RectData, rhs: RectData) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.x, rhs.x) && MessagesPigeonInternal.deepEquals(lhs.y, rhs.y) && MessagesPigeonInternal.deepEquals(lhs.width, rhs.width) && MessagesPigeonInternal.deepEquals(lhs.height, rhs.height)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("RectData")
-    MessagesPigeonInternal.deepHash(value: x, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: y, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: width, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: height, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "RectData(x: \(String(describing: x)), y: \(String(describing: y)), width: \(String(describing: width)), height: \(String(describing: height)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct SizeData: Hashable, CustomStringConvertible {
-  var width: Double
-  var height: Double
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> SizeData? {
-    let width = pigeonVar_list[0] as! Double
-    let height = pigeonVar_list[1] as! Double
-
-    return SizeData(
-      width: width,
-      height: height
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      width,
-      height,
-    ]
-  }
-  static func == (lhs: SizeData, rhs: SizeData) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.width, rhs.width) && MessagesPigeonInternal.deepEquals(lhs.height, rhs.height)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("SizeData")
-    MessagesPigeonInternal.deepHash(value: width, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: height, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "SizeData(width: \(String(describing: width)), height: \(String(describing: height)))"
-  }
+  case scrollForward = 3
+  case scrollBackward = 4
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
@@ -498,202 +288,52 @@ struct DeviceInfo: Hashable, CustomStringConvertible {
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct ScreenInfo: Hashable, CustomStringConvertible {
-  var size: SizeData
-  var scale: Double
-  var orientation: String
+struct RectData: Hashable, CustomStringConvertible {
+  var x: Double
+  var y: Double
+  var width: Double
+  var height: Double
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> ScreenInfo? {
-    let size = pigeonVar_list[0] as! SizeData
-    let scale = pigeonVar_list[1] as! Double
-    let orientation = pigeonVar_list[2] as! String
+  static func fromList(_ pigeonVar_list: [Any?]) -> RectData? {
+    let x = pigeonVar_list[0] as! Double
+    let y = pigeonVar_list[1] as! Double
+    let width = pigeonVar_list[2] as! Double
+    let height = pigeonVar_list[3] as! Double
 
-    return ScreenInfo(
-      size: size,
-      scale: scale,
-      orientation: orientation
+    return RectData(
+      x: x,
+      y: y,
+      width: width,
+      height: height
     )
   }
   func toList() -> [Any?] {
     return [
-      size,
-      scale,
-      orientation,
+      x,
+      y,
+      width,
+      height,
     ]
   }
-  static func == (lhs: ScreenInfo, rhs: ScreenInfo) -> Bool {
+  static func == (lhs: RectData, rhs: RectData) -> Bool {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return MessagesPigeonInternal.deepEquals(lhs.size, rhs.size) && MessagesPigeonInternal.deepEquals(lhs.scale, rhs.scale) && MessagesPigeonInternal.deepEquals(lhs.orientation, rhs.orientation)
+    return MessagesPigeonInternal.deepEquals(lhs.x, rhs.x) && MessagesPigeonInternal.deepEquals(lhs.y, rhs.y) && MessagesPigeonInternal.deepEquals(lhs.width, rhs.width) && MessagesPigeonInternal.deepEquals(lhs.height, rhs.height)
   }
 
   func hash(into hasher: inout Hasher) {
-    hasher.combine("ScreenInfo")
-    MessagesPigeonInternal.deepHash(value: size, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: scale, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: orientation, hasher: &hasher)
+    hasher.combine("RectData")
+    MessagesPigeonInternal.deepHash(value: x, hasher: &hasher)
+    MessagesPigeonInternal.deepHash(value: y, hasher: &hasher)
+    MessagesPigeonInternal.deepHash(value: width, hasher: &hasher)
+    MessagesPigeonInternal.deepHash(value: height, hasher: &hasher)
   }
 
   public var description: String {
-    return "ScreenInfo(size: \(String(describing: size)), scale: \(String(describing: scale)), orientation: \(String(describing: orientation)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct CapabilityInfo: Hashable, CustomStringConvertible {
-  var capabilities: [AutomationCapability?]
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> CapabilityInfo? {
-    let capabilities = pigeonVar_list[0] as! [AutomationCapability?]
-
-    return CapabilityInfo(
-      capabilities: capabilities
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      capabilities
-    ]
-  }
-  static func == (lhs: CapabilityInfo, rhs: CapabilityInfo) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.capabilities, rhs.capabilities)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("CapabilityInfo")
-    MessagesPigeonInternal.deepHash(value: capabilities, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "CapabilityInfo(capabilities: \(String(describing: capabilities)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct PermissionInfo: Hashable, CustomStringConvertible {
-  var permission: AutomationPermission
-  var state: PermissionState
-  var canRequest: Bool
-  var message: String? = nil
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> PermissionInfo? {
-    let permission = pigeonVar_list[0] as! AutomationPermission
-    let state = pigeonVar_list[1] as! PermissionState
-    let canRequest = pigeonVar_list[2] as! Bool
-    let message: String? = nilOrValue(pigeonVar_list[3])
-
-    return PermissionInfo(
-      permission: permission,
-      state: state,
-      canRequest: canRequest,
-      message: message
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      permission,
-      state,
-      canRequest,
-      message,
-    ]
-  }
-  static func == (lhs: PermissionInfo, rhs: PermissionInfo) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.permission, rhs.permission) && MessagesPigeonInternal.deepEquals(lhs.state, rhs.state) && MessagesPigeonInternal.deepEquals(lhs.canRequest, rhs.canRequest) && MessagesPigeonInternal.deepEquals(lhs.message, rhs.message)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("PermissionInfo")
-    MessagesPigeonInternal.deepHash(value: permission, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: state, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: canRequest, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: message, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "PermissionInfo(permission: \(String(describing: permission)), state: \(String(describing: state)), canRequest: \(String(describing: canRequest)), message: \(String(describing: message)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct TargetInfo: Hashable, CustomStringConvertible {
-  var targetId: String
-  var type: TargetType
-  var appId: String? = nil
-  var name: String? = nil
-  var title: String? = nil
-  var processId: Int64? = nil
-  var bounds: RectData? = nil
-  var foreground: Bool
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> TargetInfo? {
-    let targetId = pigeonVar_list[0] as! String
-    let type = pigeonVar_list[1] as! TargetType
-    let appId: String? = nilOrValue(pigeonVar_list[2])
-    let name: String? = nilOrValue(pigeonVar_list[3])
-    let title: String? = nilOrValue(pigeonVar_list[4])
-    let processId: Int64? = nilOrValue(pigeonVar_list[5])
-    let bounds: RectData? = nilOrValue(pigeonVar_list[6])
-    let foreground = pigeonVar_list[7] as! Bool
-
-    return TargetInfo(
-      targetId: targetId,
-      type: type,
-      appId: appId,
-      name: name,
-      title: title,
-      processId: processId,
-      bounds: bounds,
-      foreground: foreground
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      targetId,
-      type,
-      appId,
-      name,
-      title,
-      processId,
-      bounds,
-      foreground,
-    ]
-  }
-  static func == (lhs: TargetInfo, rhs: TargetInfo) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.targetId, rhs.targetId) && MessagesPigeonInternal.deepEquals(lhs.type, rhs.type) && MessagesPigeonInternal.deepEquals(lhs.appId, rhs.appId) && MessagesPigeonInternal.deepEquals(lhs.name, rhs.name) && MessagesPigeonInternal.deepEquals(lhs.title, rhs.title) && MessagesPigeonInternal.deepEquals(lhs.processId, rhs.processId) && MessagesPigeonInternal.deepEquals(lhs.bounds, rhs.bounds) && MessagesPigeonInternal.deepEquals(lhs.foreground, rhs.foreground)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("TargetInfo")
-    MessagesPigeonInternal.deepHash(value: targetId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: type, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: appId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: name, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: title, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: processId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: bounds, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: foreground, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "TargetInfo(targetId: \(String(describing: targetId)), type: \(String(describing: type)), appId: \(String(describing: appId)), name: \(String(describing: name)), title: \(String(describing: title)), processId: \(String(describing: processId)), bounds: \(String(describing: bounds)), foreground: \(String(describing: foreground)))"
+    return "RectData(x: \(String(describing: x)), y: \(String(describing: y)), width: \(String(describing: width)), height: \(String(describing: height)))"
   }
 }
 
@@ -701,14 +341,13 @@ struct TargetInfo: Hashable, CustomStringConvertible {
 struct UiNode: Hashable, CustomStringConvertible {
   var nodeId: String
   var parentNodeId: String? = nil
-  var childNodeIds: [String?]? = nil
+  var childNodeIds: [String]
   var automationId: String? = nil
   var text: String? = nil
   var label: String? = nil
   var value: String? = nil
-  var role: UiRole
+  var role: String
   var bounds: RectData
-  var visible: Bool
   var enabled: Bool
   var clickable: Bool
   var editable: Bool
@@ -716,29 +355,26 @@ struct UiNode: Hashable, CustomStringConvertible {
   var selected: Bool
   var checked: Bool
   var scrollable: Bool
-  var actions: [UiAction?]? = nil
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
   static func fromList(_ pigeonVar_list: [Any?]) -> UiNode? {
     let nodeId = pigeonVar_list[0] as! String
     let parentNodeId: String? = nilOrValue(pigeonVar_list[1])
-    let childNodeIds: [String?]? = nilOrValue(pigeonVar_list[2])
+    let childNodeIds = pigeonVar_list[2] as! [String]
     let automationId: String? = nilOrValue(pigeonVar_list[3])
     let text: String? = nilOrValue(pigeonVar_list[4])
     let label: String? = nilOrValue(pigeonVar_list[5])
     let value: String? = nilOrValue(pigeonVar_list[6])
-    let role = pigeonVar_list[7] as! UiRole
+    let role = pigeonVar_list[7] as! String
     let bounds = pigeonVar_list[8] as! RectData
-    let visible = pigeonVar_list[9] as! Bool
-    let enabled = pigeonVar_list[10] as! Bool
-    let clickable = pigeonVar_list[11] as! Bool
-    let editable = pigeonVar_list[12] as! Bool
-    let focused = pigeonVar_list[13] as! Bool
-    let selected = pigeonVar_list[14] as! Bool
-    let checked = pigeonVar_list[15] as! Bool
-    let scrollable = pigeonVar_list[16] as! Bool
-    let actions: [UiAction?]? = nilOrValue(pigeonVar_list[17])
+    let enabled = pigeonVar_list[9] as! Bool
+    let clickable = pigeonVar_list[10] as! Bool
+    let editable = pigeonVar_list[11] as! Bool
+    let focused = pigeonVar_list[12] as! Bool
+    let selected = pigeonVar_list[13] as! Bool
+    let checked = pigeonVar_list[14] as! Bool
+    let scrollable = pigeonVar_list[15] as! Bool
 
     return UiNode(
       nodeId: nodeId,
@@ -750,15 +386,13 @@ struct UiNode: Hashable, CustomStringConvertible {
       value: value,
       role: role,
       bounds: bounds,
-      visible: visible,
       enabled: enabled,
       clickable: clickable,
       editable: editable,
       focused: focused,
       selected: selected,
       checked: checked,
-      scrollable: scrollable,
-      actions: actions
+      scrollable: scrollable
     )
   }
   func toList() -> [Any?] {
@@ -772,7 +406,6 @@ struct UiNode: Hashable, CustomStringConvertible {
       value,
       role,
       bounds,
-      visible,
       enabled,
       clickable,
       editable,
@@ -780,14 +413,13 @@ struct UiNode: Hashable, CustomStringConvertible {
       selected,
       checked,
       scrollable,
-      actions,
     ]
   }
   static func == (lhs: UiNode, rhs: UiNode) -> Bool {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return MessagesPigeonInternal.deepEquals(lhs.nodeId, rhs.nodeId) && MessagesPigeonInternal.deepEquals(lhs.parentNodeId, rhs.parentNodeId) && MessagesPigeonInternal.deepEquals(lhs.childNodeIds, rhs.childNodeIds) && MessagesPigeonInternal.deepEquals(lhs.automationId, rhs.automationId) && MessagesPigeonInternal.deepEquals(lhs.text, rhs.text) && MessagesPigeonInternal.deepEquals(lhs.label, rhs.label) && MessagesPigeonInternal.deepEquals(lhs.value, rhs.value) && MessagesPigeonInternal.deepEquals(lhs.role, rhs.role) && MessagesPigeonInternal.deepEquals(lhs.bounds, rhs.bounds) && MessagesPigeonInternal.deepEquals(lhs.visible, rhs.visible) && MessagesPigeonInternal.deepEquals(lhs.enabled, rhs.enabled) && MessagesPigeonInternal.deepEquals(lhs.clickable, rhs.clickable) && MessagesPigeonInternal.deepEquals(lhs.editable, rhs.editable) && MessagesPigeonInternal.deepEquals(lhs.focused, rhs.focused) && MessagesPigeonInternal.deepEquals(lhs.selected, rhs.selected) && MessagesPigeonInternal.deepEquals(lhs.checked, rhs.checked) && MessagesPigeonInternal.deepEquals(lhs.scrollable, rhs.scrollable) && MessagesPigeonInternal.deepEquals(lhs.actions, rhs.actions)
+    return MessagesPigeonInternal.deepEquals(lhs.nodeId, rhs.nodeId) && MessagesPigeonInternal.deepEquals(lhs.parentNodeId, rhs.parentNodeId) && MessagesPigeonInternal.deepEquals(lhs.childNodeIds, rhs.childNodeIds) && MessagesPigeonInternal.deepEquals(lhs.automationId, rhs.automationId) && MessagesPigeonInternal.deepEquals(lhs.text, rhs.text) && MessagesPigeonInternal.deepEquals(lhs.label, rhs.label) && MessagesPigeonInternal.deepEquals(lhs.value, rhs.value) && MessagesPigeonInternal.deepEquals(lhs.role, rhs.role) && MessagesPigeonInternal.deepEquals(lhs.bounds, rhs.bounds) && MessagesPigeonInternal.deepEquals(lhs.enabled, rhs.enabled) && MessagesPigeonInternal.deepEquals(lhs.clickable, rhs.clickable) && MessagesPigeonInternal.deepEquals(lhs.editable, rhs.editable) && MessagesPigeonInternal.deepEquals(lhs.focused, rhs.focused) && MessagesPigeonInternal.deepEquals(lhs.selected, rhs.selected) && MessagesPigeonInternal.deepEquals(lhs.checked, rhs.checked) && MessagesPigeonInternal.deepEquals(lhs.scrollable, rhs.scrollable)
   }
 
   func hash(into hasher: inout Hasher) {
@@ -801,7 +433,6 @@ struct UiNode: Hashable, CustomStringConvertible {
     MessagesPigeonInternal.deepHash(value: value, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: role, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: bounds, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: visible, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: enabled, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: clickable, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: editable, hasher: &hasher)
@@ -809,45 +440,32 @@ struct UiNode: Hashable, CustomStringConvertible {
     MessagesPigeonInternal.deepHash(value: selected, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: checked, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: scrollable, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: actions, hasher: &hasher)
   }
 
   public var description: String {
-    return "UiNode(nodeId: \(String(describing: nodeId)), parentNodeId: \(String(describing: parentNodeId)), childNodeIds: \(String(describing: childNodeIds)), automationId: \(String(describing: automationId)), text: \(String(describing: text)), label: \(String(describing: label)), value: \(String(describing: value)), role: \(String(describing: role)), bounds: \(String(describing: bounds)), visible: \(String(describing: visible)), enabled: \(String(describing: enabled)), clickable: \(String(describing: clickable)), editable: \(String(describing: editable)), focused: \(String(describing: focused)), selected: \(String(describing: selected)), checked: \(String(describing: checked)), scrollable: \(String(describing: scrollable)), actions: \(String(describing: actions)))"
+    return "UiNode(nodeId: \(String(describing: nodeId)), parentNodeId: \(String(describing: parentNodeId)), childNodeIds: \(String(describing: childNodeIds)), automationId: \(String(describing: automationId)), text: \(String(describing: text)), label: \(String(describing: label)), value: \(String(describing: value)), role: \(String(describing: role)), bounds: \(String(describing: bounds)), enabled: \(String(describing: enabled)), clickable: \(String(describing: clickable)), editable: \(String(describing: editable)), focused: \(String(describing: focused)), selected: \(String(describing: selected)), checked: \(String(describing: checked)), scrollable: \(String(describing: scrollable)))"
   }
 }
 
 /// Generated class from Pigeon that represents data sent in messages.
 struct UiSnapshot: Hashable, CustomStringConvertible {
   var generation: Int64
-  var targetId: String? = nil
-  var rootNodeId: String? = nil
-  var screen: ScreenInfo
-  var nodes: [UiNode?]
+  var nodes: [UiNode]
 
 
   // swift-format-ignore: AlwaysUseLowerCamelCase
   static func fromList(_ pigeonVar_list: [Any?]) -> UiSnapshot? {
     let generation = pigeonVar_list[0] as! Int64
-    let targetId: String? = nilOrValue(pigeonVar_list[1])
-    let rootNodeId: String? = nilOrValue(pigeonVar_list[2])
-    let screen = pigeonVar_list[3] as! ScreenInfo
-    let nodes = pigeonVar_list[4] as! [UiNode?]
+    let nodes = pigeonVar_list[1] as! [UiNode]
 
     return UiSnapshot(
       generation: generation,
-      targetId: targetId,
-      rootNodeId: rootNodeId,
-      screen: screen,
       nodes: nodes
     )
   }
   func toList() -> [Any?] {
     return [
       generation,
-      targetId,
-      rootNodeId,
-      screen,
       nodes,
     ]
   }
@@ -855,155 +473,17 @@ struct UiSnapshot: Hashable, CustomStringConvertible {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return MessagesPigeonInternal.deepEquals(lhs.generation, rhs.generation) && MessagesPigeonInternal.deepEquals(lhs.targetId, rhs.targetId) && MessagesPigeonInternal.deepEquals(lhs.rootNodeId, rhs.rootNodeId) && MessagesPigeonInternal.deepEquals(lhs.screen, rhs.screen) && MessagesPigeonInternal.deepEquals(lhs.nodes, rhs.nodes)
+    return MessagesPigeonInternal.deepEquals(lhs.generation, rhs.generation) && MessagesPigeonInternal.deepEquals(lhs.nodes, rhs.nodes)
   }
 
   func hash(into hasher: inout Hasher) {
     hasher.combine("UiSnapshot")
     MessagesPigeonInternal.deepHash(value: generation, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: targetId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: rootNodeId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: screen, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: nodes, hasher: &hasher)
   }
 
   public var description: String {
-    return "UiSnapshot(generation: \(String(describing: generation)), targetId: \(String(describing: targetId)), rootNodeId: \(String(describing: rootNodeId)), screen: \(String(describing: screen)), nodes: \(String(describing: nodes)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct DumpUiRequest: Hashable, CustomStringConvertible {
-  var targetId: String? = nil
-  var includeInvisible: Bool
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> DumpUiRequest? {
-    let targetId: String? = nilOrValue(pigeonVar_list[0])
-    let includeInvisible = pigeonVar_list[1] as! Bool
-
-    return DumpUiRequest(
-      targetId: targetId,
-      includeInvisible: includeInvisible
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      targetId,
-      includeInvisible,
-    ]
-  }
-  static func == (lhs: DumpUiRequest, rhs: DumpUiRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.targetId, rhs.targetId) && MessagesPigeonInternal.deepEquals(lhs.includeInvisible, rhs.includeInvisible)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("DumpUiRequest")
-    MessagesPigeonInternal.deepHash(value: targetId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: includeInvisible, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "DumpUiRequest(targetId: \(String(describing: targetId)), includeInvisible: \(String(describing: includeInvisible)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct HitTestRequest: Hashable, CustomStringConvertible {
-  var targetId: String? = nil
-  var point: PointData
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> HitTestRequest? {
-    let targetId: String? = nilOrValue(pigeonVar_list[0])
-    let point = pigeonVar_list[1] as! PointData
-
-    return HitTestRequest(
-      targetId: targetId,
-      point: point
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      targetId,
-      point,
-    ]
-  }
-  static func == (lhs: HitTestRequest, rhs: HitTestRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.targetId, rhs.targetId) && MessagesPigeonInternal.deepEquals(lhs.point, rhs.point)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("HitTestRequest")
-    MessagesPigeonInternal.deepHash(value: targetId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: point, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "HitTestRequest(targetId: \(String(describing: targetId)), point: \(String(describing: point)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct ElementActionRequest: Hashable, CustomStringConvertible {
-  var targetId: String? = nil
-  var generation: Int64
-  var nodeId: String
-  var action: UiAction
-  var value: String? = nil
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> ElementActionRequest? {
-    let targetId: String? = nilOrValue(pigeonVar_list[0])
-    let generation = pigeonVar_list[1] as! Int64
-    let nodeId = pigeonVar_list[2] as! String
-    let action = pigeonVar_list[3] as! UiAction
-    let value: String? = nilOrValue(pigeonVar_list[4])
-
-    return ElementActionRequest(
-      targetId: targetId,
-      generation: generation,
-      nodeId: nodeId,
-      action: action,
-      value: value
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      targetId,
-      generation,
-      nodeId,
-      action,
-      value,
-    ]
-  }
-  static func == (lhs: ElementActionRequest, rhs: ElementActionRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.targetId, rhs.targetId) && MessagesPigeonInternal.deepEquals(lhs.generation, rhs.generation) && MessagesPigeonInternal.deepEquals(lhs.nodeId, rhs.nodeId) && MessagesPigeonInternal.deepEquals(lhs.action, rhs.action) && MessagesPigeonInternal.deepEquals(lhs.value, rhs.value)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("ElementActionRequest")
-    MessagesPigeonInternal.deepHash(value: targetId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: generation, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: nodeId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: action, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: value, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "ElementActionRequest(targetId: \(String(describing: targetId)), generation: \(String(describing: generation)), nodeId: \(String(describing: nodeId)), action: \(String(describing: action)), value: \(String(describing: value)))"
+    return "UiSnapshot(generation: \(String(describing: generation)), nodes: \(String(describing: nodes)))"
   }
 }
 
@@ -1052,526 +532,27 @@ struct ActionResult: Hashable, CustomStringConvertible {
   }
 }
 
-/// Generated class from Pigeon that represents data sent in messages.
-struct LaunchAppRequest: Hashable, CustomStringConvertible {
-  var appId: String
-  var arguments: [String?]? = nil
-  var environment: [String?: String?]? = nil
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> LaunchAppRequest? {
-    let appId = pigeonVar_list[0] as! String
-    let arguments: [String?]? = nilOrValue(pigeonVar_list[1])
-    let environment: [String?: String?]? = nilOrValue(pigeonVar_list[2])
-
-    return LaunchAppRequest(
-      appId: appId,
-      arguments: arguments,
-      environment: environment
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      appId,
-      arguments,
-      environment,
-    ]
-  }
-  static func == (lhs: LaunchAppRequest, rhs: LaunchAppRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.appId, rhs.appId) && MessagesPigeonInternal.deepEquals(lhs.arguments, rhs.arguments) && MessagesPigeonInternal.deepEquals(lhs.environment, rhs.environment)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("LaunchAppRequest")
-    MessagesPigeonInternal.deepHash(value: appId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: arguments, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: environment, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "LaunchAppRequest(appId: \(String(describing: appId)), arguments: \(String(describing: arguments)), environment: \(String(describing: environment)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct TapRequest: Hashable, CustomStringConvertible {
-  var point: PointData
-  var count: Int64
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> TapRequest? {
-    let point = pigeonVar_list[0] as! PointData
-    let count = pigeonVar_list[1] as! Int64
-
-    return TapRequest(
-      point: point,
-      count: count
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      point,
-      count,
-    ]
-  }
-  static func == (lhs: TapRequest, rhs: TapRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.point, rhs.point) && MessagesPigeonInternal.deepEquals(lhs.count, rhs.count)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("TapRequest")
-    MessagesPigeonInternal.deepHash(value: point, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: count, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "TapRequest(point: \(String(describing: point)), count: \(String(describing: count)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct LongPressRequest: Hashable, CustomStringConvertible {
-  var point: PointData
-  var durationMs: Int64
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> LongPressRequest? {
-    let point = pigeonVar_list[0] as! PointData
-    let durationMs = pigeonVar_list[1] as! Int64
-
-    return LongPressRequest(
-      point: point,
-      durationMs: durationMs
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      point,
-      durationMs,
-    ]
-  }
-  static func == (lhs: LongPressRequest, rhs: LongPressRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.point, rhs.point) && MessagesPigeonInternal.deepEquals(lhs.durationMs, rhs.durationMs)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("LongPressRequest")
-    MessagesPigeonInternal.deepHash(value: point, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: durationMs, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "LongPressRequest(point: \(String(describing: point)), durationMs: \(String(describing: durationMs)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct SwipeRequest: Hashable, CustomStringConvertible {
-  var from: PointData
-  var to: PointData
-  var durationMs: Int64
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> SwipeRequest? {
-    let from = pigeonVar_list[0] as! PointData
-    let to = pigeonVar_list[1] as! PointData
-    let durationMs = pigeonVar_list[2] as! Int64
-
-    return SwipeRequest(
-      from: from,
-      to: to,
-      durationMs: durationMs
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      from,
-      to,
-      durationMs,
-    ]
-  }
-  static func == (lhs: SwipeRequest, rhs: SwipeRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.from, rhs.from) && MessagesPigeonInternal.deepEquals(lhs.to, rhs.to) && MessagesPigeonInternal.deepEquals(lhs.durationMs, rhs.durationMs)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("SwipeRequest")
-    MessagesPigeonInternal.deepHash(value: from, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: to, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: durationMs, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "SwipeRequest(from: \(String(describing: from)), to: \(String(describing: to)), durationMs: \(String(describing: durationMs)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct ScrollRequest: Hashable, CustomStringConvertible {
-  var deltaX: Double
-  var deltaY: Double
-  var origin: PointData? = nil
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> ScrollRequest? {
-    let deltaX = pigeonVar_list[0] as! Double
-    let deltaY = pigeonVar_list[1] as! Double
-    let origin: PointData? = nilOrValue(pigeonVar_list[2])
-
-    return ScrollRequest(
-      deltaX: deltaX,
-      deltaY: deltaY,
-      origin: origin
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      deltaX,
-      deltaY,
-      origin,
-    ]
-  }
-  static func == (lhs: ScrollRequest, rhs: ScrollRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.deltaX, rhs.deltaX) && MessagesPigeonInternal.deepEquals(lhs.deltaY, rhs.deltaY) && MessagesPigeonInternal.deepEquals(lhs.origin, rhs.origin)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("ScrollRequest")
-    MessagesPigeonInternal.deepHash(value: deltaX, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: deltaY, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: origin, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "ScrollRequest(deltaX: \(String(describing: deltaX)), deltaY: \(String(describing: deltaY)), origin: \(String(describing: origin)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct TypeTextRequest: Hashable, CustomStringConvertible {
-  var text: String
-  var clearFirst: Bool
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> TypeTextRequest? {
-    let text = pigeonVar_list[0] as! String
-    let clearFirst = pigeonVar_list[1] as! Bool
-
-    return TypeTextRequest(
-      text: text,
-      clearFirst: clearFirst
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      text,
-      clearFirst,
-    ]
-  }
-  static func == (lhs: TypeTextRequest, rhs: TypeTextRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.text, rhs.text) && MessagesPigeonInternal.deepEquals(lhs.clearFirst, rhs.clearFirst)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("TypeTextRequest")
-    MessagesPigeonInternal.deepHash(value: text, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: clearFirst, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "TypeTextRequest(text: \(String(describing: text)), clearFirst: \(String(describing: clearFirst)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct KeyRequest: Hashable, CustomStringConvertible {
-  var key: String
-  var action: KeyAction
-  var alt: Bool
-  var control: Bool
-  var shift: Bool
-  var meta: Bool
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> KeyRequest? {
-    let key = pigeonVar_list[0] as! String
-    let action = pigeonVar_list[1] as! KeyAction
-    let alt = pigeonVar_list[2] as! Bool
-    let control = pigeonVar_list[3] as! Bool
-    let shift = pigeonVar_list[4] as! Bool
-    let meta = pigeonVar_list[5] as! Bool
-
-    return KeyRequest(
-      key: key,
-      action: action,
-      alt: alt,
-      control: control,
-      shift: shift,
-      meta: meta
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      key,
-      action,
-      alt,
-      control,
-      shift,
-      meta,
-    ]
-  }
-  static func == (lhs: KeyRequest, rhs: KeyRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.key, rhs.key) && MessagesPigeonInternal.deepEquals(lhs.action, rhs.action) && MessagesPigeonInternal.deepEquals(lhs.alt, rhs.alt) && MessagesPigeonInternal.deepEquals(lhs.control, rhs.control) && MessagesPigeonInternal.deepEquals(lhs.shift, rhs.shift) && MessagesPigeonInternal.deepEquals(lhs.meta, rhs.meta)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("KeyRequest")
-    MessagesPigeonInternal.deepHash(value: key, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: action, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: alt, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: control, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: shift, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: meta, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "KeyRequest(key: \(String(describing: key)), action: \(String(describing: action)), alt: \(String(describing: alt)), control: \(String(describing: control)), shift: \(String(describing: shift)), meta: \(String(describing: meta)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct ScreenshotRequest: Hashable, CustomStringConvertible {
-  var targetId: String? = nil
-  var format: ScreenshotFormat
-  var quality: Int64
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> ScreenshotRequest? {
-    let targetId: String? = nilOrValue(pigeonVar_list[0])
-    let format = pigeonVar_list[1] as! ScreenshotFormat
-    let quality = pigeonVar_list[2] as! Int64
-
-    return ScreenshotRequest(
-      targetId: targetId,
-      format: format,
-      quality: quality
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      targetId,
-      format,
-      quality,
-    ]
-  }
-  static func == (lhs: ScreenshotRequest, rhs: ScreenshotRequest) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.targetId, rhs.targetId) && MessagesPigeonInternal.deepEquals(lhs.format, rhs.format) && MessagesPigeonInternal.deepEquals(lhs.quality, rhs.quality)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("ScreenshotRequest")
-    MessagesPigeonInternal.deepHash(value: targetId, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: format, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: quality, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "ScreenshotRequest(targetId: \(String(describing: targetId)), format: \(String(describing: format)), quality: \(String(describing: quality)))"
-  }
-}
-
-/// Generated class from Pigeon that represents data sent in messages.
-struct ScreenshotData: Hashable, CustomStringConvertible {
-  var bytes: FlutterStandardTypedData
-  var width: Int64
-  var height: Int64
-  var scale: Double
-  var format: ScreenshotFormat
-
-
-  // swift-format-ignore: AlwaysUseLowerCamelCase
-  static func fromList(_ pigeonVar_list: [Any?]) -> ScreenshotData? {
-    let bytes = pigeonVar_list[0] as! FlutterStandardTypedData
-    let width = pigeonVar_list[1] as! Int64
-    let height = pigeonVar_list[2] as! Int64
-    let scale = pigeonVar_list[3] as! Double
-    let format = pigeonVar_list[4] as! ScreenshotFormat
-
-    return ScreenshotData(
-      bytes: bytes,
-      width: width,
-      height: height,
-      scale: scale,
-      format: format
-    )
-  }
-  func toList() -> [Any?] {
-    return [
-      bytes,
-      width,
-      height,
-      scale,
-      format,
-    ]
-  }
-  static func == (lhs: ScreenshotData, rhs: ScreenshotData) -> Bool {
-    if Swift.type(of: lhs) != Swift.type(of: rhs) {
-      return false
-    }
-    return MessagesPigeonInternal.deepEquals(lhs.bytes, rhs.bytes) && MessagesPigeonInternal.deepEquals(lhs.width, rhs.width) && MessagesPigeonInternal.deepEquals(lhs.height, rhs.height) && MessagesPigeonInternal.deepEquals(lhs.scale, rhs.scale) && MessagesPigeonInternal.deepEquals(lhs.format, rhs.format)
-  }
-
-  func hash(into hasher: inout Hasher) {
-    hasher.combine("ScreenshotData")
-    MessagesPigeonInternal.deepHash(value: bytes, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: width, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: height, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: scale, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: format, hasher: &hasher)
-  }
-
-  public var description: String {
-    return "ScreenshotData(bytes: \(String(describing: bytes)), width: \(String(describing: width)), height: \(String(describing: height)), scale: \(String(describing: scale)), format: \(String(describing: format)))"
-  }
-}
-
 private class MessagesPigeonCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
     case 129:
       let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
       if let enumResultAsInt = enumResultAsInt {
-        return AutomationCapability(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 130:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
-        return AutomationPermission(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 131:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
-        return PermissionState(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 132:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
-        return TargetType(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 133:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
-        return UiRole(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 134:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
         return UiAction(rawValue: enumResultAsInt)
       }
       return nil
-    case 135:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
-        return SystemAction(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 136:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
-        return KeyAction(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 137:
-      let enumResultAsInt: Int? = nilOrValue(self.readValue() as! Int?)
-      if let enumResultAsInt = enumResultAsInt {
-        return ScreenshotFormat(rawValue: enumResultAsInt)
-      }
-      return nil
-    case 138:
-      return PointData.fromList(self.readValue() as! [Any?])
-    case 139:
-      return RectData.fromList(self.readValue() as! [Any?])
-    case 140:
-      return SizeData.fromList(self.readValue() as! [Any?])
-    case 141:
+    case 130:
       return DriverConfig.fromList(self.readValue() as! [Any?])
-    case 142:
+    case 131:
       return DeviceInfo.fromList(self.readValue() as! [Any?])
-    case 143:
-      return ScreenInfo.fromList(self.readValue() as! [Any?])
-    case 144:
-      return CapabilityInfo.fromList(self.readValue() as! [Any?])
-    case 145:
-      return PermissionInfo.fromList(self.readValue() as! [Any?])
-    case 146:
-      return TargetInfo.fromList(self.readValue() as! [Any?])
-    case 147:
+    case 132:
+      return RectData.fromList(self.readValue() as! [Any?])
+    case 133:
       return UiNode.fromList(self.readValue() as! [Any?])
-    case 148:
+    case 134:
       return UiSnapshot.fromList(self.readValue() as! [Any?])
-    case 149:
-      return DumpUiRequest.fromList(self.readValue() as! [Any?])
-    case 150:
-      return HitTestRequest.fromList(self.readValue() as! [Any?])
-    case 151:
-      return ElementActionRequest.fromList(self.readValue() as! [Any?])
-    case 152:
+    case 135:
       return ActionResult.fromList(self.readValue() as! [Any?])
-    case 153:
-      return LaunchAppRequest.fromList(self.readValue() as! [Any?])
-    case 154:
-      return TapRequest.fromList(self.readValue() as! [Any?])
-    case 155:
-      return LongPressRequest.fromList(self.readValue() as! [Any?])
-    case 156:
-      return SwipeRequest.fromList(self.readValue() as! [Any?])
-    case 157:
-      return ScrollRequest.fromList(self.readValue() as! [Any?])
-    case 158:
-      return TypeTextRequest.fromList(self.readValue() as! [Any?])
-    case 159:
-      return KeyRequest.fromList(self.readValue() as! [Any?])
-    case 160:
-      return ScreenshotRequest.fromList(self.readValue() as! [Any?])
-    case 161:
-      return ScreenshotData.fromList(self.readValue() as! [Any?])
     default:
       return super.readValue(ofType: type)
     }
@@ -1580,104 +561,26 @@ private class MessagesPigeonCodecReader: FlutterStandardReader {
 
 private class MessagesPigeonCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? AutomationCapability {
+    if let value = value as? UiAction {
       super.writeByte(129)
       super.writeValue(value.rawValue)
-    } else if let value = value as? AutomationPermission {
-      super.writeByte(130)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? PermissionState {
-      super.writeByte(131)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? TargetType {
-      super.writeByte(132)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? UiRole {
-      super.writeByte(133)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? UiAction {
-      super.writeByte(134)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? SystemAction {
-      super.writeByte(135)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? KeyAction {
-      super.writeByte(136)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? ScreenshotFormat {
-      super.writeByte(137)
-      super.writeValue(value.rawValue)
-    } else if let value = value as? PointData {
-      super.writeByte(138)
-      super.writeValue(value.toList())
-    } else if let value = value as? RectData {
-      super.writeByte(139)
-      super.writeValue(value.toList())
-    } else if let value = value as? SizeData {
-      super.writeByte(140)
-      super.writeValue(value.toList())
     } else if let value = value as? DriverConfig {
-      super.writeByte(141)
+      super.writeByte(130)
       super.writeValue(value.toList())
     } else if let value = value as? DeviceInfo {
-      super.writeByte(142)
+      super.writeByte(131)
       super.writeValue(value.toList())
-    } else if let value = value as? ScreenInfo {
-      super.writeByte(143)
-      super.writeValue(value.toList())
-    } else if let value = value as? CapabilityInfo {
-      super.writeByte(144)
-      super.writeValue(value.toList())
-    } else if let value = value as? PermissionInfo {
-      super.writeByte(145)
-      super.writeValue(value.toList())
-    } else if let value = value as? TargetInfo {
-      super.writeByte(146)
+    } else if let value = value as? RectData {
+      super.writeByte(132)
       super.writeValue(value.toList())
     } else if let value = value as? UiNode {
-      super.writeByte(147)
+      super.writeByte(133)
       super.writeValue(value.toList())
     } else if let value = value as? UiSnapshot {
-      super.writeByte(148)
-      super.writeValue(value.toList())
-    } else if let value = value as? DumpUiRequest {
-      super.writeByte(149)
-      super.writeValue(value.toList())
-    } else if let value = value as? HitTestRequest {
-      super.writeByte(150)
-      super.writeValue(value.toList())
-    } else if let value = value as? ElementActionRequest {
-      super.writeByte(151)
+      super.writeByte(134)
       super.writeValue(value.toList())
     } else if let value = value as? ActionResult {
-      super.writeByte(152)
-      super.writeValue(value.toList())
-    } else if let value = value as? LaunchAppRequest {
-      super.writeByte(153)
-      super.writeValue(value.toList())
-    } else if let value = value as? TapRequest {
-      super.writeByte(154)
-      super.writeValue(value.toList())
-    } else if let value = value as? LongPressRequest {
-      super.writeByte(155)
-      super.writeValue(value.toList())
-    } else if let value = value as? SwipeRequest {
-      super.writeByte(156)
-      super.writeValue(value.toList())
-    } else if let value = value as? ScrollRequest {
-      super.writeByte(157)
-      super.writeValue(value.toList())
-    } else if let value = value as? TypeTextRequest {
-      super.writeByte(158)
-      super.writeValue(value.toList())
-    } else if let value = value as? KeyRequest {
-      super.writeByte(159)
-      super.writeValue(value.toList())
-    } else if let value = value as? ScreenshotRequest {
-      super.writeByte(160)
-      super.writeValue(value.toList())
-    } else if let value = value as? ScreenshotData {
-      super.writeByte(161)
+      super.writeByte(135)
       super.writeValue(value.toList())
     } else {
       super.writeValue(value)
@@ -1700,41 +603,32 @@ class MessagesPigeonCodec: FlutterStandardMessageCodec, @unchecked Sendable {
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol AutomationHostApi {
+protocol DeviceKitHostApi {
   func initialize(config: DriverConfig) throws
-  func shutdown() throws
+  func dispose() throws
   func getDeviceInfo() throws -> DeviceInfo
-  func getScreenInfo() throws -> ScreenInfo
-  func getCapabilities() throws -> CapabilityInfo
-  func getPermissions() throws -> [PermissionInfo?]
-  func requestPermission(permission: AutomationPermission) throws -> PermissionInfo
-  func listTargets() throws -> [TargetInfo?]
-  func getForegroundTarget() throws -> TargetInfo?
-  func launchApp(request: LaunchAppRequest) throws -> ActionResult
-  func terminateApp(appId: String) throws -> ActionResult
-  func activateTarget(targetId: String) throws -> ActionResult
-  func dumpUi(request: DumpUiRequest) throws -> UiSnapshot
-  func hitTest(request: HitTestRequest) throws -> UiNode?
-  func performElementAction(request: ElementActionRequest) throws -> ActionResult
-  func tap(request: TapRequest) throws -> ActionResult
-  func longPress(request: LongPressRequest) throws -> ActionResult
-  func swipe(request: SwipeRequest) throws -> ActionResult
-  func scroll(request: ScrollRequest) throws -> ActionResult
-  func typeText(request: TypeTextRequest) throws -> ActionResult
-  func pressKey(request: KeyRequest) throws -> ActionResult
-  func performSystemAction(action: SystemAction) throws -> ActionResult
-  func screenshot(request: ScreenshotRequest) throws -> ScreenshotData
-  func getClipboardText() throws -> String?
-  func setClipboardText(text: String) throws -> ActionResult
+  func openAccessibilitySettings() throws -> ActionResult
+  func launchApp(packageName: String) throws -> ActionResult
+  func dumpUi() throws -> UiSnapshot
+  func performElementAction(nodeId: String, generation: Int64, action: UiAction, value: String?) throws -> ActionResult
+  func tap(x: Double, y: Double) throws -> ActionResult
+  func swipe(fromX: Double, fromY: Double, toX: Double, toY: Double, durationMs: Int64) throws -> ActionResult
+  func typeText(text: String) throws -> ActionResult
+  func pressBack() throws -> ActionResult
+  func pressHome() throws -> ActionResult
+  func screenshot() throws -> FlutterStandardTypedData
+  func requestScreenCapture() throws -> ActionResult
+  func getClipboard() throws -> String?
+  func setClipboard(text: String) throws -> ActionResult
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class AutomationHostApiSetup {
+class DeviceKitHostApiSetup {
   static var codec: FlutterStandardMessageCodec { MessagesPigeonCodec.shared }
-  /// Sets up an instance of `AutomationHostApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: AutomationHostApi?, messageChannelSuffix: String = "") {
+  /// Sets up an instance of `DeviceKitHostApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: DeviceKitHostApi?, messageChannelSuffix: String = "") {
     let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
-    let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.initialize\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.initialize\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       initializeChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -1749,20 +643,20 @@ class AutomationHostApiSetup {
     } else {
       initializeChannel.setMessageHandler(nil)
     }
-    let shutdownChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.shutdown\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let disposeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dispose\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      shutdownChannel.setMessageHandler { _, reply in
+      disposeChannel.setMessageHandler { _, reply in
         do {
-          try api.shutdown()
+          try api.dispose()
           reply(wrapResult(nil))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      shutdownChannel.setMessageHandler(nil)
+      disposeChannel.setMessageHandler(nil)
     }
-    let getDeviceInfoChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getDeviceInfo\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let getDeviceInfoChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getDeviceInfo\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       getDeviceInfoChannel.setMessageHandler { _, reply in
         do {
@@ -1775,93 +669,26 @@ class AutomationHostApiSetup {
     } else {
       getDeviceInfoChannel.setMessageHandler(nil)
     }
-    let getScreenInfoChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getScreenInfo\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let openAccessibilitySettingsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.openAccessibilitySettings\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      getScreenInfoChannel.setMessageHandler { _, reply in
+      openAccessibilitySettingsChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.getScreenInfo()
+          let result = try api.openAccessibilitySettings()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      getScreenInfoChannel.setMessageHandler(nil)
+      openAccessibilitySettingsChannel.setMessageHandler(nil)
     }
-    let getCapabilitiesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getCapabilities\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      getCapabilitiesChannel.setMessageHandler { _, reply in
-        do {
-          let result = try api.getCapabilities()
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      getCapabilitiesChannel.setMessageHandler(nil)
-    }
-    let getPermissionsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getPermissions\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      getPermissionsChannel.setMessageHandler { _, reply in
-        do {
-          let result = try api.getPermissions()
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      getPermissionsChannel.setMessageHandler(nil)
-    }
-    let requestPermissionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.requestPermission\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      requestPermissionChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let permissionArg = args[0] as! AutomationPermission
-        do {
-          let result = try api.requestPermission(permission: permissionArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      requestPermissionChannel.setMessageHandler(nil)
-    }
-    let listTargetsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.listTargets\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      listTargetsChannel.setMessageHandler { _, reply in
-        do {
-          let result = try api.listTargets()
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      listTargetsChannel.setMessageHandler(nil)
-    }
-    let getForegroundTargetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getForegroundTarget\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      getForegroundTargetChannel.setMessageHandler { _, reply in
-        do {
-          let result = try api.getForegroundTarget()
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      getForegroundTargetChannel.setMessageHandler(nil)
-    }
-    let launchAppChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.launchApp\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let launchAppChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.launchApp\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       launchAppChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let requestArg = args[0] as! LaunchAppRequest
+        let packageNameArg = args[0] as! String
         do {
-          let result = try api.launchApp(request: requestArg)
+          let result = try api.launchApp(packageName: packageNameArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
@@ -1870,43 +697,11 @@ class AutomationHostApiSetup {
     } else {
       launchAppChannel.setMessageHandler(nil)
     }
-    let terminateAppChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.terminateApp\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let dumpUiChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dumpUi\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      terminateAppChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let appIdArg = args[0] as! String
+      dumpUiChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.terminateApp(appId: appIdArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      terminateAppChannel.setMessageHandler(nil)
-    }
-    let activateTargetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.activateTarget\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      activateTargetChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let targetIdArg = args[0] as! String
-        do {
-          let result = try api.activateTarget(targetId: targetIdArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      activateTargetChannel.setMessageHandler(nil)
-    }
-    let dumpUiChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.dumpUi\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      dumpUiChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let requestArg = args[0] as! DumpUiRequest
-        do {
-          let result = try api.dumpUi(request: requestArg)
+          let result = try api.dumpUi()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
@@ -1915,28 +710,16 @@ class AutomationHostApiSetup {
     } else {
       dumpUiChannel.setMessageHandler(nil)
     }
-    let hitTestChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.hitTest\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      hitTestChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let requestArg = args[0] as! HitTestRequest
-        do {
-          let result = try api.hitTest(request: requestArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      hitTestChannel.setMessageHandler(nil)
-    }
-    let performElementActionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performElementAction\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let performElementActionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.performElementAction\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       performElementActionChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let requestArg = args[0] as! ElementActionRequest
+        let nodeIdArg = args[0] as! String
+        let generationArg = args[1] as! Int64
+        let actionArg = args[2] as! UiAction
+        let valueArg: String? = nilOrValue(args[3])
         do {
-          let result = try api.performElementAction(request: requestArg)
+          let result = try api.performElementAction(nodeId: nodeIdArg, generation: generationArg, action: actionArg, value: valueArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
@@ -1945,13 +728,14 @@ class AutomationHostApiSetup {
     } else {
       performElementActionChannel.setMessageHandler(nil)
     }
-    let tapChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.tap\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let tapChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.tap\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       tapChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let requestArg = args[0] as! TapRequest
+        let xArg = args[0] as! Double
+        let yArg = args[1] as! Double
         do {
-          let result = try api.tap(request: requestArg)
+          let result = try api.tap(x: xArg, y: yArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
@@ -1960,28 +744,17 @@ class AutomationHostApiSetup {
     } else {
       tapChannel.setMessageHandler(nil)
     }
-    let longPressChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.longPress\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      longPressChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let requestArg = args[0] as! LongPressRequest
-        do {
-          let result = try api.longPress(request: requestArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      longPressChannel.setMessageHandler(nil)
-    }
-    let swipeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.swipe\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let swipeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.swipe\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       swipeChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let requestArg = args[0] as! SwipeRequest
+        let fromXArg = args[0] as! Double
+        let fromYArg = args[1] as! Double
+        let toXArg = args[2] as! Double
+        let toYArg = args[3] as! Double
+        let durationMsArg = args[4] as! Int64
         do {
-          let result = try api.swipe(request: requestArg)
+          let result = try api.swipe(fromX: fromXArg, fromY: fromYArg, toX: toXArg, toY: toYArg, durationMs: durationMsArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
@@ -1990,28 +763,13 @@ class AutomationHostApiSetup {
     } else {
       swipeChannel.setMessageHandler(nil)
     }
-    let scrollChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.scroll\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      scrollChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let requestArg = args[0] as! ScrollRequest
-        do {
-          let result = try api.scroll(request: requestArg)
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      scrollChannel.setMessageHandler(nil)
-    }
-    let typeTextChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.typeText\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let typeTextChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.typeText\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       typeTextChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let requestArg = args[0] as! TypeTextRequest
+        let textArg = args[0] as! String
         do {
-          let result = try api.typeText(request: requestArg)
+          let result = try api.typeText(text: textArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
@@ -2020,43 +778,37 @@ class AutomationHostApiSetup {
     } else {
       typeTextChannel.setMessageHandler(nil)
     }
-    let pressKeyChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.pressKey\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let pressBackChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressBack\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      pressKeyChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let requestArg = args[0] as! KeyRequest
+      pressBackChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.pressKey(request: requestArg)
+          let result = try api.pressBack()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      pressKeyChannel.setMessageHandler(nil)
+      pressBackChannel.setMessageHandler(nil)
     }
-    let performSystemActionChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performSystemAction\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let pressHomeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressHome\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      performSystemActionChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let actionArg = args[0] as! SystemAction
+      pressHomeChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.performSystemAction(action: actionArg)
+          let result = try api.pressHome()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      performSystemActionChannel.setMessageHandler(nil)
+      pressHomeChannel.setMessageHandler(nil)
     }
-    let screenshotChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.screenshot\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let screenshotChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.screenshot\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      screenshotChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let requestArg = args[0] as! ScreenshotRequest
+      screenshotChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.screenshot(request: requestArg)
+          let result = try api.screenshot()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
@@ -2065,33 +817,46 @@ class AutomationHostApiSetup {
     } else {
       screenshotChannel.setMessageHandler(nil)
     }
-    let getClipboardTextChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getClipboardText\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let requestScreenCaptureChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.requestScreenCapture\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      getClipboardTextChannel.setMessageHandler { _, reply in
+      requestScreenCaptureChannel.setMessageHandler { _, reply in
         do {
-          let result = try api.getClipboardText()
+          let result = try api.requestScreenCapture()
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      getClipboardTextChannel.setMessageHandler(nil)
+      requestScreenCaptureChannel.setMessageHandler(nil)
     }
-    let setClipboardTextChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.setClipboardText\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    let getClipboardChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getClipboard\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      setClipboardTextChannel.setMessageHandler { message, reply in
+      getClipboardChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.getClipboard()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      getClipboardChannel.setMessageHandler(nil)
+    }
+    let setClipboardChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.setClipboard\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      setClipboardChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let textArg = args[0] as! String
         do {
-          let result = try api.setClipboardText(text: textArg)
+          let result = try api.setClipboard(text: textArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      setClipboardTextChannel.setMessageHandler(nil)
+      setClipboardChannel.setMessageHandler(nil)
     }
   }
 }

@@ -319,254 +319,6 @@ std::string PigeonInternalToString(const ::flutter::EncodableValue& v) {
 }
 
 }  // namespace
-// PointData
-
-PointData::PointData(
-  double x,
-  double y)
- : x_(x),
-    y_(y) {}
-
-double PointData::x() const {
-  return x_;
-}
-
-void PointData::set_x(double value_arg) {
-  x_ = value_arg;
-}
-
-
-double PointData::y() const {
-  return y_;
-}
-
-void PointData::set_y(double value_arg) {
-  y_ = value_arg;
-}
-
-
-EncodableList PointData::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(2);
-  list.push_back(EncodableValue(x_));
-  list.push_back(EncodableValue(y_));
-  return list;
-}
-
-PointData PointData::FromEncodableList(const EncodableList& list) {
-  PointData decoded(
-    std::get<double>(list[0]),
-    std::get<double>(list[1]));
-  return decoded;
-}
-
-bool PointData::operator==(const PointData& other) const {
-  return PigeonInternalDeepEquals(x_, other.x_) && PigeonInternalDeepEquals(y_, other.y_);
-}
-
-bool PointData::operator!=(const PointData& other) const {
-  return !(*this == other);
-}
-
-size_t PointData::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(x_);
-  result = result * 31 + PigeonInternalDeepHash(y_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const PointData& obj) {
-  os << "PointData(";
-  os << "x: ";
-  os << PigeonInternalToString(obj.x_);
-  os << ", y: ";
-  os << PigeonInternalToString(obj.y_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const PointData& v) {
-  return v.Hash();
-}
-
-// RectData
-
-RectData::RectData(
-  double x,
-  double y,
-  double width,
-  double height)
- : x_(x),
-    y_(y),
-    width_(width),
-    height_(height) {}
-
-double RectData::x() const {
-  return x_;
-}
-
-void RectData::set_x(double value_arg) {
-  x_ = value_arg;
-}
-
-
-double RectData::y() const {
-  return y_;
-}
-
-void RectData::set_y(double value_arg) {
-  y_ = value_arg;
-}
-
-
-double RectData::width() const {
-  return width_;
-}
-
-void RectData::set_width(double value_arg) {
-  width_ = value_arg;
-}
-
-
-double RectData::height() const {
-  return height_;
-}
-
-void RectData::set_height(double value_arg) {
-  height_ = value_arg;
-}
-
-
-EncodableList RectData::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(4);
-  list.push_back(EncodableValue(x_));
-  list.push_back(EncodableValue(y_));
-  list.push_back(EncodableValue(width_));
-  list.push_back(EncodableValue(height_));
-  return list;
-}
-
-RectData RectData::FromEncodableList(const EncodableList& list) {
-  RectData decoded(
-    std::get<double>(list[0]),
-    std::get<double>(list[1]),
-    std::get<double>(list[2]),
-    std::get<double>(list[3]));
-  return decoded;
-}
-
-bool RectData::operator==(const RectData& other) const {
-  return PigeonInternalDeepEquals(x_, other.x_) && PigeonInternalDeepEquals(y_, other.y_) && PigeonInternalDeepEquals(width_, other.width_) && PigeonInternalDeepEquals(height_, other.height_);
-}
-
-bool RectData::operator!=(const RectData& other) const {
-  return !(*this == other);
-}
-
-size_t RectData::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(x_);
-  result = result * 31 + PigeonInternalDeepHash(y_);
-  result = result * 31 + PigeonInternalDeepHash(width_);
-  result = result * 31 + PigeonInternalDeepHash(height_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const RectData& obj) {
-  os << "RectData(";
-  os << "x: ";
-  os << PigeonInternalToString(obj.x_);
-  os << ", y: ";
-  os << PigeonInternalToString(obj.y_);
-  os << ", width: ";
-  os << PigeonInternalToString(obj.width_);
-  os << ", height: ";
-  os << PigeonInternalToString(obj.height_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const RectData& v) {
-  return v.Hash();
-}
-
-// SizeData
-
-SizeData::SizeData(
-  double width,
-  double height)
- : width_(width),
-    height_(height) {}
-
-double SizeData::width() const {
-  return width_;
-}
-
-void SizeData::set_width(double value_arg) {
-  width_ = value_arg;
-}
-
-
-double SizeData::height() const {
-  return height_;
-}
-
-void SizeData::set_height(double value_arg) {
-  height_ = value_arg;
-}
-
-
-EncodableList SizeData::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(2);
-  list.push_back(EncodableValue(width_));
-  list.push_back(EncodableValue(height_));
-  return list;
-}
-
-SizeData SizeData::FromEncodableList(const EncodableList& list) {
-  SizeData decoded(
-    std::get<double>(list[0]),
-    std::get<double>(list[1]));
-  return decoded;
-}
-
-bool SizeData::operator==(const SizeData& other) const {
-  return PigeonInternalDeepEquals(width_, other.width_) && PigeonInternalDeepEquals(height_, other.height_);
-}
-
-bool SizeData::operator!=(const SizeData& other) const {
-  return !(*this == other);
-}
-
-size_t SizeData::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(width_);
-  result = result * 31 + PigeonInternalDeepHash(height_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const SizeData& obj) {
-  os << "SizeData(";
-  os << "width: ";
-  os << PigeonInternalToString(obj.width_);
-  os << ", height: ";
-  os << PigeonInternalToString(obj.height_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const SizeData& v) {
-  return v.Hash();
-}
-
 // DriverConfig
 
 DriverConfig::DriverConfig(
@@ -801,540 +553,107 @@ size_t PigeonInternalDeepHash(const DeviceInfo& v) {
   return v.Hash();
 }
 
-// ScreenInfo
+// RectData
 
-ScreenInfo::ScreenInfo(
-  const SizeData& size,
-  double scale,
-  const std::string& orientation)
- : size_(std::make_unique<SizeData>(size)),
-    scale_(scale),
-    orientation_(orientation) {}
+RectData::RectData(
+  double x,
+  double y,
+  double width,
+  double height)
+ : x_(x),
+    y_(y),
+    width_(width),
+    height_(height) {}
 
-ScreenInfo::ScreenInfo(const ScreenInfo& other)
- : size_(std::make_unique<SizeData>(*other.size_)),
-    scale_(other.scale_),
-    orientation_(other.orientation_) {}
-
-ScreenInfo& ScreenInfo::operator=(const ScreenInfo& other) {
-  size_ = std::make_unique<SizeData>(*other.size_);
-  scale_ = other.scale_;
-  orientation_ = other.orientation_;
-  return *this;
+double RectData::x() const {
+  return x_;
 }
 
-const SizeData& ScreenInfo::size() const {
-  return *size_;
-}
-
-void ScreenInfo::set_size(const SizeData& value_arg) {
-  size_ = std::make_unique<SizeData>(value_arg);
+void RectData::set_x(double value_arg) {
+  x_ = value_arg;
 }
 
 
-double ScreenInfo::scale() const {
-  return scale_;
+double RectData::y() const {
+  return y_;
 }
 
-void ScreenInfo::set_scale(double value_arg) {
-  scale_ = value_arg;
-}
-
-
-const std::string& ScreenInfo::orientation() const {
-  return orientation_;
-}
-
-void ScreenInfo::set_orientation(std::string_view value_arg) {
-  orientation_ = value_arg;
+void RectData::set_y(double value_arg) {
+  y_ = value_arg;
 }
 
 
-EncodableList ScreenInfo::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(3);
-  list.push_back(CustomEncodableValue(*size_));
-  list.push_back(EncodableValue(scale_));
-  list.push_back(EncodableValue(orientation_));
-  return list;
+double RectData::width() const {
+  return width_;
 }
 
-ScreenInfo ScreenInfo::FromEncodableList(const EncodableList& list) {
-  ScreenInfo decoded(
-    std::any_cast<const SizeData&>(std::get<CustomEncodableValue>(list[0])),
-    std::get<double>(list[1]),
-    std::get<std::string>(list[2]));
-  return decoded;
-}
-
-bool ScreenInfo::operator==(const ScreenInfo& other) const {
-  return PigeonInternalDeepEquals(size_, other.size_) && PigeonInternalDeepEquals(scale_, other.scale_) && PigeonInternalDeepEquals(orientation_, other.orientation_);
-}
-
-bool ScreenInfo::operator!=(const ScreenInfo& other) const {
-  return !(*this == other);
-}
-
-size_t ScreenInfo::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(size_);
-  result = result * 31 + PigeonInternalDeepHash(scale_);
-  result = result * 31 + PigeonInternalDeepHash(orientation_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const ScreenInfo& obj) {
-  os << "ScreenInfo(";
-  os << "size: ";
-  os << obj.size_;
-  os << ", scale: ";
-  os << PigeonInternalToString(obj.scale_);
-  os << ", orientation: ";
-  os << PigeonInternalToString(obj.orientation_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const ScreenInfo& v) {
-  return v.Hash();
-}
-
-// CapabilityInfo
-
-CapabilityInfo::CapabilityInfo(const EncodableList& capabilities)
- : capabilities_(capabilities) {}
-
-const EncodableList& CapabilityInfo::capabilities() const {
-  return capabilities_;
-}
-
-void CapabilityInfo::set_capabilities(const EncodableList& value_arg) {
-  capabilities_ = value_arg;
+void RectData::set_width(double value_arg) {
+  width_ = value_arg;
 }
 
 
-EncodableList CapabilityInfo::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(1);
-  list.push_back(EncodableValue(capabilities_));
-  return list;
+double RectData::height() const {
+  return height_;
 }
 
-CapabilityInfo CapabilityInfo::FromEncodableList(const EncodableList& list) {
-  CapabilityInfo decoded(
-    std::get<EncodableList>(list[0]));
-  return decoded;
-}
-
-bool CapabilityInfo::operator==(const CapabilityInfo& other) const {
-  return PigeonInternalDeepEquals(capabilities_, other.capabilities_);
-}
-
-bool CapabilityInfo::operator!=(const CapabilityInfo& other) const {
-  return !(*this == other);
-}
-
-size_t CapabilityInfo::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(capabilities_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const CapabilityInfo& obj) {
-  os << "CapabilityInfo(";
-  os << "capabilities: ";
-  os << PigeonInternalToString(obj.capabilities_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const CapabilityInfo& v) {
-  return v.Hash();
-}
-
-// PermissionInfo
-
-PermissionInfo::PermissionInfo(
-  const AutomationPermission& permission,
-  const PermissionState& state,
-  bool can_request)
- : permission_(permission),
-    state_(state),
-    can_request_(can_request) {}
-
-PermissionInfo::PermissionInfo(
-  const AutomationPermission& permission,
-  const PermissionState& state,
-  bool can_request,
-  const std::string* message)
- : permission_(permission),
-    state_(state),
-    can_request_(can_request),
-    message_(message ? std::optional<std::string>(*message) : std::nullopt) {}
-
-const AutomationPermission& PermissionInfo::permission() const {
-  return permission_;
-}
-
-void PermissionInfo::set_permission(const AutomationPermission& value_arg) {
-  permission_ = value_arg;
+void RectData::set_height(double value_arg) {
+  height_ = value_arg;
 }
 
 
-const PermissionState& PermissionInfo::state() const {
-  return state_;
-}
-
-void PermissionInfo::set_state(const PermissionState& value_arg) {
-  state_ = value_arg;
-}
-
-
-bool PermissionInfo::can_request() const {
-  return can_request_;
-}
-
-void PermissionInfo::set_can_request(bool value_arg) {
-  can_request_ = value_arg;
-}
-
-
-const std::string* PermissionInfo::message() const {
-  return message_ ? &(*message_) : nullptr;
-}
-
-void PermissionInfo::set_message(const std::string_view* value_arg) {
-  message_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void PermissionInfo::set_message(std::string_view value_arg) {
-  message_ = value_arg;
-}
-
-
-EncodableList PermissionInfo::ToEncodableList() const {
+EncodableList RectData::ToEncodableList() const {
   EncodableList list;
   list.reserve(4);
-  list.push_back(CustomEncodableValue(permission_));
-  list.push_back(CustomEncodableValue(state_));
-  list.push_back(EncodableValue(can_request_));
-  list.push_back(message_ ? EncodableValue(*message_) : EncodableValue());
+  list.push_back(EncodableValue(x_));
+  list.push_back(EncodableValue(y_));
+  list.push_back(EncodableValue(width_));
+  list.push_back(EncodableValue(height_));
   return list;
 }
 
-PermissionInfo PermissionInfo::FromEncodableList(const EncodableList& list) {
-  PermissionInfo decoded(
-    std::any_cast<const AutomationPermission&>(std::get<CustomEncodableValue>(list[0])),
-    std::any_cast<const PermissionState&>(std::get<CustomEncodableValue>(list[1])),
-    std::get<bool>(list[2]));
-  auto& encodable_message = list[3];
-  if (!encodable_message.IsNull()) {
-    decoded.set_message(std::get<std::string>(encodable_message));
-  }
+RectData RectData::FromEncodableList(const EncodableList& list) {
+  RectData decoded(
+    std::get<double>(list[0]),
+    std::get<double>(list[1]),
+    std::get<double>(list[2]),
+    std::get<double>(list[3]));
   return decoded;
 }
 
-bool PermissionInfo::operator==(const PermissionInfo& other) const {
-  return PigeonInternalDeepEquals(permission_, other.permission_) && PigeonInternalDeepEquals(state_, other.state_) && PigeonInternalDeepEquals(can_request_, other.can_request_) && PigeonInternalDeepEquals(message_, other.message_);
+bool RectData::operator==(const RectData& other) const {
+  return PigeonInternalDeepEquals(x_, other.x_) && PigeonInternalDeepEquals(y_, other.y_) && PigeonInternalDeepEquals(width_, other.width_) && PigeonInternalDeepEquals(height_, other.height_);
 }
 
-bool PermissionInfo::operator!=(const PermissionInfo& other) const {
+bool RectData::operator!=(const RectData& other) const {
   return !(*this == other);
 }
 
-size_t PermissionInfo::Hash() const {
+size_t RectData::Hash() const {
   size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(permission_);
-  result = result * 31 + PigeonInternalDeepHash(state_);
-  result = result * 31 + PigeonInternalDeepHash(can_request_);
-  result = result * 31 + PigeonInternalDeepHash(message_);
+  result = result * 31 + PigeonInternalDeepHash(x_);
+  result = result * 31 + PigeonInternalDeepHash(y_);
+  result = result * 31 + PigeonInternalDeepHash(width_);
+  result = result * 31 + PigeonInternalDeepHash(height_);
   return result;
 }
 
 std::ostream& operator<<(
   std::ostream& os,
-  const PermissionInfo& obj) {
-  os << "PermissionInfo(";
-  os << "permission: ";
-  os << PigeonInternalToString(obj.permission_);
-  os << ", state: ";
-  os << PigeonInternalToString(obj.state_);
-  os << ", can_request: ";
-  os << PigeonInternalToString(obj.can_request_);
-  os << ", message: ";
-  if (obj.message_) {
-    os << PigeonInternalToString(*obj.message_);
-  }
-  else {
-    os << "null";
-  }
+  const RectData& obj) {
+  os << "RectData(";
+  os << "x: ";
+  os << PigeonInternalToString(obj.x_);
+  os << ", y: ";
+  os << PigeonInternalToString(obj.y_);
+  os << ", width: ";
+  os << PigeonInternalToString(obj.width_);
+  os << ", height: ";
+  os << PigeonInternalToString(obj.height_);
   os << ")";
   return os;
 }
 
-size_t PigeonInternalDeepHash(const PermissionInfo& v) {
-  return v.Hash();
-}
-
-// TargetInfo
-
-TargetInfo::TargetInfo(
-  const std::string& target_id,
-  const TargetType& type,
-  bool foreground)
- : target_id_(target_id),
-    type_(type),
-    foreground_(foreground) {}
-
-TargetInfo::TargetInfo(
-  const std::string& target_id,
-  const TargetType& type,
-  const std::string* app_id,
-  const std::string* name,
-  const std::string* title,
-  const int64_t* process_id,
-  const RectData* bounds,
-  bool foreground)
- : target_id_(target_id),
-    type_(type),
-    app_id_(app_id ? std::optional<std::string>(*app_id) : std::nullopt),
-    name_(name ? std::optional<std::string>(*name) : std::nullopt),
-    title_(title ? std::optional<std::string>(*title) : std::nullopt),
-    process_id_(process_id ? std::optional<int64_t>(*process_id) : std::nullopt),
-    bounds_(bounds ? std::make_unique<RectData>(*bounds) : nullptr),
-    foreground_(foreground) {}
-
-TargetInfo::TargetInfo(const TargetInfo& other)
- : target_id_(other.target_id_),
-    type_(other.type_),
-    app_id_(other.app_id_ ? std::optional<std::string>(*other.app_id_) : std::nullopt),
-    name_(other.name_ ? std::optional<std::string>(*other.name_) : std::nullopt),
-    title_(other.title_ ? std::optional<std::string>(*other.title_) : std::nullopt),
-    process_id_(other.process_id_ ? std::optional<int64_t>(*other.process_id_) : std::nullopt),
-    bounds_(other.bounds_ ? std::make_unique<RectData>(*other.bounds_) : nullptr),
-    foreground_(other.foreground_) {}
-
-TargetInfo& TargetInfo::operator=(const TargetInfo& other) {
-  target_id_ = other.target_id_;
-  type_ = other.type_;
-  app_id_ = other.app_id_;
-  name_ = other.name_;
-  title_ = other.title_;
-  process_id_ = other.process_id_;
-  bounds_ = other.bounds_ ? std::make_unique<RectData>(*other.bounds_) : nullptr;
-  foreground_ = other.foreground_;
-  return *this;
-}
-
-const std::string& TargetInfo::target_id() const {
-  return target_id_;
-}
-
-void TargetInfo::set_target_id(std::string_view value_arg) {
-  target_id_ = value_arg;
-}
-
-
-const TargetType& TargetInfo::type() const {
-  return type_;
-}
-
-void TargetInfo::set_type(const TargetType& value_arg) {
-  type_ = value_arg;
-}
-
-
-const std::string* TargetInfo::app_id() const {
-  return app_id_ ? &(*app_id_) : nullptr;
-}
-
-void TargetInfo::set_app_id(const std::string_view* value_arg) {
-  app_id_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void TargetInfo::set_app_id(std::string_view value_arg) {
-  app_id_ = value_arg;
-}
-
-
-const std::string* TargetInfo::name() const {
-  return name_ ? &(*name_) : nullptr;
-}
-
-void TargetInfo::set_name(const std::string_view* value_arg) {
-  name_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void TargetInfo::set_name(std::string_view value_arg) {
-  name_ = value_arg;
-}
-
-
-const std::string* TargetInfo::title() const {
-  return title_ ? &(*title_) : nullptr;
-}
-
-void TargetInfo::set_title(const std::string_view* value_arg) {
-  title_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void TargetInfo::set_title(std::string_view value_arg) {
-  title_ = value_arg;
-}
-
-
-const int64_t* TargetInfo::process_id() const {
-  return process_id_ ? &(*process_id_) : nullptr;
-}
-
-void TargetInfo::set_process_id(const int64_t* value_arg) {
-  process_id_ = value_arg ? std::optional<int64_t>(*value_arg) : std::nullopt;
-}
-
-void TargetInfo::set_process_id(int64_t value_arg) {
-  process_id_ = value_arg;
-}
-
-
-const RectData* TargetInfo::bounds() const {
-  return bounds_.get();
-}
-
-void TargetInfo::set_bounds(const RectData* value_arg) {
-  bounds_ = value_arg ? std::make_unique<RectData>(*value_arg) : nullptr;
-}
-
-void TargetInfo::set_bounds(const RectData& value_arg) {
-  bounds_ = std::make_unique<RectData>(value_arg);
-}
-
-
-bool TargetInfo::foreground() const {
-  return foreground_;
-}
-
-void TargetInfo::set_foreground(bool value_arg) {
-  foreground_ = value_arg;
-}
-
-
-EncodableList TargetInfo::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(8);
-  list.push_back(EncodableValue(target_id_));
-  list.push_back(CustomEncodableValue(type_));
-  list.push_back(app_id_ ? EncodableValue(*app_id_) : EncodableValue());
-  list.push_back(name_ ? EncodableValue(*name_) : EncodableValue());
-  list.push_back(title_ ? EncodableValue(*title_) : EncodableValue());
-  list.push_back(process_id_ ? EncodableValue(*process_id_) : EncodableValue());
-  list.push_back(bounds_ ? CustomEncodableValue(*bounds_) : EncodableValue());
-  list.push_back(EncodableValue(foreground_));
-  return list;
-}
-
-TargetInfo TargetInfo::FromEncodableList(const EncodableList& list) {
-  TargetInfo decoded(
-    std::get<std::string>(list[0]),
-    std::any_cast<const TargetType&>(std::get<CustomEncodableValue>(list[1])),
-    std::get<bool>(list[7]));
-  auto& encodable_app_id = list[2];
-  if (!encodable_app_id.IsNull()) {
-    decoded.set_app_id(std::get<std::string>(encodable_app_id));
-  }
-  auto& encodable_name = list[3];
-  if (!encodable_name.IsNull()) {
-    decoded.set_name(std::get<std::string>(encodable_name));
-  }
-  auto& encodable_title = list[4];
-  if (!encodable_title.IsNull()) {
-    decoded.set_title(std::get<std::string>(encodable_title));
-  }
-  auto& encodable_process_id = list[5];
-  if (!encodable_process_id.IsNull()) {
-    decoded.set_process_id(std::get<int64_t>(encodable_process_id));
-  }
-  auto& encodable_bounds = list[6];
-  if (!encodable_bounds.IsNull()) {
-    decoded.set_bounds(std::any_cast<const RectData&>(std::get<CustomEncodableValue>(encodable_bounds)));
-  }
-  return decoded;
-}
-
-bool TargetInfo::operator==(const TargetInfo& other) const {
-  return PigeonInternalDeepEquals(target_id_, other.target_id_) && PigeonInternalDeepEquals(type_, other.type_) && PigeonInternalDeepEquals(app_id_, other.app_id_) && PigeonInternalDeepEquals(name_, other.name_) && PigeonInternalDeepEquals(title_, other.title_) && PigeonInternalDeepEquals(process_id_, other.process_id_) && PigeonInternalDeepEquals(bounds_, other.bounds_) && PigeonInternalDeepEquals(foreground_, other.foreground_);
-}
-
-bool TargetInfo::operator!=(const TargetInfo& other) const {
-  return !(*this == other);
-}
-
-size_t TargetInfo::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(target_id_);
-  result = result * 31 + PigeonInternalDeepHash(type_);
-  result = result * 31 + PigeonInternalDeepHash(app_id_);
-  result = result * 31 + PigeonInternalDeepHash(name_);
-  result = result * 31 + PigeonInternalDeepHash(title_);
-  result = result * 31 + PigeonInternalDeepHash(process_id_);
-  result = result * 31 + PigeonInternalDeepHash(bounds_);
-  result = result * 31 + PigeonInternalDeepHash(foreground_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const TargetInfo& obj) {
-  os << "TargetInfo(";
-  os << "target_id: ";
-  os << PigeonInternalToString(obj.target_id_);
-  os << ", type: ";
-  os << PigeonInternalToString(obj.type_);
-  os << ", app_id: ";
-  if (obj.app_id_) {
-    os << PigeonInternalToString(*obj.app_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", name: ";
-  if (obj.name_) {
-    os << PigeonInternalToString(*obj.name_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", title: ";
-  if (obj.title_) {
-    os << PigeonInternalToString(*obj.title_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", process_id: ";
-  if (obj.process_id_) {
-    os << PigeonInternalToString(*obj.process_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", bounds: ";
-  if (obj.bounds_) {
-    os << *obj.bounds_;
-  }
-  else {
-    os << "null";
-  }
-  os << ", foreground: ";
-  os << PigeonInternalToString(obj.foreground_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const TargetInfo& v) {
+size_t PigeonInternalDeepHash(const RectData& v) {
   return v.Hash();
 }
 
@@ -1342,9 +661,9 @@ size_t PigeonInternalDeepHash(const TargetInfo& v) {
 
 UiNode::UiNode(
   const std::string& node_id,
-  const UiRole& role,
+  const EncodableList& child_node_ids,
+  const std::string& role,
   const RectData& bounds,
-  bool visible,
   bool enabled,
   bool clickable,
   bool editable,
@@ -1353,9 +672,9 @@ UiNode::UiNode(
   bool checked,
   bool scrollable)
  : node_id_(node_id),
+    child_node_ids_(child_node_ids),
     role_(role),
     bounds_(std::make_unique<RectData>(bounds)),
-    visible_(visible),
     enabled_(enabled),
     clickable_(clickable),
     editable_(editable),
@@ -1367,60 +686,54 @@ UiNode::UiNode(
 UiNode::UiNode(
   const std::string& node_id,
   const std::string* parent_node_id,
-  const EncodableList* child_node_ids,
+  const EncodableList& child_node_ids,
   const std::string* automation_id,
   const std::string* text,
   const std::string* label,
   const std::string* value,
-  const UiRole& role,
+  const std::string& role,
   const RectData& bounds,
-  bool visible,
   bool enabled,
   bool clickable,
   bool editable,
   bool focused,
   bool selected,
   bool checked,
-  bool scrollable,
-  const EncodableList* actions)
+  bool scrollable)
  : node_id_(node_id),
     parent_node_id_(parent_node_id ? std::optional<std::string>(*parent_node_id) : std::nullopt),
-    child_node_ids_(child_node_ids ? std::optional<EncodableList>(*child_node_ids) : std::nullopt),
+    child_node_ids_(child_node_ids),
     automation_id_(automation_id ? std::optional<std::string>(*automation_id) : std::nullopt),
     text_(text ? std::optional<std::string>(*text) : std::nullopt),
     label_(label ? std::optional<std::string>(*label) : std::nullopt),
     value_(value ? std::optional<std::string>(*value) : std::nullopt),
     role_(role),
     bounds_(std::make_unique<RectData>(bounds)),
-    visible_(visible),
     enabled_(enabled),
     clickable_(clickable),
     editable_(editable),
     focused_(focused),
     selected_(selected),
     checked_(checked),
-    scrollable_(scrollable),
-    actions_(actions ? std::optional<EncodableList>(*actions) : std::nullopt) {}
+    scrollable_(scrollable) {}
 
 UiNode::UiNode(const UiNode& other)
  : node_id_(other.node_id_),
     parent_node_id_(other.parent_node_id_ ? std::optional<std::string>(*other.parent_node_id_) : std::nullopt),
-    child_node_ids_(other.child_node_ids_ ? std::optional<EncodableList>(*other.child_node_ids_) : std::nullopt),
+    child_node_ids_(other.child_node_ids_),
     automation_id_(other.automation_id_ ? std::optional<std::string>(*other.automation_id_) : std::nullopt),
     text_(other.text_ ? std::optional<std::string>(*other.text_) : std::nullopt),
     label_(other.label_ ? std::optional<std::string>(*other.label_) : std::nullopt),
     value_(other.value_ ? std::optional<std::string>(*other.value_) : std::nullopt),
     role_(other.role_),
     bounds_(std::make_unique<RectData>(*other.bounds_)),
-    visible_(other.visible_),
     enabled_(other.enabled_),
     clickable_(other.clickable_),
     editable_(other.editable_),
     focused_(other.focused_),
     selected_(other.selected_),
     checked_(other.checked_),
-    scrollable_(other.scrollable_),
-    actions_(other.actions_ ? std::optional<EncodableList>(*other.actions_) : std::nullopt) {}
+    scrollable_(other.scrollable_) {}
 
 UiNode& UiNode::operator=(const UiNode& other) {
   node_id_ = other.node_id_;
@@ -1432,7 +745,6 @@ UiNode& UiNode::operator=(const UiNode& other) {
   value_ = other.value_;
   role_ = other.role_;
   bounds_ = std::make_unique<RectData>(*other.bounds_);
-  visible_ = other.visible_;
   enabled_ = other.enabled_;
   clickable_ = other.clickable_;
   editable_ = other.editable_;
@@ -1440,7 +752,6 @@ UiNode& UiNode::operator=(const UiNode& other) {
   selected_ = other.selected_;
   checked_ = other.checked_;
   scrollable_ = other.scrollable_;
-  actions_ = other.actions_;
   return *this;
 }
 
@@ -1466,12 +777,8 @@ void UiNode::set_parent_node_id(std::string_view value_arg) {
 }
 
 
-const EncodableList* UiNode::child_node_ids() const {
-  return child_node_ids_ ? &(*child_node_ids_) : nullptr;
-}
-
-void UiNode::set_child_node_ids(const EncodableList* value_arg) {
-  child_node_ids_ = value_arg ? std::optional<EncodableList>(*value_arg) : std::nullopt;
+const EncodableList& UiNode::child_node_ids() const {
+  return child_node_ids_;
 }
 
 void UiNode::set_child_node_ids(const EncodableList& value_arg) {
@@ -1531,11 +838,11 @@ void UiNode::set_value(std::string_view value_arg) {
 }
 
 
-const UiRole& UiNode::role() const {
+const std::string& UiNode::role() const {
   return role_;
 }
 
-void UiNode::set_role(const UiRole& value_arg) {
+void UiNode::set_role(std::string_view value_arg) {
   role_ = value_arg;
 }
 
@@ -1546,15 +853,6 @@ const RectData& UiNode::bounds() const {
 
 void UiNode::set_bounds(const RectData& value_arg) {
   bounds_ = std::make_unique<RectData>(value_arg);
-}
-
-
-bool UiNode::visible() const {
-  return visible_;
-}
-
-void UiNode::set_visible(bool value_arg) {
-  visible_ = value_arg;
 }
 
 
@@ -1621,32 +919,18 @@ void UiNode::set_scrollable(bool value_arg) {
 }
 
 
-const EncodableList* UiNode::actions() const {
-  return actions_ ? &(*actions_) : nullptr;
-}
-
-void UiNode::set_actions(const EncodableList* value_arg) {
-  actions_ = value_arg ? std::optional<EncodableList>(*value_arg) : std::nullopt;
-}
-
-void UiNode::set_actions(const EncodableList& value_arg) {
-  actions_ = value_arg;
-}
-
-
 EncodableList UiNode::ToEncodableList() const {
   EncodableList list;
-  list.reserve(18);
+  list.reserve(16);
   list.push_back(EncodableValue(node_id_));
   list.push_back(parent_node_id_ ? EncodableValue(*parent_node_id_) : EncodableValue());
-  list.push_back(child_node_ids_ ? EncodableValue(*child_node_ids_) : EncodableValue());
+  list.push_back(EncodableValue(child_node_ids_));
   list.push_back(automation_id_ ? EncodableValue(*automation_id_) : EncodableValue());
   list.push_back(text_ ? EncodableValue(*text_) : EncodableValue());
   list.push_back(label_ ? EncodableValue(*label_) : EncodableValue());
   list.push_back(value_ ? EncodableValue(*value_) : EncodableValue());
-  list.push_back(CustomEncodableValue(role_));
+  list.push_back(EncodableValue(role_));
   list.push_back(CustomEncodableValue(*bounds_));
-  list.push_back(EncodableValue(visible_));
   list.push_back(EncodableValue(enabled_));
   list.push_back(EncodableValue(clickable_));
   list.push_back(EncodableValue(editable_));
@@ -1654,14 +938,14 @@ EncodableList UiNode::ToEncodableList() const {
   list.push_back(EncodableValue(selected_));
   list.push_back(EncodableValue(checked_));
   list.push_back(EncodableValue(scrollable_));
-  list.push_back(actions_ ? EncodableValue(*actions_) : EncodableValue());
   return list;
 }
 
 UiNode UiNode::FromEncodableList(const EncodableList& list) {
   UiNode decoded(
     std::get<std::string>(list[0]),
-    std::any_cast<const UiRole&>(std::get<CustomEncodableValue>(list[7])),
+    std::get<EncodableList>(list[2]),
+    std::get<std::string>(list[7]),
     std::any_cast<const RectData&>(std::get<CustomEncodableValue>(list[8])),
     std::get<bool>(list[9]),
     std::get<bool>(list[10]),
@@ -1669,15 +953,10 @@ UiNode UiNode::FromEncodableList(const EncodableList& list) {
     std::get<bool>(list[12]),
     std::get<bool>(list[13]),
     std::get<bool>(list[14]),
-    std::get<bool>(list[15]),
-    std::get<bool>(list[16]));
+    std::get<bool>(list[15]));
   auto& encodable_parent_node_id = list[1];
   if (!encodable_parent_node_id.IsNull()) {
     decoded.set_parent_node_id(std::get<std::string>(encodable_parent_node_id));
-  }
-  auto& encodable_child_node_ids = list[2];
-  if (!encodable_child_node_ids.IsNull()) {
-    decoded.set_child_node_ids(std::get<EncodableList>(encodable_child_node_ids));
   }
   auto& encodable_automation_id = list[3];
   if (!encodable_automation_id.IsNull()) {
@@ -1695,15 +974,11 @@ UiNode UiNode::FromEncodableList(const EncodableList& list) {
   if (!encodable_value.IsNull()) {
     decoded.set_value(std::get<std::string>(encodable_value));
   }
-  auto& encodable_actions = list[17];
-  if (!encodable_actions.IsNull()) {
-    decoded.set_actions(std::get<EncodableList>(encodable_actions));
-  }
   return decoded;
 }
 
 bool UiNode::operator==(const UiNode& other) const {
-  return PigeonInternalDeepEquals(node_id_, other.node_id_) && PigeonInternalDeepEquals(parent_node_id_, other.parent_node_id_) && PigeonInternalDeepEquals(child_node_ids_, other.child_node_ids_) && PigeonInternalDeepEquals(automation_id_, other.automation_id_) && PigeonInternalDeepEquals(text_, other.text_) && PigeonInternalDeepEquals(label_, other.label_) && PigeonInternalDeepEquals(value_, other.value_) && PigeonInternalDeepEquals(role_, other.role_) && PigeonInternalDeepEquals(bounds_, other.bounds_) && PigeonInternalDeepEquals(visible_, other.visible_) && PigeonInternalDeepEquals(enabled_, other.enabled_) && PigeonInternalDeepEquals(clickable_, other.clickable_) && PigeonInternalDeepEquals(editable_, other.editable_) && PigeonInternalDeepEquals(focused_, other.focused_) && PigeonInternalDeepEquals(selected_, other.selected_) && PigeonInternalDeepEquals(checked_, other.checked_) && PigeonInternalDeepEquals(scrollable_, other.scrollable_) && PigeonInternalDeepEquals(actions_, other.actions_);
+  return PigeonInternalDeepEquals(node_id_, other.node_id_) && PigeonInternalDeepEquals(parent_node_id_, other.parent_node_id_) && PigeonInternalDeepEquals(child_node_ids_, other.child_node_ids_) && PigeonInternalDeepEquals(automation_id_, other.automation_id_) && PigeonInternalDeepEquals(text_, other.text_) && PigeonInternalDeepEquals(label_, other.label_) && PigeonInternalDeepEquals(value_, other.value_) && PigeonInternalDeepEquals(role_, other.role_) && PigeonInternalDeepEquals(bounds_, other.bounds_) && PigeonInternalDeepEquals(enabled_, other.enabled_) && PigeonInternalDeepEquals(clickable_, other.clickable_) && PigeonInternalDeepEquals(editable_, other.editable_) && PigeonInternalDeepEquals(focused_, other.focused_) && PigeonInternalDeepEquals(selected_, other.selected_) && PigeonInternalDeepEquals(checked_, other.checked_) && PigeonInternalDeepEquals(scrollable_, other.scrollable_);
 }
 
 bool UiNode::operator!=(const UiNode& other) const {
@@ -1721,7 +996,6 @@ size_t UiNode::Hash() const {
   result = result * 31 + PigeonInternalDeepHash(value_);
   result = result * 31 + PigeonInternalDeepHash(role_);
   result = result * 31 + PigeonInternalDeepHash(bounds_);
-  result = result * 31 + PigeonInternalDeepHash(visible_);
   result = result * 31 + PigeonInternalDeepHash(enabled_);
   result = result * 31 + PigeonInternalDeepHash(clickable_);
   result = result * 31 + PigeonInternalDeepHash(editable_);
@@ -1729,7 +1003,6 @@ size_t UiNode::Hash() const {
   result = result * 31 + PigeonInternalDeepHash(selected_);
   result = result * 31 + PigeonInternalDeepHash(checked_);
   result = result * 31 + PigeonInternalDeepHash(scrollable_);
-  result = result * 31 + PigeonInternalDeepHash(actions_);
   return result;
 }
 
@@ -1747,12 +1020,7 @@ std::ostream& operator<<(
     os << "null";
   }
   os << ", child_node_ids: ";
-  if (obj.child_node_ids_) {
-    os << PigeonInternalToString(*obj.child_node_ids_);
-  }
-  else {
-    os << "null";
-  }
+  os << PigeonInternalToString(obj.child_node_ids_);
   os << ", automation_id: ";
   if (obj.automation_id_) {
     os << PigeonInternalToString(*obj.automation_id_);
@@ -1785,8 +1053,6 @@ std::ostream& operator<<(
   os << PigeonInternalToString(obj.role_);
   os << ", bounds: ";
   os << obj.bounds_;
-  os << ", visible: ";
-  os << PigeonInternalToString(obj.visible_);
   os << ", enabled: ";
   os << PigeonInternalToString(obj.enabled_);
   os << ", clickable: ";
@@ -1801,13 +1067,6 @@ std::ostream& operator<<(
   os << PigeonInternalToString(obj.checked_);
   os << ", scrollable: ";
   os << PigeonInternalToString(obj.scrollable_);
-  os << ", actions: ";
-  if (obj.actions_) {
-    os << PigeonInternalToString(*obj.actions_);
-  }
-  else {
-    os << "null";
-  }
   os << ")";
   return os;
 }
@@ -1820,39 +1079,9 @@ size_t PigeonInternalDeepHash(const UiNode& v) {
 
 UiSnapshot::UiSnapshot(
   int64_t generation,
-  const ScreenInfo& screen,
   const EncodableList& nodes)
  : generation_(generation),
-    screen_(std::make_unique<ScreenInfo>(screen)),
     nodes_(nodes) {}
-
-UiSnapshot::UiSnapshot(
-  int64_t generation,
-  const std::string* target_id,
-  const std::string* root_node_id,
-  const ScreenInfo& screen,
-  const EncodableList& nodes)
- : generation_(generation),
-    target_id_(target_id ? std::optional<std::string>(*target_id) : std::nullopt),
-    root_node_id_(root_node_id ? std::optional<std::string>(*root_node_id) : std::nullopt),
-    screen_(std::make_unique<ScreenInfo>(screen)),
-    nodes_(nodes) {}
-
-UiSnapshot::UiSnapshot(const UiSnapshot& other)
- : generation_(other.generation_),
-    target_id_(other.target_id_ ? std::optional<std::string>(*other.target_id_) : std::nullopt),
-    root_node_id_(other.root_node_id_ ? std::optional<std::string>(*other.root_node_id_) : std::nullopt),
-    screen_(std::make_unique<ScreenInfo>(*other.screen_)),
-    nodes_(other.nodes_) {}
-
-UiSnapshot& UiSnapshot::operator=(const UiSnapshot& other) {
-  generation_ = other.generation_;
-  target_id_ = other.target_id_;
-  root_node_id_ = other.root_node_id_;
-  screen_ = std::make_unique<ScreenInfo>(*other.screen_);
-  nodes_ = other.nodes_;
-  return *this;
-}
 
 int64_t UiSnapshot::generation() const {
   return generation_;
@@ -1860,41 +1089,6 @@ int64_t UiSnapshot::generation() const {
 
 void UiSnapshot::set_generation(int64_t value_arg) {
   generation_ = value_arg;
-}
-
-
-const std::string* UiSnapshot::target_id() const {
-  return target_id_ ? &(*target_id_) : nullptr;
-}
-
-void UiSnapshot::set_target_id(const std::string_view* value_arg) {
-  target_id_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void UiSnapshot::set_target_id(std::string_view value_arg) {
-  target_id_ = value_arg;
-}
-
-
-const std::string* UiSnapshot::root_node_id() const {
-  return root_node_id_ ? &(*root_node_id_) : nullptr;
-}
-
-void UiSnapshot::set_root_node_id(const std::string_view* value_arg) {
-  root_node_id_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void UiSnapshot::set_root_node_id(std::string_view value_arg) {
-  root_node_id_ = value_arg;
-}
-
-
-const ScreenInfo& UiSnapshot::screen() const {
-  return *screen_;
-}
-
-void UiSnapshot::set_screen(const ScreenInfo& value_arg) {
-  screen_ = std::make_unique<ScreenInfo>(value_arg);
 }
 
 
@@ -1909,11 +1103,8 @@ void UiSnapshot::set_nodes(const EncodableList& value_arg) {
 
 EncodableList UiSnapshot::ToEncodableList() const {
   EncodableList list;
-  list.reserve(5);
+  list.reserve(2);
   list.push_back(EncodableValue(generation_));
-  list.push_back(target_id_ ? EncodableValue(*target_id_) : EncodableValue());
-  list.push_back(root_node_id_ ? EncodableValue(*root_node_id_) : EncodableValue());
-  list.push_back(CustomEncodableValue(*screen_));
   list.push_back(EncodableValue(nodes_));
   return list;
 }
@@ -1921,21 +1112,12 @@ EncodableList UiSnapshot::ToEncodableList() const {
 UiSnapshot UiSnapshot::FromEncodableList(const EncodableList& list) {
   UiSnapshot decoded(
     std::get<int64_t>(list[0]),
-    std::any_cast<const ScreenInfo&>(std::get<CustomEncodableValue>(list[3])),
-    std::get<EncodableList>(list[4]));
-  auto& encodable_target_id = list[1];
-  if (!encodable_target_id.IsNull()) {
-    decoded.set_target_id(std::get<std::string>(encodable_target_id));
-  }
-  auto& encodable_root_node_id = list[2];
-  if (!encodable_root_node_id.IsNull()) {
-    decoded.set_root_node_id(std::get<std::string>(encodable_root_node_id));
-  }
+    std::get<EncodableList>(list[1]));
   return decoded;
 }
 
 bool UiSnapshot::operator==(const UiSnapshot& other) const {
-  return PigeonInternalDeepEquals(generation_, other.generation_) && PigeonInternalDeepEquals(target_id_, other.target_id_) && PigeonInternalDeepEquals(root_node_id_, other.root_node_id_) && PigeonInternalDeepEquals(screen_, other.screen_) && PigeonInternalDeepEquals(nodes_, other.nodes_);
+  return PigeonInternalDeepEquals(generation_, other.generation_) && PigeonInternalDeepEquals(nodes_, other.nodes_);
 }
 
 bool UiSnapshot::operator!=(const UiSnapshot& other) const {
@@ -1945,9 +1127,6 @@ bool UiSnapshot::operator!=(const UiSnapshot& other) const {
 size_t UiSnapshot::Hash() const {
   size_t result = 1;
   result = result * 31 + PigeonInternalDeepHash(generation_);
-  result = result * 31 + PigeonInternalDeepHash(target_id_);
-  result = result * 31 + PigeonInternalDeepHash(root_node_id_);
-  result = result * 31 + PigeonInternalDeepHash(screen_);
   result = result * 31 + PigeonInternalDeepHash(nodes_);
   return result;
 }
@@ -1958,22 +1137,6 @@ std::ostream& operator<<(
   os << "UiSnapshot(";
   os << "generation: ";
   os << PigeonInternalToString(obj.generation_);
-  os << ", target_id: ";
-  if (obj.target_id_) {
-    os << PigeonInternalToString(*obj.target_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", root_node_id: ";
-  if (obj.root_node_id_) {
-    os << PigeonInternalToString(*obj.root_node_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", screen: ";
-  os << obj.screen_;
   os << ", nodes: ";
   os << PigeonInternalToString(obj.nodes_);
   os << ")";
@@ -1981,342 +1144,6 @@ std::ostream& operator<<(
 }
 
 size_t PigeonInternalDeepHash(const UiSnapshot& v) {
-  return v.Hash();
-}
-
-// DumpUiRequest
-
-DumpUiRequest::DumpUiRequest(bool include_invisible)
- : include_invisible_(include_invisible) {}
-
-DumpUiRequest::DumpUiRequest(
-  const std::string* target_id,
-  bool include_invisible)
- : target_id_(target_id ? std::optional<std::string>(*target_id) : std::nullopt),
-    include_invisible_(include_invisible) {}
-
-const std::string* DumpUiRequest::target_id() const {
-  return target_id_ ? &(*target_id_) : nullptr;
-}
-
-void DumpUiRequest::set_target_id(const std::string_view* value_arg) {
-  target_id_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void DumpUiRequest::set_target_id(std::string_view value_arg) {
-  target_id_ = value_arg;
-}
-
-
-bool DumpUiRequest::include_invisible() const {
-  return include_invisible_;
-}
-
-void DumpUiRequest::set_include_invisible(bool value_arg) {
-  include_invisible_ = value_arg;
-}
-
-
-EncodableList DumpUiRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(2);
-  list.push_back(target_id_ ? EncodableValue(*target_id_) : EncodableValue());
-  list.push_back(EncodableValue(include_invisible_));
-  return list;
-}
-
-DumpUiRequest DumpUiRequest::FromEncodableList(const EncodableList& list) {
-  DumpUiRequest decoded(
-    std::get<bool>(list[1]));
-  auto& encodable_target_id = list[0];
-  if (!encodable_target_id.IsNull()) {
-    decoded.set_target_id(std::get<std::string>(encodable_target_id));
-  }
-  return decoded;
-}
-
-bool DumpUiRequest::operator==(const DumpUiRequest& other) const {
-  return PigeonInternalDeepEquals(target_id_, other.target_id_) && PigeonInternalDeepEquals(include_invisible_, other.include_invisible_);
-}
-
-bool DumpUiRequest::operator!=(const DumpUiRequest& other) const {
-  return !(*this == other);
-}
-
-size_t DumpUiRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(target_id_);
-  result = result * 31 + PigeonInternalDeepHash(include_invisible_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const DumpUiRequest& obj) {
-  os << "DumpUiRequest(";
-  os << "target_id: ";
-  if (obj.target_id_) {
-    os << PigeonInternalToString(*obj.target_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", include_invisible: ";
-  os << PigeonInternalToString(obj.include_invisible_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const DumpUiRequest& v) {
-  return v.Hash();
-}
-
-// HitTestRequest
-
-HitTestRequest::HitTestRequest(const PointData& point)
- : point_(std::make_unique<PointData>(point)) {}
-
-HitTestRequest::HitTestRequest(
-  const std::string* target_id,
-  const PointData& point)
- : target_id_(target_id ? std::optional<std::string>(*target_id) : std::nullopt),
-    point_(std::make_unique<PointData>(point)) {}
-
-HitTestRequest::HitTestRequest(const HitTestRequest& other)
- : target_id_(other.target_id_ ? std::optional<std::string>(*other.target_id_) : std::nullopt),
-    point_(std::make_unique<PointData>(*other.point_)) {}
-
-HitTestRequest& HitTestRequest::operator=(const HitTestRequest& other) {
-  target_id_ = other.target_id_;
-  point_ = std::make_unique<PointData>(*other.point_);
-  return *this;
-}
-
-const std::string* HitTestRequest::target_id() const {
-  return target_id_ ? &(*target_id_) : nullptr;
-}
-
-void HitTestRequest::set_target_id(const std::string_view* value_arg) {
-  target_id_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void HitTestRequest::set_target_id(std::string_view value_arg) {
-  target_id_ = value_arg;
-}
-
-
-const PointData& HitTestRequest::point() const {
-  return *point_;
-}
-
-void HitTestRequest::set_point(const PointData& value_arg) {
-  point_ = std::make_unique<PointData>(value_arg);
-}
-
-
-EncodableList HitTestRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(2);
-  list.push_back(target_id_ ? EncodableValue(*target_id_) : EncodableValue());
-  list.push_back(CustomEncodableValue(*point_));
-  return list;
-}
-
-HitTestRequest HitTestRequest::FromEncodableList(const EncodableList& list) {
-  HitTestRequest decoded(
-    std::any_cast<const PointData&>(std::get<CustomEncodableValue>(list[1])));
-  auto& encodable_target_id = list[0];
-  if (!encodable_target_id.IsNull()) {
-    decoded.set_target_id(std::get<std::string>(encodable_target_id));
-  }
-  return decoded;
-}
-
-bool HitTestRequest::operator==(const HitTestRequest& other) const {
-  return PigeonInternalDeepEquals(target_id_, other.target_id_) && PigeonInternalDeepEquals(point_, other.point_);
-}
-
-bool HitTestRequest::operator!=(const HitTestRequest& other) const {
-  return !(*this == other);
-}
-
-size_t HitTestRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(target_id_);
-  result = result * 31 + PigeonInternalDeepHash(point_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const HitTestRequest& obj) {
-  os << "HitTestRequest(";
-  os << "target_id: ";
-  if (obj.target_id_) {
-    os << PigeonInternalToString(*obj.target_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", point: ";
-  os << obj.point_;
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const HitTestRequest& v) {
-  return v.Hash();
-}
-
-// ElementActionRequest
-
-ElementActionRequest::ElementActionRequest(
-  int64_t generation,
-  const std::string& node_id,
-  const UiAction& action)
- : generation_(generation),
-    node_id_(node_id),
-    action_(action) {}
-
-ElementActionRequest::ElementActionRequest(
-  const std::string* target_id,
-  int64_t generation,
-  const std::string& node_id,
-  const UiAction& action,
-  const std::string* value)
- : target_id_(target_id ? std::optional<std::string>(*target_id) : std::nullopt),
-    generation_(generation),
-    node_id_(node_id),
-    action_(action),
-    value_(value ? std::optional<std::string>(*value) : std::nullopt) {}
-
-const std::string* ElementActionRequest::target_id() const {
-  return target_id_ ? &(*target_id_) : nullptr;
-}
-
-void ElementActionRequest::set_target_id(const std::string_view* value_arg) {
-  target_id_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void ElementActionRequest::set_target_id(std::string_view value_arg) {
-  target_id_ = value_arg;
-}
-
-
-int64_t ElementActionRequest::generation() const {
-  return generation_;
-}
-
-void ElementActionRequest::set_generation(int64_t value_arg) {
-  generation_ = value_arg;
-}
-
-
-const std::string& ElementActionRequest::node_id() const {
-  return node_id_;
-}
-
-void ElementActionRequest::set_node_id(std::string_view value_arg) {
-  node_id_ = value_arg;
-}
-
-
-const UiAction& ElementActionRequest::action() const {
-  return action_;
-}
-
-void ElementActionRequest::set_action(const UiAction& value_arg) {
-  action_ = value_arg;
-}
-
-
-const std::string* ElementActionRequest::value() const {
-  return value_ ? &(*value_) : nullptr;
-}
-
-void ElementActionRequest::set_value(const std::string_view* value_arg) {
-  value_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void ElementActionRequest::set_value(std::string_view value_arg) {
-  value_ = value_arg;
-}
-
-
-EncodableList ElementActionRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(5);
-  list.push_back(target_id_ ? EncodableValue(*target_id_) : EncodableValue());
-  list.push_back(EncodableValue(generation_));
-  list.push_back(EncodableValue(node_id_));
-  list.push_back(CustomEncodableValue(action_));
-  list.push_back(value_ ? EncodableValue(*value_) : EncodableValue());
-  return list;
-}
-
-ElementActionRequest ElementActionRequest::FromEncodableList(const EncodableList& list) {
-  ElementActionRequest decoded(
-    std::get<int64_t>(list[1]),
-    std::get<std::string>(list[2]),
-    std::any_cast<const UiAction&>(std::get<CustomEncodableValue>(list[3])));
-  auto& encodable_target_id = list[0];
-  if (!encodable_target_id.IsNull()) {
-    decoded.set_target_id(std::get<std::string>(encodable_target_id));
-  }
-  auto& encodable_value = list[4];
-  if (!encodable_value.IsNull()) {
-    decoded.set_value(std::get<std::string>(encodable_value));
-  }
-  return decoded;
-}
-
-bool ElementActionRequest::operator==(const ElementActionRequest& other) const {
-  return PigeonInternalDeepEquals(target_id_, other.target_id_) && PigeonInternalDeepEquals(generation_, other.generation_) && PigeonInternalDeepEquals(node_id_, other.node_id_) && PigeonInternalDeepEquals(action_, other.action_) && PigeonInternalDeepEquals(value_, other.value_);
-}
-
-bool ElementActionRequest::operator!=(const ElementActionRequest& other) const {
-  return !(*this == other);
-}
-
-size_t ElementActionRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(target_id_);
-  result = result * 31 + PigeonInternalDeepHash(generation_);
-  result = result * 31 + PigeonInternalDeepHash(node_id_);
-  result = result * 31 + PigeonInternalDeepHash(action_);
-  result = result * 31 + PigeonInternalDeepHash(value_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const ElementActionRequest& obj) {
-  os << "ElementActionRequest(";
-  os << "target_id: ";
-  if (obj.target_id_) {
-    os << PigeonInternalToString(*obj.target_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", generation: ";
-  os << PigeonInternalToString(obj.generation_);
-  os << ", node_id: ";
-  os << PigeonInternalToString(obj.node_id_);
-  os << ", action: ";
-  os << PigeonInternalToString(obj.action_);
-  os << ", value: ";
-  if (obj.value_) {
-    os << PigeonInternalToString(*obj.value_);
-  }
-  else {
-    os << "null";
-  }
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const ElementActionRequest& v) {
   return v.Hash();
 }
 
@@ -2426,937 +1253,6 @@ size_t PigeonInternalDeepHash(const ActionResult& v) {
   return v.Hash();
 }
 
-// LaunchAppRequest
-
-LaunchAppRequest::LaunchAppRequest(const std::string& app_id)
- : app_id_(app_id) {}
-
-LaunchAppRequest::LaunchAppRequest(
-  const std::string& app_id,
-  const EncodableList* arguments,
-  const EncodableMap* environment)
- : app_id_(app_id),
-    arguments_(arguments ? std::optional<EncodableList>(*arguments) : std::nullopt),
-    environment_(environment ? std::optional<EncodableMap>(*environment) : std::nullopt) {}
-
-const std::string& LaunchAppRequest::app_id() const {
-  return app_id_;
-}
-
-void LaunchAppRequest::set_app_id(std::string_view value_arg) {
-  app_id_ = value_arg;
-}
-
-
-const EncodableList* LaunchAppRequest::arguments() const {
-  return arguments_ ? &(*arguments_) : nullptr;
-}
-
-void LaunchAppRequest::set_arguments(const EncodableList* value_arg) {
-  arguments_ = value_arg ? std::optional<EncodableList>(*value_arg) : std::nullopt;
-}
-
-void LaunchAppRequest::set_arguments(const EncodableList& value_arg) {
-  arguments_ = value_arg;
-}
-
-
-const EncodableMap* LaunchAppRequest::environment() const {
-  return environment_ ? &(*environment_) : nullptr;
-}
-
-void LaunchAppRequest::set_environment(const EncodableMap* value_arg) {
-  environment_ = value_arg ? std::optional<EncodableMap>(*value_arg) : std::nullopt;
-}
-
-void LaunchAppRequest::set_environment(const EncodableMap& value_arg) {
-  environment_ = value_arg;
-}
-
-
-EncodableList LaunchAppRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(3);
-  list.push_back(EncodableValue(app_id_));
-  list.push_back(arguments_ ? EncodableValue(*arguments_) : EncodableValue());
-  list.push_back(environment_ ? EncodableValue(*environment_) : EncodableValue());
-  return list;
-}
-
-LaunchAppRequest LaunchAppRequest::FromEncodableList(const EncodableList& list) {
-  LaunchAppRequest decoded(
-    std::get<std::string>(list[0]));
-  auto& encodable_arguments = list[1];
-  if (!encodable_arguments.IsNull()) {
-    decoded.set_arguments(std::get<EncodableList>(encodable_arguments));
-  }
-  auto& encodable_environment = list[2];
-  if (!encodable_environment.IsNull()) {
-    decoded.set_environment(std::get<EncodableMap>(encodable_environment));
-  }
-  return decoded;
-}
-
-bool LaunchAppRequest::operator==(const LaunchAppRequest& other) const {
-  return PigeonInternalDeepEquals(app_id_, other.app_id_) && PigeonInternalDeepEquals(arguments_, other.arguments_) && PigeonInternalDeepEquals(environment_, other.environment_);
-}
-
-bool LaunchAppRequest::operator!=(const LaunchAppRequest& other) const {
-  return !(*this == other);
-}
-
-size_t LaunchAppRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(app_id_);
-  result = result * 31 + PigeonInternalDeepHash(arguments_);
-  result = result * 31 + PigeonInternalDeepHash(environment_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const LaunchAppRequest& obj) {
-  os << "LaunchAppRequest(";
-  os << "app_id: ";
-  os << PigeonInternalToString(obj.app_id_);
-  os << ", arguments: ";
-  if (obj.arguments_) {
-    os << PigeonInternalToString(*obj.arguments_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", environment: ";
-  if (obj.environment_) {
-    os << PigeonInternalToString(*obj.environment_);
-  }
-  else {
-    os << "null";
-  }
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const LaunchAppRequest& v) {
-  return v.Hash();
-}
-
-// TapRequest
-
-TapRequest::TapRequest(
-  const PointData& point,
-  int64_t count)
- : point_(std::make_unique<PointData>(point)),
-    count_(count) {}
-
-TapRequest::TapRequest(const TapRequest& other)
- : point_(std::make_unique<PointData>(*other.point_)),
-    count_(other.count_) {}
-
-TapRequest& TapRequest::operator=(const TapRequest& other) {
-  point_ = std::make_unique<PointData>(*other.point_);
-  count_ = other.count_;
-  return *this;
-}
-
-const PointData& TapRequest::point() const {
-  return *point_;
-}
-
-void TapRequest::set_point(const PointData& value_arg) {
-  point_ = std::make_unique<PointData>(value_arg);
-}
-
-
-int64_t TapRequest::count() const {
-  return count_;
-}
-
-void TapRequest::set_count(int64_t value_arg) {
-  count_ = value_arg;
-}
-
-
-EncodableList TapRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(2);
-  list.push_back(CustomEncodableValue(*point_));
-  list.push_back(EncodableValue(count_));
-  return list;
-}
-
-TapRequest TapRequest::FromEncodableList(const EncodableList& list) {
-  TapRequest decoded(
-    std::any_cast<const PointData&>(std::get<CustomEncodableValue>(list[0])),
-    std::get<int64_t>(list[1]));
-  return decoded;
-}
-
-bool TapRequest::operator==(const TapRequest& other) const {
-  return PigeonInternalDeepEquals(point_, other.point_) && PigeonInternalDeepEquals(count_, other.count_);
-}
-
-bool TapRequest::operator!=(const TapRequest& other) const {
-  return !(*this == other);
-}
-
-size_t TapRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(point_);
-  result = result * 31 + PigeonInternalDeepHash(count_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const TapRequest& obj) {
-  os << "TapRequest(";
-  os << "point: ";
-  os << obj.point_;
-  os << ", count: ";
-  os << PigeonInternalToString(obj.count_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const TapRequest& v) {
-  return v.Hash();
-}
-
-// LongPressRequest
-
-LongPressRequest::LongPressRequest(
-  const PointData& point,
-  int64_t duration_ms)
- : point_(std::make_unique<PointData>(point)),
-    duration_ms_(duration_ms) {}
-
-LongPressRequest::LongPressRequest(const LongPressRequest& other)
- : point_(std::make_unique<PointData>(*other.point_)),
-    duration_ms_(other.duration_ms_) {}
-
-LongPressRequest& LongPressRequest::operator=(const LongPressRequest& other) {
-  point_ = std::make_unique<PointData>(*other.point_);
-  duration_ms_ = other.duration_ms_;
-  return *this;
-}
-
-const PointData& LongPressRequest::point() const {
-  return *point_;
-}
-
-void LongPressRequest::set_point(const PointData& value_arg) {
-  point_ = std::make_unique<PointData>(value_arg);
-}
-
-
-int64_t LongPressRequest::duration_ms() const {
-  return duration_ms_;
-}
-
-void LongPressRequest::set_duration_ms(int64_t value_arg) {
-  duration_ms_ = value_arg;
-}
-
-
-EncodableList LongPressRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(2);
-  list.push_back(CustomEncodableValue(*point_));
-  list.push_back(EncodableValue(duration_ms_));
-  return list;
-}
-
-LongPressRequest LongPressRequest::FromEncodableList(const EncodableList& list) {
-  LongPressRequest decoded(
-    std::any_cast<const PointData&>(std::get<CustomEncodableValue>(list[0])),
-    std::get<int64_t>(list[1]));
-  return decoded;
-}
-
-bool LongPressRequest::operator==(const LongPressRequest& other) const {
-  return PigeonInternalDeepEquals(point_, other.point_) && PigeonInternalDeepEquals(duration_ms_, other.duration_ms_);
-}
-
-bool LongPressRequest::operator!=(const LongPressRequest& other) const {
-  return !(*this == other);
-}
-
-size_t LongPressRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(point_);
-  result = result * 31 + PigeonInternalDeepHash(duration_ms_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const LongPressRequest& obj) {
-  os << "LongPressRequest(";
-  os << "point: ";
-  os << obj.point_;
-  os << ", duration_ms: ";
-  os << PigeonInternalToString(obj.duration_ms_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const LongPressRequest& v) {
-  return v.Hash();
-}
-
-// SwipeRequest
-
-SwipeRequest::SwipeRequest(
-  const PointData& from,
-  const PointData& to,
-  int64_t duration_ms)
- : from_(std::make_unique<PointData>(from)),
-    to_(std::make_unique<PointData>(to)),
-    duration_ms_(duration_ms) {}
-
-SwipeRequest::SwipeRequest(const SwipeRequest& other)
- : from_(std::make_unique<PointData>(*other.from_)),
-    to_(std::make_unique<PointData>(*other.to_)),
-    duration_ms_(other.duration_ms_) {}
-
-SwipeRequest& SwipeRequest::operator=(const SwipeRequest& other) {
-  from_ = std::make_unique<PointData>(*other.from_);
-  to_ = std::make_unique<PointData>(*other.to_);
-  duration_ms_ = other.duration_ms_;
-  return *this;
-}
-
-const PointData& SwipeRequest::from() const {
-  return *from_;
-}
-
-void SwipeRequest::set_from(const PointData& value_arg) {
-  from_ = std::make_unique<PointData>(value_arg);
-}
-
-
-const PointData& SwipeRequest::to() const {
-  return *to_;
-}
-
-void SwipeRequest::set_to(const PointData& value_arg) {
-  to_ = std::make_unique<PointData>(value_arg);
-}
-
-
-int64_t SwipeRequest::duration_ms() const {
-  return duration_ms_;
-}
-
-void SwipeRequest::set_duration_ms(int64_t value_arg) {
-  duration_ms_ = value_arg;
-}
-
-
-EncodableList SwipeRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(3);
-  list.push_back(CustomEncodableValue(*from_));
-  list.push_back(CustomEncodableValue(*to_));
-  list.push_back(EncodableValue(duration_ms_));
-  return list;
-}
-
-SwipeRequest SwipeRequest::FromEncodableList(const EncodableList& list) {
-  SwipeRequest decoded(
-    std::any_cast<const PointData&>(std::get<CustomEncodableValue>(list[0])),
-    std::any_cast<const PointData&>(std::get<CustomEncodableValue>(list[1])),
-    std::get<int64_t>(list[2]));
-  return decoded;
-}
-
-bool SwipeRequest::operator==(const SwipeRequest& other) const {
-  return PigeonInternalDeepEquals(from_, other.from_) && PigeonInternalDeepEquals(to_, other.to_) && PigeonInternalDeepEquals(duration_ms_, other.duration_ms_);
-}
-
-bool SwipeRequest::operator!=(const SwipeRequest& other) const {
-  return !(*this == other);
-}
-
-size_t SwipeRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(from_);
-  result = result * 31 + PigeonInternalDeepHash(to_);
-  result = result * 31 + PigeonInternalDeepHash(duration_ms_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const SwipeRequest& obj) {
-  os << "SwipeRequest(";
-  os << "from: ";
-  os << obj.from_;
-  os << ", to: ";
-  os << obj.to_;
-  os << ", duration_ms: ";
-  os << PigeonInternalToString(obj.duration_ms_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const SwipeRequest& v) {
-  return v.Hash();
-}
-
-// ScrollRequest
-
-ScrollRequest::ScrollRequest(
-  double delta_x,
-  double delta_y)
- : delta_x_(delta_x),
-    delta_y_(delta_y) {}
-
-ScrollRequest::ScrollRequest(
-  double delta_x,
-  double delta_y,
-  const PointData* origin)
- : delta_x_(delta_x),
-    delta_y_(delta_y),
-    origin_(origin ? std::make_unique<PointData>(*origin) : nullptr) {}
-
-ScrollRequest::ScrollRequest(const ScrollRequest& other)
- : delta_x_(other.delta_x_),
-    delta_y_(other.delta_y_),
-    origin_(other.origin_ ? std::make_unique<PointData>(*other.origin_) : nullptr) {}
-
-ScrollRequest& ScrollRequest::operator=(const ScrollRequest& other) {
-  delta_x_ = other.delta_x_;
-  delta_y_ = other.delta_y_;
-  origin_ = other.origin_ ? std::make_unique<PointData>(*other.origin_) : nullptr;
-  return *this;
-}
-
-double ScrollRequest::delta_x() const {
-  return delta_x_;
-}
-
-void ScrollRequest::set_delta_x(double value_arg) {
-  delta_x_ = value_arg;
-}
-
-
-double ScrollRequest::delta_y() const {
-  return delta_y_;
-}
-
-void ScrollRequest::set_delta_y(double value_arg) {
-  delta_y_ = value_arg;
-}
-
-
-const PointData* ScrollRequest::origin() const {
-  return origin_.get();
-}
-
-void ScrollRequest::set_origin(const PointData* value_arg) {
-  origin_ = value_arg ? std::make_unique<PointData>(*value_arg) : nullptr;
-}
-
-void ScrollRequest::set_origin(const PointData& value_arg) {
-  origin_ = std::make_unique<PointData>(value_arg);
-}
-
-
-EncodableList ScrollRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(3);
-  list.push_back(EncodableValue(delta_x_));
-  list.push_back(EncodableValue(delta_y_));
-  list.push_back(origin_ ? CustomEncodableValue(*origin_) : EncodableValue());
-  return list;
-}
-
-ScrollRequest ScrollRequest::FromEncodableList(const EncodableList& list) {
-  ScrollRequest decoded(
-    std::get<double>(list[0]),
-    std::get<double>(list[1]));
-  auto& encodable_origin = list[2];
-  if (!encodable_origin.IsNull()) {
-    decoded.set_origin(std::any_cast<const PointData&>(std::get<CustomEncodableValue>(encodable_origin)));
-  }
-  return decoded;
-}
-
-bool ScrollRequest::operator==(const ScrollRequest& other) const {
-  return PigeonInternalDeepEquals(delta_x_, other.delta_x_) && PigeonInternalDeepEquals(delta_y_, other.delta_y_) && PigeonInternalDeepEquals(origin_, other.origin_);
-}
-
-bool ScrollRequest::operator!=(const ScrollRequest& other) const {
-  return !(*this == other);
-}
-
-size_t ScrollRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(delta_x_);
-  result = result * 31 + PigeonInternalDeepHash(delta_y_);
-  result = result * 31 + PigeonInternalDeepHash(origin_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const ScrollRequest& obj) {
-  os << "ScrollRequest(";
-  os << "delta_x: ";
-  os << PigeonInternalToString(obj.delta_x_);
-  os << ", delta_y: ";
-  os << PigeonInternalToString(obj.delta_y_);
-  os << ", origin: ";
-  if (obj.origin_) {
-    os << *obj.origin_;
-  }
-  else {
-    os << "null";
-  }
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const ScrollRequest& v) {
-  return v.Hash();
-}
-
-// TypeTextRequest
-
-TypeTextRequest::TypeTextRequest(
-  const std::string& text,
-  bool clear_first)
- : text_(text),
-    clear_first_(clear_first) {}
-
-const std::string& TypeTextRequest::text() const {
-  return text_;
-}
-
-void TypeTextRequest::set_text(std::string_view value_arg) {
-  text_ = value_arg;
-}
-
-
-bool TypeTextRequest::clear_first() const {
-  return clear_first_;
-}
-
-void TypeTextRequest::set_clear_first(bool value_arg) {
-  clear_first_ = value_arg;
-}
-
-
-EncodableList TypeTextRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(2);
-  list.push_back(EncodableValue(text_));
-  list.push_back(EncodableValue(clear_first_));
-  return list;
-}
-
-TypeTextRequest TypeTextRequest::FromEncodableList(const EncodableList& list) {
-  TypeTextRequest decoded(
-    std::get<std::string>(list[0]),
-    std::get<bool>(list[1]));
-  return decoded;
-}
-
-bool TypeTextRequest::operator==(const TypeTextRequest& other) const {
-  return PigeonInternalDeepEquals(text_, other.text_) && PigeonInternalDeepEquals(clear_first_, other.clear_first_);
-}
-
-bool TypeTextRequest::operator!=(const TypeTextRequest& other) const {
-  return !(*this == other);
-}
-
-size_t TypeTextRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(text_);
-  result = result * 31 + PigeonInternalDeepHash(clear_first_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const TypeTextRequest& obj) {
-  os << "TypeTextRequest(";
-  os << "text: ";
-  os << PigeonInternalToString(obj.text_);
-  os << ", clear_first: ";
-  os << PigeonInternalToString(obj.clear_first_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const TypeTextRequest& v) {
-  return v.Hash();
-}
-
-// KeyRequest
-
-KeyRequest::KeyRequest(
-  const std::string& key,
-  const KeyAction& action,
-  bool alt,
-  bool control,
-  bool shift,
-  bool meta)
- : key_(key),
-    action_(action),
-    alt_(alt),
-    control_(control),
-    shift_(shift),
-    meta_(meta) {}
-
-const std::string& KeyRequest::key() const {
-  return key_;
-}
-
-void KeyRequest::set_key(std::string_view value_arg) {
-  key_ = value_arg;
-}
-
-
-const KeyAction& KeyRequest::action() const {
-  return action_;
-}
-
-void KeyRequest::set_action(const KeyAction& value_arg) {
-  action_ = value_arg;
-}
-
-
-bool KeyRequest::alt() const {
-  return alt_;
-}
-
-void KeyRequest::set_alt(bool value_arg) {
-  alt_ = value_arg;
-}
-
-
-bool KeyRequest::control() const {
-  return control_;
-}
-
-void KeyRequest::set_control(bool value_arg) {
-  control_ = value_arg;
-}
-
-
-bool KeyRequest::shift() const {
-  return shift_;
-}
-
-void KeyRequest::set_shift(bool value_arg) {
-  shift_ = value_arg;
-}
-
-
-bool KeyRequest::meta() const {
-  return meta_;
-}
-
-void KeyRequest::set_meta(bool value_arg) {
-  meta_ = value_arg;
-}
-
-
-EncodableList KeyRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(6);
-  list.push_back(EncodableValue(key_));
-  list.push_back(CustomEncodableValue(action_));
-  list.push_back(EncodableValue(alt_));
-  list.push_back(EncodableValue(control_));
-  list.push_back(EncodableValue(shift_));
-  list.push_back(EncodableValue(meta_));
-  return list;
-}
-
-KeyRequest KeyRequest::FromEncodableList(const EncodableList& list) {
-  KeyRequest decoded(
-    std::get<std::string>(list[0]),
-    std::any_cast<const KeyAction&>(std::get<CustomEncodableValue>(list[1])),
-    std::get<bool>(list[2]),
-    std::get<bool>(list[3]),
-    std::get<bool>(list[4]),
-    std::get<bool>(list[5]));
-  return decoded;
-}
-
-bool KeyRequest::operator==(const KeyRequest& other) const {
-  return PigeonInternalDeepEquals(key_, other.key_) && PigeonInternalDeepEquals(action_, other.action_) && PigeonInternalDeepEquals(alt_, other.alt_) && PigeonInternalDeepEquals(control_, other.control_) && PigeonInternalDeepEquals(shift_, other.shift_) && PigeonInternalDeepEquals(meta_, other.meta_);
-}
-
-bool KeyRequest::operator!=(const KeyRequest& other) const {
-  return !(*this == other);
-}
-
-size_t KeyRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(key_);
-  result = result * 31 + PigeonInternalDeepHash(action_);
-  result = result * 31 + PigeonInternalDeepHash(alt_);
-  result = result * 31 + PigeonInternalDeepHash(control_);
-  result = result * 31 + PigeonInternalDeepHash(shift_);
-  result = result * 31 + PigeonInternalDeepHash(meta_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const KeyRequest& obj) {
-  os << "KeyRequest(";
-  os << "key: ";
-  os << PigeonInternalToString(obj.key_);
-  os << ", action: ";
-  os << PigeonInternalToString(obj.action_);
-  os << ", alt: ";
-  os << PigeonInternalToString(obj.alt_);
-  os << ", control: ";
-  os << PigeonInternalToString(obj.control_);
-  os << ", shift: ";
-  os << PigeonInternalToString(obj.shift_);
-  os << ", meta: ";
-  os << PigeonInternalToString(obj.meta_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const KeyRequest& v) {
-  return v.Hash();
-}
-
-// ScreenshotRequest
-
-ScreenshotRequest::ScreenshotRequest(
-  const ScreenshotFormat& format,
-  int64_t quality)
- : format_(format),
-    quality_(quality) {}
-
-ScreenshotRequest::ScreenshotRequest(
-  const std::string* target_id,
-  const ScreenshotFormat& format,
-  int64_t quality)
- : target_id_(target_id ? std::optional<std::string>(*target_id) : std::nullopt),
-    format_(format),
-    quality_(quality) {}
-
-const std::string* ScreenshotRequest::target_id() const {
-  return target_id_ ? &(*target_id_) : nullptr;
-}
-
-void ScreenshotRequest::set_target_id(const std::string_view* value_arg) {
-  target_id_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt;
-}
-
-void ScreenshotRequest::set_target_id(std::string_view value_arg) {
-  target_id_ = value_arg;
-}
-
-
-const ScreenshotFormat& ScreenshotRequest::format() const {
-  return format_;
-}
-
-void ScreenshotRequest::set_format(const ScreenshotFormat& value_arg) {
-  format_ = value_arg;
-}
-
-
-int64_t ScreenshotRequest::quality() const {
-  return quality_;
-}
-
-void ScreenshotRequest::set_quality(int64_t value_arg) {
-  quality_ = value_arg;
-}
-
-
-EncodableList ScreenshotRequest::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(3);
-  list.push_back(target_id_ ? EncodableValue(*target_id_) : EncodableValue());
-  list.push_back(CustomEncodableValue(format_));
-  list.push_back(EncodableValue(quality_));
-  return list;
-}
-
-ScreenshotRequest ScreenshotRequest::FromEncodableList(const EncodableList& list) {
-  ScreenshotRequest decoded(
-    std::any_cast<const ScreenshotFormat&>(std::get<CustomEncodableValue>(list[1])),
-    std::get<int64_t>(list[2]));
-  auto& encodable_target_id = list[0];
-  if (!encodable_target_id.IsNull()) {
-    decoded.set_target_id(std::get<std::string>(encodable_target_id));
-  }
-  return decoded;
-}
-
-bool ScreenshotRequest::operator==(const ScreenshotRequest& other) const {
-  return PigeonInternalDeepEquals(target_id_, other.target_id_) && PigeonInternalDeepEquals(format_, other.format_) && PigeonInternalDeepEquals(quality_, other.quality_);
-}
-
-bool ScreenshotRequest::operator!=(const ScreenshotRequest& other) const {
-  return !(*this == other);
-}
-
-size_t ScreenshotRequest::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(target_id_);
-  result = result * 31 + PigeonInternalDeepHash(format_);
-  result = result * 31 + PigeonInternalDeepHash(quality_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const ScreenshotRequest& obj) {
-  os << "ScreenshotRequest(";
-  os << "target_id: ";
-  if (obj.target_id_) {
-    os << PigeonInternalToString(*obj.target_id_);
-  }
-  else {
-    os << "null";
-  }
-  os << ", format: ";
-  os << PigeonInternalToString(obj.format_);
-  os << ", quality: ";
-  os << PigeonInternalToString(obj.quality_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const ScreenshotRequest& v) {
-  return v.Hash();
-}
-
-// ScreenshotData
-
-ScreenshotData::ScreenshotData(
-  const std::vector<uint8_t>& bytes,
-  int64_t width,
-  int64_t height,
-  double scale,
-  const ScreenshotFormat& format)
- : bytes_(bytes),
-    width_(width),
-    height_(height),
-    scale_(scale),
-    format_(format) {}
-
-const std::vector<uint8_t>& ScreenshotData::bytes() const {
-  return bytes_;
-}
-
-void ScreenshotData::set_bytes(const std::vector<uint8_t>& value_arg) {
-  bytes_ = value_arg;
-}
-
-
-int64_t ScreenshotData::width() const {
-  return width_;
-}
-
-void ScreenshotData::set_width(int64_t value_arg) {
-  width_ = value_arg;
-}
-
-
-int64_t ScreenshotData::height() const {
-  return height_;
-}
-
-void ScreenshotData::set_height(int64_t value_arg) {
-  height_ = value_arg;
-}
-
-
-double ScreenshotData::scale() const {
-  return scale_;
-}
-
-void ScreenshotData::set_scale(double value_arg) {
-  scale_ = value_arg;
-}
-
-
-const ScreenshotFormat& ScreenshotData::format() const {
-  return format_;
-}
-
-void ScreenshotData::set_format(const ScreenshotFormat& value_arg) {
-  format_ = value_arg;
-}
-
-
-EncodableList ScreenshotData::ToEncodableList() const {
-  EncodableList list;
-  list.reserve(5);
-  list.push_back(EncodableValue(bytes_));
-  list.push_back(EncodableValue(width_));
-  list.push_back(EncodableValue(height_));
-  list.push_back(EncodableValue(scale_));
-  list.push_back(CustomEncodableValue(format_));
-  return list;
-}
-
-ScreenshotData ScreenshotData::FromEncodableList(const EncodableList& list) {
-  ScreenshotData decoded(
-    std::get<std::vector<uint8_t>>(list[0]),
-    std::get<int64_t>(list[1]),
-    std::get<int64_t>(list[2]),
-    std::get<double>(list[3]),
-    std::any_cast<const ScreenshotFormat&>(std::get<CustomEncodableValue>(list[4])));
-  return decoded;
-}
-
-bool ScreenshotData::operator==(const ScreenshotData& other) const {
-  return PigeonInternalDeepEquals(bytes_, other.bytes_) && PigeonInternalDeepEquals(width_, other.width_) && PigeonInternalDeepEquals(height_, other.height_) && PigeonInternalDeepEquals(scale_, other.scale_) && PigeonInternalDeepEquals(format_, other.format_);
-}
-
-bool ScreenshotData::operator!=(const ScreenshotData& other) const {
-  return !(*this == other);
-}
-
-size_t ScreenshotData::Hash() const {
-  size_t result = 1;
-  result = result * 31 + PigeonInternalDeepHash(bytes_);
-  result = result * 31 + PigeonInternalDeepHash(width_);
-  result = result * 31 + PigeonInternalDeepHash(height_);
-  result = result * 31 + PigeonInternalDeepHash(scale_);
-  result = result * 31 + PigeonInternalDeepHash(format_);
-  return result;
-}
-
-std::ostream& operator<<(
-  std::ostream& os,
-  const ScreenshotData& obj) {
-  os << "ScreenshotData(";
-  os << "bytes: ";
-  os << PigeonInternalToString(obj.bytes_);
-  os << ", width: ";
-  os << PigeonInternalToString(obj.width_);
-  os << ", height: ";
-  os << PigeonInternalToString(obj.height_);
-  os << ", scale: ";
-  os << PigeonInternalToString(obj.scale_);
-  os << ", format: ";
-  os << PigeonInternalToString(obj.format_);
-  os << ")";
-  return os;
-}
-
-size_t PigeonInternalDeepHash(const ScreenshotData& v) {
-  return v.Hash();
-}
-
 
 PigeonInternalCodecSerializer::PigeonInternalCodecSerializer() {}
 
@@ -3367,119 +1263,25 @@ EncodableValue PigeonInternalCodecSerializer::ReadValueOfType(
     case 129: {
         const auto& encodable_enum_arg = ReadValue(stream);
         const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<AutomationCapability>(enum_arg_value));
-      }
-    case 130: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<AutomationPermission>(enum_arg_value));
-      }
-    case 131: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<PermissionState>(enum_arg_value));
-      }
-    case 132: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<TargetType>(enum_arg_value));
-      }
-    case 133: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<UiRole>(enum_arg_value));
-      }
-    case 134: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
         return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<UiAction>(enum_arg_value));
       }
-    case 135: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<SystemAction>(enum_arg_value));
-      }
-    case 136: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<KeyAction>(enum_arg_value));
-      }
-    case 137: {
-        const auto& encodable_enum_arg = ReadValue(stream);
-        const int64_t enum_arg_value = encodable_enum_arg.IsNull() ? 0 : encodable_enum_arg.LongValue();
-        return encodable_enum_arg.IsNull() ? EncodableValue() : CustomEncodableValue(static_cast<ScreenshotFormat>(enum_arg_value));
-      }
-    case 138: {
-        return CustomEncodableValue(PointData::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 139: {
-        return CustomEncodableValue(RectData::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 140: {
-        return CustomEncodableValue(SizeData::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 141: {
+    case 130: {
         return CustomEncodableValue(DriverConfig::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
       }
-    case 142: {
+    case 131: {
         return CustomEncodableValue(DeviceInfo::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
       }
-    case 143: {
-        return CustomEncodableValue(ScreenInfo::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
+    case 132: {
+        return CustomEncodableValue(RectData::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
       }
-    case 144: {
-        return CustomEncodableValue(CapabilityInfo::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 145: {
-        return CustomEncodableValue(PermissionInfo::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 146: {
-        return CustomEncodableValue(TargetInfo::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 147: {
+    case 133: {
         return CustomEncodableValue(UiNode::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
       }
-    case 148: {
+    case 134: {
         return CustomEncodableValue(UiSnapshot::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
       }
-    case 149: {
-        return CustomEncodableValue(DumpUiRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 150: {
-        return CustomEncodableValue(HitTestRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 151: {
-        return CustomEncodableValue(ElementActionRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 152: {
+    case 135: {
         return CustomEncodableValue(ActionResult::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 153: {
-        return CustomEncodableValue(LaunchAppRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 154: {
-        return CustomEncodableValue(TapRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 155: {
-        return CustomEncodableValue(LongPressRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 156: {
-        return CustomEncodableValue(SwipeRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 157: {
-        return CustomEncodableValue(ScrollRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 158: {
-        return CustomEncodableValue(TypeTextRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 159: {
-        return CustomEncodableValue(KeyRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 160: {
-        return CustomEncodableValue(ScreenshotRequest::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
-      }
-    case 161: {
-        return CustomEncodableValue(ScreenshotData::FromEncodableList(std::get<EncodableList>(ReadValue(stream))));
       }
     default:
       return ::flutter::StandardCodecSerializer::ReadValueOfType(type, stream);
@@ -3490,194 +1292,64 @@ void PigeonInternalCodecSerializer::WriteValue(
   const EncodableValue& value,
   ::flutter::ByteStreamWriter* stream) const {
   if (const CustomEncodableValue* custom_value = std::get_if<CustomEncodableValue>(&value)) {
-    if (custom_value->type() == typeid(AutomationCapability)) {
-      stream->WriteByte(129);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<AutomationCapability>(*custom_value))), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(AutomationPermission)) {
-      stream->WriteByte(130);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<AutomationPermission>(*custom_value))), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(PermissionState)) {
-      stream->WriteByte(131);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<PermissionState>(*custom_value))), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(TargetType)) {
-      stream->WriteByte(132);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<TargetType>(*custom_value))), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(UiRole)) {
-      stream->WriteByte(133);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<UiRole>(*custom_value))), stream);
-      return;
-    }
     if (custom_value->type() == typeid(UiAction)) {
-      stream->WriteByte(134);
+      stream->WriteByte(129);
       WriteValue(EncodableValue(static_cast<int>(std::any_cast<UiAction>(*custom_value))), stream);
       return;
     }
-    if (custom_value->type() == typeid(SystemAction)) {
-      stream->WriteByte(135);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<SystemAction>(*custom_value))), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(KeyAction)) {
-      stream->WriteByte(136);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<KeyAction>(*custom_value))), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(ScreenshotFormat)) {
-      stream->WriteByte(137);
-      WriteValue(EncodableValue(static_cast<int>(std::any_cast<ScreenshotFormat>(*custom_value))), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(PointData)) {
-      stream->WriteByte(138);
-      WriteValue(EncodableValue(std::any_cast<PointData>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(RectData)) {
-      stream->WriteByte(139);
-      WriteValue(EncodableValue(std::any_cast<RectData>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(SizeData)) {
-      stream->WriteByte(140);
-      WriteValue(EncodableValue(std::any_cast<SizeData>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
     if (custom_value->type() == typeid(DriverConfig)) {
-      stream->WriteByte(141);
+      stream->WriteByte(130);
       WriteValue(EncodableValue(std::any_cast<DriverConfig>(*custom_value).ToEncodableList()), stream);
       return;
     }
     if (custom_value->type() == typeid(DeviceInfo)) {
-      stream->WriteByte(142);
+      stream->WriteByte(131);
       WriteValue(EncodableValue(std::any_cast<DeviceInfo>(*custom_value).ToEncodableList()), stream);
       return;
     }
-    if (custom_value->type() == typeid(ScreenInfo)) {
-      stream->WriteByte(143);
-      WriteValue(EncodableValue(std::any_cast<ScreenInfo>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(CapabilityInfo)) {
-      stream->WriteByte(144);
-      WriteValue(EncodableValue(std::any_cast<CapabilityInfo>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(PermissionInfo)) {
-      stream->WriteByte(145);
-      WriteValue(EncodableValue(std::any_cast<PermissionInfo>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(TargetInfo)) {
-      stream->WriteByte(146);
-      WriteValue(EncodableValue(std::any_cast<TargetInfo>(*custom_value).ToEncodableList()), stream);
+    if (custom_value->type() == typeid(RectData)) {
+      stream->WriteByte(132);
+      WriteValue(EncodableValue(std::any_cast<RectData>(*custom_value).ToEncodableList()), stream);
       return;
     }
     if (custom_value->type() == typeid(UiNode)) {
-      stream->WriteByte(147);
+      stream->WriteByte(133);
       WriteValue(EncodableValue(std::any_cast<UiNode>(*custom_value).ToEncodableList()), stream);
       return;
     }
     if (custom_value->type() == typeid(UiSnapshot)) {
-      stream->WriteByte(148);
+      stream->WriteByte(134);
       WriteValue(EncodableValue(std::any_cast<UiSnapshot>(*custom_value).ToEncodableList()), stream);
       return;
     }
-    if (custom_value->type() == typeid(DumpUiRequest)) {
-      stream->WriteByte(149);
-      WriteValue(EncodableValue(std::any_cast<DumpUiRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(HitTestRequest)) {
-      stream->WriteByte(150);
-      WriteValue(EncodableValue(std::any_cast<HitTestRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(ElementActionRequest)) {
-      stream->WriteByte(151);
-      WriteValue(EncodableValue(std::any_cast<ElementActionRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
     if (custom_value->type() == typeid(ActionResult)) {
-      stream->WriteByte(152);
+      stream->WriteByte(135);
       WriteValue(EncodableValue(std::any_cast<ActionResult>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(LaunchAppRequest)) {
-      stream->WriteByte(153);
-      WriteValue(EncodableValue(std::any_cast<LaunchAppRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(TapRequest)) {
-      stream->WriteByte(154);
-      WriteValue(EncodableValue(std::any_cast<TapRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(LongPressRequest)) {
-      stream->WriteByte(155);
-      WriteValue(EncodableValue(std::any_cast<LongPressRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(SwipeRequest)) {
-      stream->WriteByte(156);
-      WriteValue(EncodableValue(std::any_cast<SwipeRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(ScrollRequest)) {
-      stream->WriteByte(157);
-      WriteValue(EncodableValue(std::any_cast<ScrollRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(TypeTextRequest)) {
-      stream->WriteByte(158);
-      WriteValue(EncodableValue(std::any_cast<TypeTextRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(KeyRequest)) {
-      stream->WriteByte(159);
-      WriteValue(EncodableValue(std::any_cast<KeyRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(ScreenshotRequest)) {
-      stream->WriteByte(160);
-      WriteValue(EncodableValue(std::any_cast<ScreenshotRequest>(*custom_value).ToEncodableList()), stream);
-      return;
-    }
-    if (custom_value->type() == typeid(ScreenshotData)) {
-      stream->WriteByte(161);
-      WriteValue(EncodableValue(std::any_cast<ScreenshotData>(*custom_value).ToEncodableList()), stream);
       return;
     }
   }
   ::flutter::StandardCodecSerializer::WriteValue(value, stream);
 }
 
-/// The codec used by AutomationHostApi.
-const ::flutter::StandardMessageCodec& AutomationHostApi::GetCodec() {
+/// The codec used by DeviceKitHostApi.
+const ::flutter::StandardMessageCodec& DeviceKitHostApi::GetCodec() {
   return ::flutter::StandardMessageCodec::GetInstance(&PigeonInternalCodecSerializer::GetInstance());
 }
 
-// Sets up an instance of `AutomationHostApi` to handle messages through the `binary_messenger`.
-void AutomationHostApi::SetUp(
+// Sets up an instance of `DeviceKitHostApi` to handle messages through the `binary_messenger`.
+void DeviceKitHostApi::SetUp(
   ::flutter::BinaryMessenger* binary_messenger,
-  AutomationHostApi* api) {
-  AutomationHostApi::SetUp(binary_messenger, api, "");
+  DeviceKitHostApi* api) {
+  DeviceKitHostApi::SetUp(binary_messenger, api, "");
 }
 
-void AutomationHostApi::SetUp(
+void DeviceKitHostApi::SetUp(
   ::flutter::BinaryMessenger* binary_messenger,
-  AutomationHostApi* api,
+  DeviceKitHostApi* api,
   const std::string& message_channel_suffix) {
   const std::string prepended_suffix = message_channel_suffix.length() > 0 ? std::string(".") + message_channel_suffix : "";
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.initialize" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.initialize" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
@@ -3705,11 +1377,11 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.shutdown" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dispose" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
-          std::optional<FlutterError> output = api->Shutdown();
+          std::optional<FlutterError> output = api->Dispose();
           if (output.has_value()) {
             reply(WrapError(output.value()));
             return;
@@ -3726,7 +1398,7 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getDeviceInfo" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getDeviceInfo" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
@@ -3747,11 +1419,11 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getScreenInfo" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.openAccessibilitySettings" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
-          ErrorOr<ScreenInfo> output = api->GetScreenInfo();
+          ErrorOr<ActionResult> output = api->OpenAccessibilitySettings();
           if (output.has_error()) {
             reply(WrapError(output.error()));
             return;
@@ -3768,11 +1440,18 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getCapabilities" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.launchApp" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
-          ErrorOr<CapabilityInfo> output = api->GetCapabilities();
+          const auto& args = std::get<EncodableList>(message);
+          const auto& encodable_package_name_arg = args.at(0);
+          if (encodable_package_name_arg.IsNull()) {
+            reply(WrapError("package_name_arg unexpectedly null."));
+            return;
+          }
+          const auto& package_name_arg = std::get<std::string>(encodable_package_name_arg);
+          ErrorOr<ActionResult> output = api->LaunchApp(package_name_arg);
           if (output.has_error()) {
             reply(WrapError(output.error()));
             return;
@@ -3789,39 +1468,11 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getPermissions" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dumpUi" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
-          ErrorOr<EncodableList> output = api->GetPermissions();
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(EncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.requestPermission" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_permission_arg = args.at(0);
-          if (encodable_permission_arg.IsNull()) {
-            reply(WrapError("permission_arg unexpectedly null."));
-            return;
-          }
-          const auto& permission_arg = std::any_cast<const AutomationPermission&>(std::get<CustomEncodableValue>(encodable_permission_arg));
-          ErrorOr<PermissionInfo> output = api->RequestPermission(permission_arg);
+          ErrorOr<UiSnapshot> output = api->DumpUi();
           if (output.has_error()) {
             reply(WrapError(output.error()));
             return;
@@ -3838,406 +1489,32 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.listTargets" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          ErrorOr<EncodableList> output = api->ListTargets();
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(EncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getForegroundTarget" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          ErrorOr<std::optional<TargetInfo>> output = api->GetForegroundTarget();
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          auto output_optional = std::move(output).TakeValue();
-          if (output_optional) {
-            wrapped.push_back(CustomEncodableValue(std::move(output_optional).value()));
-          } else {
-            wrapped.push_back(EncodableValue());
-          }
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.launchApp" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.performElementAction" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
           const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
+          const auto& encodable_node_id_arg = args.at(0);
+          if (encodable_node_id_arg.IsNull()) {
+            reply(WrapError("node_id_arg unexpectedly null."));
             return;
           }
-          const auto& request_arg = std::any_cast<const LaunchAppRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->LaunchApp(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
+          const auto& node_id_arg = std::get<std::string>(encodable_node_id_arg);
+          const auto& encodable_generation_arg = args.at(1);
+          if (encodable_generation_arg.IsNull()) {
+            reply(WrapError("generation_arg unexpectedly null."));
             return;
           }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.terminateApp" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_app_id_arg = args.at(0);
-          if (encodable_app_id_arg.IsNull()) {
-            reply(WrapError("app_id_arg unexpectedly null."));
-            return;
-          }
-          const auto& app_id_arg = std::get<std::string>(encodable_app_id_arg);
-          ErrorOr<ActionResult> output = api->TerminateApp(app_id_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.activateTarget" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_target_id_arg = args.at(0);
-          if (encodable_target_id_arg.IsNull()) {
-            reply(WrapError("target_id_arg unexpectedly null."));
-            return;
-          }
-          const auto& target_id_arg = std::get<std::string>(encodable_target_id_arg);
-          ErrorOr<ActionResult> output = api->ActivateTarget(target_id_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.dumpUi" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const DumpUiRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<UiSnapshot> output = api->DumpUi(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.hitTest" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const HitTestRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<std::optional<UiNode>> output = api->HitTest(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          auto output_optional = std::move(output).TakeValue();
-          if (output_optional) {
-            wrapped.push_back(CustomEncodableValue(std::move(output_optional).value()));
-          } else {
-            wrapped.push_back(EncodableValue());
-          }
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performElementAction" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const ElementActionRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->PerformElementAction(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.tap" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const TapRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->Tap(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.longPress" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const LongPressRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->LongPress(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.swipe" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const SwipeRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->Swipe(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.scroll" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const ScrollRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->Scroll(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.typeText" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const TypeTextRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->TypeText(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.pressKey" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
-            return;
-          }
-          const auto& request_arg = std::any_cast<const KeyRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ActionResult> output = api->PressKey(request_arg);
-          if (output.has_error()) {
-            reply(WrapError(output.error()));
-            return;
-          }
-          EncodableList wrapped;
-          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
-          reply(EncodableValue(std::move(wrapped)));
-        } catch (const std::exception& exception) {
-          reply(WrapError(exception.what()));
-        }
-      });
-    } else {
-      channel.SetMessageHandler(nullptr);
-    }
-  }
-  {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performSystemAction" + prepended_suffix, &GetCodec());
-    if (api != nullptr) {
-      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
-        try {
-          const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_action_arg = args.at(0);
+          const int64_t generation_arg = encodable_generation_arg.LongValue();
+          const auto& encodable_action_arg = args.at(2);
           if (encodable_action_arg.IsNull()) {
             reply(WrapError("action_arg unexpectedly null."));
             return;
           }
-          const auto& action_arg = std::any_cast<const SystemAction&>(std::get<CustomEncodableValue>(encodable_action_arg));
-          ErrorOr<ActionResult> output = api->PerformSystemAction(action_arg);
+          const auto& action_arg = std::any_cast<const UiAction&>(std::get<CustomEncodableValue>(encodable_action_arg));
+          const auto& encodable_value_arg = args.at(3);
+          const auto* value_arg = std::get_if<std::string>(&encodable_value_arg);
+          ErrorOr<ActionResult> output = api->PerformElementAction(node_id_arg, generation_arg, action_arg, value_arg);
           if (output.has_error()) {
             reply(WrapError(output.error()));
             return;
@@ -4254,18 +1531,24 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.screenshot" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.tap" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
           const auto& args = std::get<EncodableList>(message);
-          const auto& encodable_request_arg = args.at(0);
-          if (encodable_request_arg.IsNull()) {
-            reply(WrapError("request_arg unexpectedly null."));
+          const auto& encodable_x_arg = args.at(0);
+          if (encodable_x_arg.IsNull()) {
+            reply(WrapError("x_arg unexpectedly null."));
             return;
           }
-          const auto& request_arg = std::any_cast<const ScreenshotRequest&>(std::get<CustomEncodableValue>(encodable_request_arg));
-          ErrorOr<ScreenshotData> output = api->Screenshot(request_arg);
+          const auto& x_arg = std::get<double>(encodable_x_arg);
+          const auto& encodable_y_arg = args.at(1);
+          if (encodable_y_arg.IsNull()) {
+            reply(WrapError("y_arg unexpectedly null."));
+            return;
+          }
+          const auto& y_arg = std::get<double>(encodable_y_arg);
+          ErrorOr<ActionResult> output = api->Tap(x_arg, y_arg);
           if (output.has_error()) {
             reply(WrapError(output.error()));
             return;
@@ -4282,11 +1565,175 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getClipboardText" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.swipe" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
-          ErrorOr<std::optional<std::string>> output = api->GetClipboardText();
+          const auto& args = std::get<EncodableList>(message);
+          const auto& encodable_from_x_arg = args.at(0);
+          if (encodable_from_x_arg.IsNull()) {
+            reply(WrapError("from_x_arg unexpectedly null."));
+            return;
+          }
+          const auto& from_x_arg = std::get<double>(encodable_from_x_arg);
+          const auto& encodable_from_y_arg = args.at(1);
+          if (encodable_from_y_arg.IsNull()) {
+            reply(WrapError("from_y_arg unexpectedly null."));
+            return;
+          }
+          const auto& from_y_arg = std::get<double>(encodable_from_y_arg);
+          const auto& encodable_to_x_arg = args.at(2);
+          if (encodable_to_x_arg.IsNull()) {
+            reply(WrapError("to_x_arg unexpectedly null."));
+            return;
+          }
+          const auto& to_x_arg = std::get<double>(encodable_to_x_arg);
+          const auto& encodable_to_y_arg = args.at(3);
+          if (encodable_to_y_arg.IsNull()) {
+            reply(WrapError("to_y_arg unexpectedly null."));
+            return;
+          }
+          const auto& to_y_arg = std::get<double>(encodable_to_y_arg);
+          const auto& encodable_duration_ms_arg = args.at(4);
+          if (encodable_duration_ms_arg.IsNull()) {
+            reply(WrapError("duration_ms_arg unexpectedly null."));
+            return;
+          }
+          const int64_t duration_ms_arg = encodable_duration_ms_arg.LongValue();
+          ErrorOr<ActionResult> output = api->Swipe(from_x_arg, from_y_arg, to_x_arg, to_y_arg, duration_ms_arg);
+          if (output.has_error()) {
+            reply(WrapError(output.error()));
+            return;
+          }
+          EncodableList wrapped;
+          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
+          reply(EncodableValue(std::move(wrapped)));
+        } catch (const std::exception& exception) {
+          reply(WrapError(exception.what()));
+        }
+      });
+    } else {
+      channel.SetMessageHandler(nullptr);
+    }
+  }
+  {
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.typeText" + prepended_suffix, &GetCodec());
+    if (api != nullptr) {
+      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
+        try {
+          const auto& args = std::get<EncodableList>(message);
+          const auto& encodable_text_arg = args.at(0);
+          if (encodable_text_arg.IsNull()) {
+            reply(WrapError("text_arg unexpectedly null."));
+            return;
+          }
+          const auto& text_arg = std::get<std::string>(encodable_text_arg);
+          ErrorOr<ActionResult> output = api->TypeText(text_arg);
+          if (output.has_error()) {
+            reply(WrapError(output.error()));
+            return;
+          }
+          EncodableList wrapped;
+          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
+          reply(EncodableValue(std::move(wrapped)));
+        } catch (const std::exception& exception) {
+          reply(WrapError(exception.what()));
+        }
+      });
+    } else {
+      channel.SetMessageHandler(nullptr);
+    }
+  }
+  {
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressBack" + prepended_suffix, &GetCodec());
+    if (api != nullptr) {
+      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
+        try {
+          ErrorOr<ActionResult> output = api->PressBack();
+          if (output.has_error()) {
+            reply(WrapError(output.error()));
+            return;
+          }
+          EncodableList wrapped;
+          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
+          reply(EncodableValue(std::move(wrapped)));
+        } catch (const std::exception& exception) {
+          reply(WrapError(exception.what()));
+        }
+      });
+    } else {
+      channel.SetMessageHandler(nullptr);
+    }
+  }
+  {
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressHome" + prepended_suffix, &GetCodec());
+    if (api != nullptr) {
+      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
+        try {
+          ErrorOr<ActionResult> output = api->PressHome();
+          if (output.has_error()) {
+            reply(WrapError(output.error()));
+            return;
+          }
+          EncodableList wrapped;
+          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
+          reply(EncodableValue(std::move(wrapped)));
+        } catch (const std::exception& exception) {
+          reply(WrapError(exception.what()));
+        }
+      });
+    } else {
+      channel.SetMessageHandler(nullptr);
+    }
+  }
+  {
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.screenshot" + prepended_suffix, &GetCodec());
+    if (api != nullptr) {
+      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
+        try {
+          ErrorOr<std::vector<uint8_t>> output = api->Screenshot();
+          if (output.has_error()) {
+            reply(WrapError(output.error()));
+            return;
+          }
+          EncodableList wrapped;
+          wrapped.push_back(EncodableValue(std::move(output).TakeValue()));
+          reply(EncodableValue(std::move(wrapped)));
+        } catch (const std::exception& exception) {
+          reply(WrapError(exception.what()));
+        }
+      });
+    } else {
+      channel.SetMessageHandler(nullptr);
+    }
+  }
+  {
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.requestScreenCapture" + prepended_suffix, &GetCodec());
+    if (api != nullptr) {
+      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
+        try {
+          ErrorOr<ActionResult> output = api->RequestScreenCapture();
+          if (output.has_error()) {
+            reply(WrapError(output.error()));
+            return;
+          }
+          EncodableList wrapped;
+          wrapped.push_back(CustomEncodableValue(std::move(output).TakeValue()));
+          reply(EncodableValue(std::move(wrapped)));
+        } catch (const std::exception& exception) {
+          reply(WrapError(exception.what()));
+        }
+      });
+    } else {
+      channel.SetMessageHandler(nullptr);
+    }
+  }
+  {
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getClipboard" + prepended_suffix, &GetCodec());
+    if (api != nullptr) {
+      channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
+        try {
+          ErrorOr<std::optional<std::string>> output = api->GetClipboard();
           if (output.has_error()) {
             reply(WrapError(output.error()));
             return;
@@ -4308,7 +1755,7 @@ void AutomationHostApi::SetUp(
     }
   }
   {
-    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.setClipboardText" + prepended_suffix, &GetCodec());
+    BasicMessageChannel<> channel(binary_messenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.setClipboard" + prepended_suffix, &GetCodec());
     if (api != nullptr) {
       channel.SetMessageHandler([api](const EncodableValue& message, const ::flutter::MessageReply<EncodableValue>& reply) {
         try {
@@ -4319,7 +1766,7 @@ void AutomationHostApi::SetUp(
             return;
           }
           const auto& text_arg = std::get<std::string>(encodable_text_arg);
-          ErrorOr<ActionResult> output = api->SetClipboardText(text_arg);
+          ErrorOr<ActionResult> output = api->SetClipboard(text_arg);
           if (output.has_error()) {
             reply(WrapError(output.error()));
             return;
@@ -4337,7 +1784,7 @@ void AutomationHostApi::SetUp(
   }
 }
 
-EncodableValue AutomationHostApi::WrapError(std::string_view error_message) {
+EncodableValue DeviceKitHostApi::WrapError(std::string_view error_message) {
   return EncodableValue(EncodableList{
     EncodableValue(std::string(error_message)),
     EncodableValue("Error"),
@@ -4345,7 +1792,7 @@ EncodableValue AutomationHostApi::WrapError(std::string_view error_message) {
   });
 }
 
-EncodableValue AutomationHostApi::WrapError(const FlutterError& error) {
+EncodableValue DeviceKitHostApi::WrapError(const FlutterError& error) {
   return EncodableValue(EncodableList{
     EncodableValue(error.code()),
     EncodableValue(error.message()),

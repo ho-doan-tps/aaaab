@@ -49,7 +49,7 @@ template<class T> class ErrorOr {
   const FlutterError& error() const { return std::get<FlutterError>(v_); };
 
  private:
-  friend class AutomationHostApi;
+  friend class DeviceKitHostApi;
   ErrorOr() = default;
   T TakeValue() && { return std::get<T>(std::move(v_)); }
 
@@ -57,200 +57,12 @@ template<class T> class ErrorOr {
 };
 
 
-enum class AutomationCapability {
-  kUiDump = 0,
-  kSemanticAction = 1,
-  kPointerInput = 2,
-  kKeyboardInput = 3,
-  kScreenshot = 4,
-  kClipboard = 5,
-  kAppLifecycle = 6,
-  kWindowManagement = 7,
-  kSystemAction = 8
-};
-
-enum class AutomationPermission {
-  kAccessibility = 0,
-  kScreenRecording = 1,
-  kInputMonitoring = 2
-};
-
-enum class PermissionState {
-  kUnknown = 0,
-  kDenied = 1,
-  kGranted = 2,
-  kRestricted = 3
-};
-
-enum class TargetType {
-  kApplication = 0,
-  kWindow = 1,
-  kSystemUi = 2
-};
-
-enum class UiRole {
-  kUnknown = 0,
-  kApplication = 1,
-  kWindow = 2,
-  kDialog = 3,
-  kButton = 4,
-  kText = 5,
-  kTextField = 6,
-  kImage = 7,
-  kCheckbox = 8,
-  kRadio = 9,
-  kSwitchControl = 10,
-  kSlider = 11,
-  kList = 12,
-  kListItem = 13,
-  kMenu = 14,
-  kMenuItem = 15,
-  kTab = 16,
-  kLink = 17,
-  kScrollView = 18
-};
-
 enum class UiAction {
   kPress = 0,
   kFocus = 1,
   kSetValue = 2,
-  kIncrement = 3,
-  kDecrement = 4,
-  kToggle = 5,
-  kSelect = 6,
-  kExpand = 7,
-  kCollapse = 8,
-  kDismiss = 9,
-  kScrollForward = 10,
-  kScrollBackward = 11
-};
-
-enum class SystemAction {
-  kBack = 0,
-  kHome = 1,
-  kEscape = 2,
-  kAppSwitcher = 3,
-  kNotificationCenter = 4,
-  kQuickSettings = 5
-};
-
-enum class KeyAction {
-  kPress = 0,
-  kDown = 1,
-  kUp = 2
-};
-
-enum class ScreenshotFormat {
-  kPng = 0,
-  kJpeg = 1
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class PointData {
- public:
-  // Constructs an object setting all fields.
-  explicit PointData(
-    double x,
-    double y);
-
-  double x() const;
-  void set_x(double value_arg);
-
-  double y() const;
-  void set_y(double value_arg);
-
-  bool operator==(const PointData& other) const;
-  bool operator!=(const PointData& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const PointData& obj);
- private:
-  static PointData FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class HitTestRequest;
-  friend class TapRequest;
-  friend class LongPressRequest;
-  friend class SwipeRequest;
-  friend class ScrollRequest;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  double x_;
-  double y_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class RectData {
- public:
-  // Constructs an object setting all fields.
-  explicit RectData(
-    double x,
-    double y,
-    double width,
-    double height);
-
-  double x() const;
-  void set_x(double value_arg);
-
-  double y() const;
-  void set_y(double value_arg);
-
-  double width() const;
-  void set_width(double value_arg);
-
-  double height() const;
-  void set_height(double value_arg);
-
-  bool operator==(const RectData& other) const;
-  bool operator!=(const RectData& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const RectData& obj);
- private:
-  static RectData FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class TargetInfo;
-  friend class UiNode;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  double x_;
-  double y_;
-  double width_;
-  double height_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class SizeData {
- public:
-  // Constructs an object setting all fields.
-  explicit SizeData(
-    double width,
-    double height);
-
-  double width() const;
-  void set_width(double value_arg);
-
-  double height() const;
-  void set_height(double value_arg);
-
-  bool operator==(const SizeData& other) const;
-  bool operator!=(const SizeData& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const SizeData& obj);
- private:
-  static SizeData FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class ScreenInfo;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  double width_;
-  double height_;
+  kScrollForward = 3,
+  kScrollBackward = 4
 };
 
 
@@ -277,7 +89,7 @@ class DriverConfig {
  private:
   static DriverConfig FromEncodableList(const ::flutter::EncodableList& list);
   ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
+  friend class DeviceKitHostApi;
   friend class PigeonInternalCodecSerializer;
   std::string session_id_;
   bool enable_logs_;
@@ -327,7 +139,7 @@ class DeviceInfo {
  private:
   static DeviceInfo FromEncodableList(const ::flutter::EncodableList& list);
   ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
+  friend class DeviceKitHostApi;
   friend class PigeonInternalCodecSerializer;
   std::string platform_;
   std::optional<std::string> os_version_;
@@ -338,190 +150,43 @@ class DeviceInfo {
 
 
 // Generated class from Pigeon that represents data sent in messages.
-class ScreenInfo {
+class RectData {
  public:
   // Constructs an object setting all fields.
-  explicit ScreenInfo(
-    const SizeData& size,
-    double scale,
-    const std::string& orientation);
+  explicit RectData(
+    double x,
+    double y,
+    double width,
+    double height);
 
-  ~ScreenInfo() = default;
-  ScreenInfo(const ScreenInfo& other);
-  ScreenInfo& operator=(const ScreenInfo& other);
-  ScreenInfo(ScreenInfo&& other) = default;
-  ScreenInfo& operator=(ScreenInfo&& other) noexcept = default;
-  const SizeData& size() const;
-  void set_size(const SizeData& value_arg);
+  double x() const;
+  void set_x(double value_arg);
 
-  double scale() const;
-  void set_scale(double value_arg);
+  double y() const;
+  void set_y(double value_arg);
 
-  const std::string& orientation() const;
-  void set_orientation(std::string_view value_arg);
+  double width() const;
+  void set_width(double value_arg);
 
-  bool operator==(const ScreenInfo& other) const;
-  bool operator!=(const ScreenInfo& other) const;
+  double height() const;
+  void set_height(double value_arg);
+
+  bool operator==(const RectData& other) const;
+  bool operator!=(const RectData& other) const;
   /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
   size_t Hash() const;
   /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const ScreenInfo& obj);
+  friend std::ostream& operator<<(std::ostream& os, const RectData& obj);
  private:
-  static ScreenInfo FromEncodableList(const ::flutter::EncodableList& list);
+  static RectData FromEncodableList(const ::flutter::EncodableList& list);
   ::flutter::EncodableList ToEncodableList() const;
-  friend class UiSnapshot;
-  friend class AutomationHostApi;
+  friend class UiNode;
+  friend class DeviceKitHostApi;
   friend class PigeonInternalCodecSerializer;
-  std::unique_ptr<SizeData> size_;
-  double scale_;
-  std::string orientation_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class CapabilityInfo {
- public:
-  // Constructs an object setting all fields.
-  explicit CapabilityInfo(const ::flutter::EncodableList& capabilities);
-
-  const ::flutter::EncodableList& capabilities() const;
-  void set_capabilities(const ::flutter::EncodableList& value_arg);
-
-  bool operator==(const CapabilityInfo& other) const;
-  bool operator!=(const CapabilityInfo& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const CapabilityInfo& obj);
- private:
-  static CapabilityInfo FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  ::flutter::EncodableList capabilities_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class PermissionInfo {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit PermissionInfo(
-    const AutomationPermission& permission,
-    const PermissionState& state,
-    bool can_request);
-
-  // Constructs an object setting all fields.
-  explicit PermissionInfo(
-    const AutomationPermission& permission,
-    const PermissionState& state,
-    bool can_request,
-    const std::string* message);
-
-  const AutomationPermission& permission() const;
-  void set_permission(const AutomationPermission& value_arg);
-
-  const PermissionState& state() const;
-  void set_state(const PermissionState& value_arg);
-
-  bool can_request() const;
-  void set_can_request(bool value_arg);
-
-  const std::string* message() const;
-  void set_message(const std::string_view* value_arg);
-  void set_message(std::string_view value_arg);
-
-  bool operator==(const PermissionInfo& other) const;
-  bool operator!=(const PermissionInfo& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const PermissionInfo& obj);
- private:
-  static PermissionInfo FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  AutomationPermission permission_;
-  PermissionState state_;
-  bool can_request_;
-  std::optional<std::string> message_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class TargetInfo {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit TargetInfo(
-    const std::string& target_id,
-    const TargetType& type,
-    bool foreground);
-
-  // Constructs an object setting all fields.
-  explicit TargetInfo(
-    const std::string& target_id,
-    const TargetType& type,
-    const std::string* app_id,
-    const std::string* name,
-    const std::string* title,
-    const int64_t* process_id,
-    const RectData* bounds,
-    bool foreground);
-
-  ~TargetInfo() = default;
-  TargetInfo(const TargetInfo& other);
-  TargetInfo& operator=(const TargetInfo& other);
-  TargetInfo(TargetInfo&& other) = default;
-  TargetInfo& operator=(TargetInfo&& other) noexcept = default;
-  const std::string& target_id() const;
-  void set_target_id(std::string_view value_arg);
-
-  const TargetType& type() const;
-  void set_type(const TargetType& value_arg);
-
-  const std::string* app_id() const;
-  void set_app_id(const std::string_view* value_arg);
-  void set_app_id(std::string_view value_arg);
-
-  const std::string* name() const;
-  void set_name(const std::string_view* value_arg);
-  void set_name(std::string_view value_arg);
-
-  const std::string* title() const;
-  void set_title(const std::string_view* value_arg);
-  void set_title(std::string_view value_arg);
-
-  const int64_t* process_id() const;
-  void set_process_id(const int64_t* value_arg);
-  void set_process_id(int64_t value_arg);
-
-  const RectData* bounds() const;
-  void set_bounds(const RectData* value_arg);
-  void set_bounds(const RectData& value_arg);
-
-  bool foreground() const;
-  void set_foreground(bool value_arg);
-
-  bool operator==(const TargetInfo& other) const;
-  bool operator!=(const TargetInfo& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const TargetInfo& obj);
- private:
-  static TargetInfo FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::string target_id_;
-  TargetType type_;
-  std::optional<std::string> app_id_;
-  std::optional<std::string> name_;
-  std::optional<std::string> title_;
-  std::optional<int64_t> process_id_;
-  std::unique_ptr<RectData> bounds_;
-  bool foreground_;
+  double x_;
+  double y_;
+  double width_;
+  double height_;
 };
 
 
@@ -531,9 +196,9 @@ class UiNode {
   // Constructs an object setting all non-nullable fields.
   explicit UiNode(
     const std::string& node_id,
-    const UiRole& role,
+    const ::flutter::EncodableList& child_node_ids,
+    const std::string& role,
     const RectData& bounds,
-    bool visible,
     bool enabled,
     bool clickable,
     bool editable,
@@ -546,22 +211,20 @@ class UiNode {
   explicit UiNode(
     const std::string& node_id,
     const std::string* parent_node_id,
-    const ::flutter::EncodableList* child_node_ids,
+    const ::flutter::EncodableList& child_node_ids,
     const std::string* automation_id,
     const std::string* text,
     const std::string* label,
     const std::string* value,
-    const UiRole& role,
+    const std::string& role,
     const RectData& bounds,
-    bool visible,
     bool enabled,
     bool clickable,
     bool editable,
     bool focused,
     bool selected,
     bool checked,
-    bool scrollable,
-    const ::flutter::EncodableList* actions);
+    bool scrollable);
 
   ~UiNode() = default;
   UiNode(const UiNode& other);
@@ -575,8 +238,7 @@ class UiNode {
   void set_parent_node_id(const std::string_view* value_arg);
   void set_parent_node_id(std::string_view value_arg);
 
-  const ::flutter::EncodableList* child_node_ids() const;
-  void set_child_node_ids(const ::flutter::EncodableList* value_arg);
+  const ::flutter::EncodableList& child_node_ids() const;
   void set_child_node_ids(const ::flutter::EncodableList& value_arg);
 
   const std::string* automation_id() const;
@@ -595,14 +257,11 @@ class UiNode {
   void set_value(const std::string_view* value_arg);
   void set_value(std::string_view value_arg);
 
-  const UiRole& role() const;
-  void set_role(const UiRole& value_arg);
+  const std::string& role() const;
+  void set_role(std::string_view value_arg);
 
   const RectData& bounds() const;
   void set_bounds(const RectData& value_arg);
-
-  bool visible() const;
-  void set_visible(bool value_arg);
 
   bool enabled() const;
   void set_enabled(bool value_arg);
@@ -625,10 +284,6 @@ class UiNode {
   bool scrollable() const;
   void set_scrollable(bool value_arg);
 
-  const ::flutter::EncodableList* actions() const;
-  void set_actions(const ::flutter::EncodableList* value_arg);
-  void set_actions(const ::flutter::EncodableList& value_arg);
-
   bool operator==(const UiNode& other) const;
   bool operator!=(const UiNode& other) const;
   /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
@@ -638,18 +293,17 @@ class UiNode {
  private:
   static UiNode FromEncodableList(const ::flutter::EncodableList& list);
   ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
+  friend class DeviceKitHostApi;
   friend class PigeonInternalCodecSerializer;
   std::string node_id_;
   std::optional<std::string> parent_node_id_;
-  std::optional<::flutter::EncodableList> child_node_ids_;
+  ::flutter::EncodableList child_node_ids_;
   std::optional<std::string> automation_id_;
   std::optional<std::string> text_;
   std::optional<std::string> label_;
   std::optional<std::string> value_;
-  UiRole role_;
+  std::string role_;
   std::unique_ptr<RectData> bounds_;
-  bool visible_;
   bool enabled_;
   bool clickable_;
   bool editable_;
@@ -657,45 +311,19 @@ class UiNode {
   bool selected_;
   bool checked_;
   bool scrollable_;
-  std::optional<::flutter::EncodableList> actions_;
 };
 
 
 // Generated class from Pigeon that represents data sent in messages.
 class UiSnapshot {
  public:
-  // Constructs an object setting all non-nullable fields.
-  explicit UiSnapshot(
-    int64_t generation,
-    const ScreenInfo& screen,
-    const ::flutter::EncodableList& nodes);
-
   // Constructs an object setting all fields.
   explicit UiSnapshot(
     int64_t generation,
-    const std::string* target_id,
-    const std::string* root_node_id,
-    const ScreenInfo& screen,
     const ::flutter::EncodableList& nodes);
 
-  ~UiSnapshot() = default;
-  UiSnapshot(const UiSnapshot& other);
-  UiSnapshot& operator=(const UiSnapshot& other);
-  UiSnapshot(UiSnapshot&& other) = default;
-  UiSnapshot& operator=(UiSnapshot&& other) noexcept = default;
   int64_t generation() const;
   void set_generation(int64_t value_arg);
-
-  const std::string* target_id() const;
-  void set_target_id(const std::string_view* value_arg);
-  void set_target_id(std::string_view value_arg);
-
-  const std::string* root_node_id() const;
-  void set_root_node_id(const std::string_view* value_arg);
-  void set_root_node_id(std::string_view value_arg);
-
-  const ScreenInfo& screen() const;
-  void set_screen(const ScreenInfo& value_arg);
 
   const ::flutter::EncodableList& nodes() const;
   void set_nodes(const ::flutter::EncodableList& value_arg);
@@ -709,139 +337,10 @@ class UiSnapshot {
  private:
   static UiSnapshot FromEncodableList(const ::flutter::EncodableList& list);
   ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
+  friend class DeviceKitHostApi;
   friend class PigeonInternalCodecSerializer;
   int64_t generation_;
-  std::optional<std::string> target_id_;
-  std::optional<std::string> root_node_id_;
-  std::unique_ptr<ScreenInfo> screen_;
   ::flutter::EncodableList nodes_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class DumpUiRequest {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit DumpUiRequest(bool include_invisible);
-
-  // Constructs an object setting all fields.
-  explicit DumpUiRequest(
-    const std::string* target_id,
-    bool include_invisible);
-
-  const std::string* target_id() const;
-  void set_target_id(const std::string_view* value_arg);
-  void set_target_id(std::string_view value_arg);
-
-  bool include_invisible() const;
-  void set_include_invisible(bool value_arg);
-
-  bool operator==(const DumpUiRequest& other) const;
-  bool operator!=(const DumpUiRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const DumpUiRequest& obj);
- private:
-  static DumpUiRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::optional<std::string> target_id_;
-  bool include_invisible_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class HitTestRequest {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit HitTestRequest(const PointData& point);
-
-  // Constructs an object setting all fields.
-  explicit HitTestRequest(
-    const std::string* target_id,
-    const PointData& point);
-
-  ~HitTestRequest() = default;
-  HitTestRequest(const HitTestRequest& other);
-  HitTestRequest& operator=(const HitTestRequest& other);
-  HitTestRequest(HitTestRequest&& other) = default;
-  HitTestRequest& operator=(HitTestRequest&& other) noexcept = default;
-  const std::string* target_id() const;
-  void set_target_id(const std::string_view* value_arg);
-  void set_target_id(std::string_view value_arg);
-
-  const PointData& point() const;
-  void set_point(const PointData& value_arg);
-
-  bool operator==(const HitTestRequest& other) const;
-  bool operator!=(const HitTestRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const HitTestRequest& obj);
- private:
-  static HitTestRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::optional<std::string> target_id_;
-  std::unique_ptr<PointData> point_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class ElementActionRequest {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit ElementActionRequest(
-    int64_t generation,
-    const std::string& node_id,
-    const UiAction& action);
-
-  // Constructs an object setting all fields.
-  explicit ElementActionRequest(
-    const std::string* target_id,
-    int64_t generation,
-    const std::string& node_id,
-    const UiAction& action,
-    const std::string* value);
-
-  const std::string* target_id() const;
-  void set_target_id(const std::string_view* value_arg);
-  void set_target_id(std::string_view value_arg);
-
-  int64_t generation() const;
-  void set_generation(int64_t value_arg);
-
-  const std::string& node_id() const;
-  void set_node_id(std::string_view value_arg);
-
-  const UiAction& action() const;
-  void set_action(const UiAction& value_arg);
-
-  const std::string* value() const;
-  void set_value(const std::string_view* value_arg);
-  void set_value(std::string_view value_arg);
-
-  bool operator==(const ElementActionRequest& other) const;
-  bool operator!=(const ElementActionRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const ElementActionRequest& obj);
- private:
-  static ElementActionRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::optional<std::string> target_id_;
-  int64_t generation_;
-  std::string node_id_;
-  UiAction action_;
-  std::optional<std::string> value_;
 };
 
 
@@ -878,373 +377,11 @@ class ActionResult {
  private:
   static ActionResult FromEncodableList(const ::flutter::EncodableList& list);
   ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
+  friend class DeviceKitHostApi;
   friend class PigeonInternalCodecSerializer;
   bool success_;
   std::optional<std::string> message_;
   bool ui_changed_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class LaunchAppRequest {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit LaunchAppRequest(const std::string& app_id);
-
-  // Constructs an object setting all fields.
-  explicit LaunchAppRequest(
-    const std::string& app_id,
-    const ::flutter::EncodableList* arguments,
-    const ::flutter::EncodableMap* environment);
-
-  const std::string& app_id() const;
-  void set_app_id(std::string_view value_arg);
-
-  const ::flutter::EncodableList* arguments() const;
-  void set_arguments(const ::flutter::EncodableList* value_arg);
-  void set_arguments(const ::flutter::EncodableList& value_arg);
-
-  const ::flutter::EncodableMap* environment() const;
-  void set_environment(const ::flutter::EncodableMap* value_arg);
-  void set_environment(const ::flutter::EncodableMap& value_arg);
-
-  bool operator==(const LaunchAppRequest& other) const;
-  bool operator!=(const LaunchAppRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const LaunchAppRequest& obj);
- private:
-  static LaunchAppRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::string app_id_;
-  std::optional<::flutter::EncodableList> arguments_;
-  std::optional<::flutter::EncodableMap> environment_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class TapRequest {
- public:
-  // Constructs an object setting all fields.
-  explicit TapRequest(
-    const PointData& point,
-    int64_t count);
-
-  ~TapRequest() = default;
-  TapRequest(const TapRequest& other);
-  TapRequest& operator=(const TapRequest& other);
-  TapRequest(TapRequest&& other) = default;
-  TapRequest& operator=(TapRequest&& other) noexcept = default;
-  const PointData& point() const;
-  void set_point(const PointData& value_arg);
-
-  int64_t count() const;
-  void set_count(int64_t value_arg);
-
-  bool operator==(const TapRequest& other) const;
-  bool operator!=(const TapRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const TapRequest& obj);
- private:
-  static TapRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::unique_ptr<PointData> point_;
-  int64_t count_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class LongPressRequest {
- public:
-  // Constructs an object setting all fields.
-  explicit LongPressRequest(
-    const PointData& point,
-    int64_t duration_ms);
-
-  ~LongPressRequest() = default;
-  LongPressRequest(const LongPressRequest& other);
-  LongPressRequest& operator=(const LongPressRequest& other);
-  LongPressRequest(LongPressRequest&& other) = default;
-  LongPressRequest& operator=(LongPressRequest&& other) noexcept = default;
-  const PointData& point() const;
-  void set_point(const PointData& value_arg);
-
-  int64_t duration_ms() const;
-  void set_duration_ms(int64_t value_arg);
-
-  bool operator==(const LongPressRequest& other) const;
-  bool operator!=(const LongPressRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const LongPressRequest& obj);
- private:
-  static LongPressRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::unique_ptr<PointData> point_;
-  int64_t duration_ms_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class SwipeRequest {
- public:
-  // Constructs an object setting all fields.
-  explicit SwipeRequest(
-    const PointData& from,
-    const PointData& to,
-    int64_t duration_ms);
-
-  ~SwipeRequest() = default;
-  SwipeRequest(const SwipeRequest& other);
-  SwipeRequest& operator=(const SwipeRequest& other);
-  SwipeRequest(SwipeRequest&& other) = default;
-  SwipeRequest& operator=(SwipeRequest&& other) noexcept = default;
-  const PointData& from() const;
-  void set_from(const PointData& value_arg);
-
-  const PointData& to() const;
-  void set_to(const PointData& value_arg);
-
-  int64_t duration_ms() const;
-  void set_duration_ms(int64_t value_arg);
-
-  bool operator==(const SwipeRequest& other) const;
-  bool operator!=(const SwipeRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const SwipeRequest& obj);
- private:
-  static SwipeRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::unique_ptr<PointData> from_;
-  std::unique_ptr<PointData> to_;
-  int64_t duration_ms_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class ScrollRequest {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit ScrollRequest(
-    double delta_x,
-    double delta_y);
-
-  // Constructs an object setting all fields.
-  explicit ScrollRequest(
-    double delta_x,
-    double delta_y,
-    const PointData* origin);
-
-  ~ScrollRequest() = default;
-  ScrollRequest(const ScrollRequest& other);
-  ScrollRequest& operator=(const ScrollRequest& other);
-  ScrollRequest(ScrollRequest&& other) = default;
-  ScrollRequest& operator=(ScrollRequest&& other) noexcept = default;
-  double delta_x() const;
-  void set_delta_x(double value_arg);
-
-  double delta_y() const;
-  void set_delta_y(double value_arg);
-
-  const PointData* origin() const;
-  void set_origin(const PointData* value_arg);
-  void set_origin(const PointData& value_arg);
-
-  bool operator==(const ScrollRequest& other) const;
-  bool operator!=(const ScrollRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const ScrollRequest& obj);
- private:
-  static ScrollRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  double delta_x_;
-  double delta_y_;
-  std::unique_ptr<PointData> origin_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class TypeTextRequest {
- public:
-  // Constructs an object setting all fields.
-  explicit TypeTextRequest(
-    const std::string& text,
-    bool clear_first);
-
-  const std::string& text() const;
-  void set_text(std::string_view value_arg);
-
-  bool clear_first() const;
-  void set_clear_first(bool value_arg);
-
-  bool operator==(const TypeTextRequest& other) const;
-  bool operator!=(const TypeTextRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const TypeTextRequest& obj);
- private:
-  static TypeTextRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::string text_;
-  bool clear_first_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class KeyRequest {
- public:
-  // Constructs an object setting all fields.
-  explicit KeyRequest(
-    const std::string& key,
-    const KeyAction& action,
-    bool alt,
-    bool control,
-    bool shift,
-    bool meta);
-
-  const std::string& key() const;
-  void set_key(std::string_view value_arg);
-
-  const KeyAction& action() const;
-  void set_action(const KeyAction& value_arg);
-
-  bool alt() const;
-  void set_alt(bool value_arg);
-
-  bool control() const;
-  void set_control(bool value_arg);
-
-  bool shift() const;
-  void set_shift(bool value_arg);
-
-  bool meta() const;
-  void set_meta(bool value_arg);
-
-  bool operator==(const KeyRequest& other) const;
-  bool operator!=(const KeyRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const KeyRequest& obj);
- private:
-  static KeyRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::string key_;
-  KeyAction action_;
-  bool alt_;
-  bool control_;
-  bool shift_;
-  bool meta_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class ScreenshotRequest {
- public:
-  // Constructs an object setting all non-nullable fields.
-  explicit ScreenshotRequest(
-    const ScreenshotFormat& format,
-    int64_t quality);
-
-  // Constructs an object setting all fields.
-  explicit ScreenshotRequest(
-    const std::string* target_id,
-    const ScreenshotFormat& format,
-    int64_t quality);
-
-  const std::string* target_id() const;
-  void set_target_id(const std::string_view* value_arg);
-  void set_target_id(std::string_view value_arg);
-
-  const ScreenshotFormat& format() const;
-  void set_format(const ScreenshotFormat& value_arg);
-
-  int64_t quality() const;
-  void set_quality(int64_t value_arg);
-
-  bool operator==(const ScreenshotRequest& other) const;
-  bool operator!=(const ScreenshotRequest& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const ScreenshotRequest& obj);
- private:
-  static ScreenshotRequest FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::optional<std::string> target_id_;
-  ScreenshotFormat format_;
-  int64_t quality_;
-};
-
-
-// Generated class from Pigeon that represents data sent in messages.
-class ScreenshotData {
- public:
-  // Constructs an object setting all fields.
-  explicit ScreenshotData(
-    const std::vector<uint8_t>& bytes,
-    int64_t width,
-    int64_t height,
-    double scale,
-    const ScreenshotFormat& format);
-
-  const std::vector<uint8_t>& bytes() const;
-  void set_bytes(const std::vector<uint8_t>& value_arg);
-
-  int64_t width() const;
-  void set_width(int64_t value_arg);
-
-  int64_t height() const;
-  void set_height(int64_t value_arg);
-
-  double scale() const;
-  void set_scale(double value_arg);
-
-  const ScreenshotFormat& format() const;
-  void set_format(const ScreenshotFormat& value_arg);
-
-  bool operator==(const ScreenshotData& other) const;
-  bool operator!=(const ScreenshotData& other) const;
-  /// Returns a hash code value for the object. This method is supported for the benefit of hash tables.
-  size_t Hash() const;
-  /// Stream output operator for formatted string representation.
-  friend std::ostream& operator<<(std::ostream& os, const ScreenshotData& obj);
- private:
-  static ScreenshotData FromEncodableList(const ::flutter::EncodableList& list);
-  ::flutter::EncodableList ToEncodableList() const;
-  friend class AutomationHostApi;
-  friend class PigeonInternalCodecSerializer;
-  std::vector<uint8_t> bytes_;
-  int64_t width_;
-  int64_t height_;
-  double scale_;
-  ScreenshotFormat format_;
 };
 
 
@@ -1266,51 +403,53 @@ class PigeonInternalCodecSerializer : public ::flutter::StandardCodecSerializer 
 };
 
 // Generated interface from Pigeon that represents a handler of messages from Flutter.
-class AutomationHostApi {
+class DeviceKitHostApi {
  public:
-  AutomationHostApi(const AutomationHostApi&) = delete;
-  AutomationHostApi& operator=(const AutomationHostApi&) = delete;
-  virtual ~AutomationHostApi() {}
+  DeviceKitHostApi(const DeviceKitHostApi&) = delete;
+  DeviceKitHostApi& operator=(const DeviceKitHostApi&) = delete;
+  virtual ~DeviceKitHostApi() {}
   virtual std::optional<FlutterError> Initialize(const DriverConfig& config) = 0;
-  virtual std::optional<FlutterError> Shutdown() = 0;
+  virtual std::optional<FlutterError> Dispose() = 0;
   virtual ErrorOr<DeviceInfo> GetDeviceInfo() = 0;
-  virtual ErrorOr<ScreenInfo> GetScreenInfo() = 0;
-  virtual ErrorOr<CapabilityInfo> GetCapabilities() = 0;
-  virtual ErrorOr<::flutter::EncodableList> GetPermissions() = 0;
-  virtual ErrorOr<PermissionInfo> RequestPermission(const AutomationPermission& permission) = 0;
-  virtual ErrorOr<::flutter::EncodableList> ListTargets() = 0;
-  virtual ErrorOr<std::optional<TargetInfo>> GetForegroundTarget() = 0;
-  virtual ErrorOr<ActionResult> LaunchApp(const LaunchAppRequest& request) = 0;
-  virtual ErrorOr<ActionResult> TerminateApp(const std::string& app_id) = 0;
-  virtual ErrorOr<ActionResult> ActivateTarget(const std::string& target_id) = 0;
-  virtual ErrorOr<UiSnapshot> DumpUi(const DumpUiRequest& request) = 0;
-  virtual ErrorOr<std::optional<UiNode>> HitTest(const HitTestRequest& request) = 0;
-  virtual ErrorOr<ActionResult> PerformElementAction(const ElementActionRequest& request) = 0;
-  virtual ErrorOr<ActionResult> Tap(const TapRequest& request) = 0;
-  virtual ErrorOr<ActionResult> LongPress(const LongPressRequest& request) = 0;
-  virtual ErrorOr<ActionResult> Swipe(const SwipeRequest& request) = 0;
-  virtual ErrorOr<ActionResult> Scroll(const ScrollRequest& request) = 0;
-  virtual ErrorOr<ActionResult> TypeText(const TypeTextRequest& request) = 0;
-  virtual ErrorOr<ActionResult> PressKey(const KeyRequest& request) = 0;
-  virtual ErrorOr<ActionResult> PerformSystemAction(const SystemAction& action) = 0;
-  virtual ErrorOr<ScreenshotData> Screenshot(const ScreenshotRequest& request) = 0;
-  virtual ErrorOr<std::optional<std::string>> GetClipboardText() = 0;
-  virtual ErrorOr<ActionResult> SetClipboardText(const std::string& text) = 0;
+  virtual ErrorOr<ActionResult> OpenAccessibilitySettings() = 0;
+  virtual ErrorOr<ActionResult> LaunchApp(const std::string& package_name) = 0;
+  virtual ErrorOr<UiSnapshot> DumpUi() = 0;
+  virtual ErrorOr<ActionResult> PerformElementAction(
+    const std::string& node_id,
+    int64_t generation,
+    const UiAction& action,
+    const std::string* value) = 0;
+  virtual ErrorOr<ActionResult> Tap(
+    double x,
+    double y) = 0;
+  virtual ErrorOr<ActionResult> Swipe(
+    double from_x,
+    double from_y,
+    double to_x,
+    double to_y,
+    int64_t duration_ms) = 0;
+  virtual ErrorOr<ActionResult> TypeText(const std::string& text) = 0;
+  virtual ErrorOr<ActionResult> PressBack() = 0;
+  virtual ErrorOr<ActionResult> PressHome() = 0;
+  virtual ErrorOr<std::vector<uint8_t>> Screenshot() = 0;
+  virtual ErrorOr<ActionResult> RequestScreenCapture() = 0;
+  virtual ErrorOr<std::optional<std::string>> GetClipboard() = 0;
+  virtual ErrorOr<ActionResult> SetClipboard(const std::string& text) = 0;
 
-  // The codec used by AutomationHostApi.
+  // The codec used by DeviceKitHostApi.
   static const ::flutter::StandardMessageCodec& GetCodec();
-  // Sets up an instance of `AutomationHostApi` to handle messages through the `binary_messenger`.
+  // Sets up an instance of `DeviceKitHostApi` to handle messages through the `binary_messenger`.
   static void SetUp(
     ::flutter::BinaryMessenger* binary_messenger,
-    AutomationHostApi* api);
+    DeviceKitHostApi* api);
   static void SetUp(
     ::flutter::BinaryMessenger* binary_messenger,
-    AutomationHostApi* api,
+    DeviceKitHostApi* api,
     const std::string& message_channel_suffix);
   static ::flutter::EncodableValue WrapError(std::string_view error_message);
   static ::flutter::EncodableValue WrapError(const FlutterError& error);
  protected:
-  AutomationHostApi() = default;
+  DeviceKitHostApi() = default;
 };
 }  // namespace device_kit_lib
 #endif  // PIGEON_MESSAGES_G_H_

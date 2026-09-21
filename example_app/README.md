@@ -1,5 +1,16 @@
 # example_app
 
+Independent Flutter counter target app used by the Device Kit controller.
+It does not depend on `device_kit_lib`.
+
+The app exposes these semantics identifiers for automation:
+
+- `counter_value`
+- `increment_button`
+
+Its default Android package is `com.example.example_app`, but the controller
+accepts any launchable package at runtime.
+
 A new Flutter project.
 
 ## Getting Started

@@ -31,6 +31,9 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+
+# Patrol generates this Dart bundle when running native self-tests.
+patrol_test/test_bundle.dart
 /coverage/
 
 # Symbolication related

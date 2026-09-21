@@ -1,8 +1,5 @@
 
-import 'device_kit_lib_platform_interface.dart';
-
-class DeviceKitLib {
-  Future<String?> getPlatformVersion() {
-    return DeviceKitLibPlatform.instance.getPlatformVersion();
-  }
-}
+export 'src/android_driver.dart';
+export 'src/device_driver.dart';
+export 'src/selector.dart';
+export 'src/ui_element.dart';

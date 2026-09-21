@@ -32,6 +32,7 @@ dependencies:
 dev_dependencies:
   integration_test:
     sdk: flutter
+  patrol: ^4.10.0
   flutter_test:
     sdk: flutter
 
@@ -41,6 +42,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+
+patrol:
+  test_directory: patrol_test
+  android:
+    package_name: com.hodoan.device_kit_lib_example
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -97,252 +97,12 @@ int _deepHash(Object? value) {
 }
 
 
-enum AutomationCapability {
-  uiDump,
-  semanticAction,
-  pointerInput,
-  keyboardInput,
-  screenshot,
-  clipboard,
-  appLifecycle,
-  windowManagement,
-  systemAction,
-}
-
-enum AutomationPermission {
-  accessibility,
-  screenRecording,
-  inputMonitoring,
-}
-
-enum PermissionState {
-  unknown,
-  denied,
-  granted,
-  restricted,
-}
-
-enum TargetType {
-  application,
-  window,
-  systemUi,
-}
-
-enum UiRole {
-  unknown,
-  application,
-  window,
-  dialog,
-  button,
-  text,
-  textField,
-  image,
-  checkbox,
-  radio,
-  switchControl,
-  slider,
-  list,
-  listItem,
-  menu,
-  menuItem,
-  tab,
-  link,
-  scrollView,
-}
-
 enum UiAction {
   press,
   focus,
   setValue,
-  increment,
-  decrement,
-  toggle,
-  select,
-  expand,
-  collapse,
-  dismiss,
   scrollForward,
   scrollBackward,
-}
-
-enum SystemAction {
-  back,
-  home,
-  escape,
-  appSwitcher,
-  notificationCenter,
-  quickSettings,
-}
-
-enum KeyAction {
-  press,
-  down,
-  up,
-}
-
-enum ScreenshotFormat {
-  png,
-  jpeg,
-}
-
-class PointData {
-  PointData({
-    required this.x,
-    required this.y,
-  });
-
-  double x;
-
-  double y;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      x,
-      y,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static PointData decode(Object result) {
-    result as List<Object?>;
-    return PointData(
-      x: result[0]! as double,
-      y: result[1]! as double,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! PointData || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(x, other.x) && _deepEquals(y, other.y);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'PointData(x: $x, y: $y)';
-  }
-}
-
-class RectData {
-  RectData({
-    required this.x,
-    required this.y,
-    required this.width,
-    required this.height,
-  });
-
-  double x;
-
-  double y;
-
-  double width;
-
-  double height;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      x,
-      y,
-      width,
-      height,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static RectData decode(Object result) {
-    result as List<Object?>;
-    return RectData(
-      x: result[0]! as double,
-      y: result[1]! as double,
-      width: result[2]! as double,
-      height: result[3]! as double,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! RectData || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(x, other.x) && _deepEquals(y, other.y) && _deepEquals(width, other.width) && _deepEquals(height, other.height);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'RectData(x: $x, y: $y, width: $width, height: $height)';
-  }
-}
-
-class SizeData {
-  SizeData({
-    required this.width,
-    required this.height,
-  });
-
-  double width;
-
-  double height;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      width,
-      height,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static SizeData decode(Object result) {
-    result as List<Object?>;
-    return SizeData(
-      width: result[0]! as double,
-      height: result[1]! as double,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! SizeData || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(width, other.width) && _deepEquals(height, other.height);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'SizeData(width: $width, height: $height)';
-  }
 }
 
 class DriverConfig {
@@ -460,49 +220,54 @@ class DeviceInfo {
   }
 }
 
-class ScreenInfo {
-  ScreenInfo({
-    required this.size,
-    required this.scale,
-    required this.orientation,
+class RectData {
+  RectData({
+    required this.x,
+    required this.y,
+    required this.width,
+    required this.height,
   });
 
-  SizeData size;
+  double x;
 
-  double scale;
+  double y;
 
-  String orientation;
+  double width;
+
+  double height;
 
   List<Object?> _toList() {
     return <Object?>[
-      size,
-      scale,
-      orientation,
+      x,
+      y,
+      width,
+      height,
     ];
   }
 
   Object encode() {
     return _toList();  }
 
-  static ScreenInfo decode(Object result) {
+  static RectData decode(Object result) {
     result as List<Object?>;
-    return ScreenInfo(
-      size: result[0]! as SizeData,
-      scale: result[1]! as double,
-      orientation: result[2]! as String,
+    return RectData(
+      x: result[0]! as double,
+      y: result[1]! as double,
+      width: result[2]! as double,
+      height: result[3]! as double,
     );
   }
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! ScreenInfo || other.runtimeType != runtimeType) {
+    if (other is! RectData || other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(size, other.size) && _deepEquals(scale, other.scale) && _deepEquals(orientation, other.orientation);
+    return _deepEquals(x, other.x) && _deepEquals(y, other.y) && _deepEquals(width, other.width) && _deepEquals(height, other.height);
   }
 
   @override
@@ -511,192 +276,7 @@ class ScreenInfo {
 
   @override
   String toString() {
-    return 'ScreenInfo(size: $size, scale: $scale, orientation: $orientation)';
-  }
-}
-
-class CapabilityInfo {
-  CapabilityInfo({
-    required this.capabilities,
-  });
-
-  List<AutomationCapability?> capabilities;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      capabilities,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static CapabilityInfo decode(Object result) {
-    result as List<Object?>;
-    return CapabilityInfo(
-      capabilities: (result[0]! as List<Object?>).cast<AutomationCapability?>(),
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! CapabilityInfo || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(capabilities, other.capabilities);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'CapabilityInfo(capabilities: $capabilities)';
-  }
-}
-
-class PermissionInfo {
-  PermissionInfo({
-    required this.permission,
-    required this.state,
-    required this.canRequest,
-    this.message,
-  });
-
-  AutomationPermission permission;
-
-  PermissionState state;
-
-  bool canRequest;
-
-  String? message;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      permission,
-      state,
-      canRequest,
-      message,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static PermissionInfo decode(Object result) {
-    result as List<Object?>;
-    return PermissionInfo(
-      permission: result[0]! as AutomationPermission,
-      state: result[1]! as PermissionState,
-      canRequest: result[2]! as bool,
-      message: result[3] as String?,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! PermissionInfo || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(permission, other.permission) && _deepEquals(state, other.state) && _deepEquals(canRequest, other.canRequest) && _deepEquals(message, other.message);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'PermissionInfo(permission: $permission, state: $state, canRequest: $canRequest, message: $message)';
-  }
-}
-
-class TargetInfo {
-  TargetInfo({
-    required this.targetId,
-    required this.type,
-    this.appId,
-    this.name,
-    this.title,
-    this.processId,
-    this.bounds,
-    required this.foreground,
-  });
-
-  String targetId;
-
-  TargetType type;
-
-  String? appId;
-
-  String? name;
-
-  String? title;
-
-  int? processId;
-
-  RectData? bounds;
-
-  bool foreground;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      targetId,
-      type,
-      appId,
-      name,
-      title,
-      processId,
-      bounds,
-      foreground,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static TargetInfo decode(Object result) {
-    result as List<Object?>;
-    return TargetInfo(
-      targetId: result[0]! as String,
-      type: result[1]! as TargetType,
-      appId: result[2] as String?,
-      name: result[3] as String?,
-      title: result[4] as String?,
-      processId: result[5] as int?,
-      bounds: result[6] as RectData?,
-      foreground: result[7]! as bool,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! TargetInfo || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(targetId, other.targetId) && _deepEquals(type, other.type) && _deepEquals(appId, other.appId) && _deepEquals(name, other.name) && _deepEquals(title, other.title) && _deepEquals(processId, other.processId) && _deepEquals(bounds, other.bounds) && _deepEquals(foreground, other.foreground);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'TargetInfo(targetId: $targetId, type: $type, appId: $appId, name: $name, title: $title, processId: $processId, bounds: $bounds, foreground: $foreground)';
+    return 'RectData(x: $x, y: $y, width: $width, height: $height)';
   }
 }
 
@@ -704,14 +284,13 @@ class UiNode {
   UiNode({
     required this.nodeId,
     this.parentNodeId,
-    this.childNodeIds,
+    required this.childNodeIds,
     this.automationId,
     this.text,
     this.label,
     this.value,
     required this.role,
     required this.bounds,
-    required this.visible,
     required this.enabled,
     required this.clickable,
     required this.editable,
@@ -719,14 +298,13 @@ class UiNode {
     required this.selected,
     required this.checked,
     required this.scrollable,
-    this.actions,
   });
 
   String nodeId;
 
   String? parentNodeId;
 
-  List<String?>? childNodeIds;
+  List<String> childNodeIds;
 
   String? automationId;
 
@@ -736,11 +314,9 @@ class UiNode {
 
   String? value;
 
-  UiRole role;
+  String role;
 
   RectData bounds;
-
-  bool visible;
 
   bool enabled;
 
@@ -756,8 +332,6 @@ class UiNode {
 
   bool scrollable;
 
-  List<UiAction?>? actions;
-
   List<Object?> _toList() {
     return <Object?>[
       nodeId,
@@ -769,7 +343,6 @@ class UiNode {
       value,
       role,
       bounds,
-      visible,
       enabled,
       clickable,
       editable,
@@ -777,7 +350,6 @@ class UiNode {
       selected,
       checked,
       scrollable,
-      actions,
     ];
   }
 
@@ -789,22 +361,20 @@ class UiNode {
     return UiNode(
       nodeId: result[0]! as String,
       parentNodeId: result[1] as String?,
-      childNodeIds: (result[2] as List<Object?>?)?.cast<String?>(),
+      childNodeIds: (result[2]! as List<Object?>).cast<String>(),
       automationId: result[3] as String?,
       text: result[4] as String?,
       label: result[5] as String?,
       value: result[6] as String?,
-      role: result[7]! as UiRole,
+      role: result[7]! as String,
       bounds: result[8]! as RectData,
-      visible: result[9]! as bool,
-      enabled: result[10]! as bool,
-      clickable: result[11]! as bool,
-      editable: result[12]! as bool,
-      focused: result[13]! as bool,
-      selected: result[14]! as bool,
-      checked: result[15]! as bool,
-      scrollable: result[16]! as bool,
-      actions: (result[17] as List<Object?>?)?.cast<UiAction?>(),
+      enabled: result[9]! as bool,
+      clickable: result[10]! as bool,
+      editable: result[11]! as bool,
+      focused: result[12]! as bool,
+      selected: result[13]! as bool,
+      checked: result[14]! as bool,
+      scrollable: result[15]! as bool,
     );
   }
 
@@ -817,7 +387,7 @@ class UiNode {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(nodeId, other.nodeId) && _deepEquals(parentNodeId, other.parentNodeId) && _deepEquals(childNodeIds, other.childNodeIds) && _deepEquals(automationId, other.automationId) && _deepEquals(text, other.text) && _deepEquals(label, other.label) && _deepEquals(value, other.value) && _deepEquals(role, other.role) && _deepEquals(bounds, other.bounds) && _deepEquals(visible, other.visible) && _deepEquals(enabled, other.enabled) && _deepEquals(clickable, other.clickable) && _deepEquals(editable, other.editable) && _deepEquals(focused, other.focused) && _deepEquals(selected, other.selected) && _deepEquals(checked, other.checked) && _deepEquals(scrollable, other.scrollable) && _deepEquals(actions, other.actions);
+    return _deepEquals(nodeId, other.nodeId) && _deepEquals(parentNodeId, other.parentNodeId) && _deepEquals(childNodeIds, other.childNodeIds) && _deepEquals(automationId, other.automationId) && _deepEquals(text, other.text) && _deepEquals(label, other.label) && _deepEquals(value, other.value) && _deepEquals(role, other.role) && _deepEquals(bounds, other.bounds) && _deepEquals(enabled, other.enabled) && _deepEquals(clickable, other.clickable) && _deepEquals(editable, other.editable) && _deepEquals(focused, other.focused) && _deepEquals(selected, other.selected) && _deepEquals(checked, other.checked) && _deepEquals(scrollable, other.scrollable);
   }
 
   @override
@@ -826,35 +396,23 @@ class UiNode {
 
   @override
   String toString() {
-    return 'UiNode(nodeId: $nodeId, parentNodeId: $parentNodeId, childNodeIds: $childNodeIds, automationId: $automationId, text: $text, label: $label, value: $value, role: $role, bounds: $bounds, visible: $visible, enabled: $enabled, clickable: $clickable, editable: $editable, focused: $focused, selected: $selected, checked: $checked, scrollable: $scrollable, actions: $actions)';
+    return 'UiNode(nodeId: $nodeId, parentNodeId: $parentNodeId, childNodeIds: $childNodeIds, automationId: $automationId, text: $text, label: $label, value: $value, role: $role, bounds: $bounds, enabled: $enabled, clickable: $clickable, editable: $editable, focused: $focused, selected: $selected, checked: $checked, scrollable: $scrollable)';
   }
 }
 
 class UiSnapshot {
   UiSnapshot({
     required this.generation,
-    this.targetId,
-    this.rootNodeId,
-    required this.screen,
     required this.nodes,
   });
 
   int generation;
 
-  String? targetId;
-
-  String? rootNodeId;
-
-  ScreenInfo screen;
-
-  List<UiNode?> nodes;
+  List<UiNode> nodes;
 
   List<Object?> _toList() {
     return <Object?>[
       generation,
-      targetId,
-      rootNodeId,
-      screen,
       nodes,
     ];
   }
@@ -866,10 +424,7 @@ class UiSnapshot {
     result as List<Object?>;
     return UiSnapshot(
       generation: result[0]! as int,
-      targetId: result[1] as String?,
-      rootNodeId: result[2] as String?,
-      screen: result[3]! as ScreenInfo,
-      nodes: (result[4]! as List<Object?>).cast<UiNode?>(),
+      nodes: (result[1]! as List<Object?>).cast<UiNode>(),
     );
   }
 
@@ -882,7 +437,7 @@ class UiSnapshot {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(generation, other.generation) && _deepEquals(targetId, other.targetId) && _deepEquals(rootNodeId, other.rootNodeId) && _deepEquals(screen, other.screen) && _deepEquals(nodes, other.nodes);
+    return _deepEquals(generation, other.generation) && _deepEquals(nodes, other.nodes);
   }
 
   @override
@@ -891,172 +446,7 @@ class UiSnapshot {
 
   @override
   String toString() {
-    return 'UiSnapshot(generation: $generation, targetId: $targetId, rootNodeId: $rootNodeId, screen: $screen, nodes: $nodes)';
-  }
-}
-
-class DumpUiRequest {
-  DumpUiRequest({
-    this.targetId,
-    required this.includeInvisible,
-  });
-
-  String? targetId;
-
-  bool includeInvisible;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      targetId,
-      includeInvisible,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static DumpUiRequest decode(Object result) {
-    result as List<Object?>;
-    return DumpUiRequest(
-      targetId: result[0] as String?,
-      includeInvisible: result[1]! as bool,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! DumpUiRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(targetId, other.targetId) && _deepEquals(includeInvisible, other.includeInvisible);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'DumpUiRequest(targetId: $targetId, includeInvisible: $includeInvisible)';
-  }
-}
-
-class HitTestRequest {
-  HitTestRequest({
-    this.targetId,
-    required this.point,
-  });
-
-  String? targetId;
-
-  PointData point;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      targetId,
-      point,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static HitTestRequest decode(Object result) {
-    result as List<Object?>;
-    return HitTestRequest(
-      targetId: result[0] as String?,
-      point: result[1]! as PointData,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! HitTestRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(targetId, other.targetId) && _deepEquals(point, other.point);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'HitTestRequest(targetId: $targetId, point: $point)';
-  }
-}
-
-class ElementActionRequest {
-  ElementActionRequest({
-    this.targetId,
-    required this.generation,
-    required this.nodeId,
-    required this.action,
-    this.value,
-  });
-
-  String? targetId;
-
-  int generation;
-
-  String nodeId;
-
-  UiAction action;
-
-  String? value;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      targetId,
-      generation,
-      nodeId,
-      action,
-      value,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static ElementActionRequest decode(Object result) {
-    result as List<Object?>;
-    return ElementActionRequest(
-      targetId: result[0] as String?,
-      generation: result[1]! as int,
-      nodeId: result[2]! as String,
-      action: result[3]! as UiAction,
-      value: result[4] as String?,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! ElementActionRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(targetId, other.targetId) && _deepEquals(generation, other.generation) && _deepEquals(nodeId, other.nodeId) && _deepEquals(action, other.action) && _deepEquals(value, other.value);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'ElementActionRequest(targetId: $targetId, generation: $generation, nodeId: $nodeId, action: $action, value: $value)';
+    return 'UiSnapshot(generation: $generation, nodes: $nodes)';
   }
 }
 
@@ -1115,511 +505,6 @@ class ActionResult {
   }
 }
 
-class LaunchAppRequest {
-  LaunchAppRequest({
-    required this.appId,
-    this.arguments,
-    this.environment,
-  });
-
-  String appId;
-
-  List<String?>? arguments;
-
-  Map<String?, String?>? environment;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      appId,
-      arguments,
-      environment,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static LaunchAppRequest decode(Object result) {
-    result as List<Object?>;
-    return LaunchAppRequest(
-      appId: result[0]! as String,
-      arguments: (result[1] as List<Object?>?)?.cast<String?>(),
-      environment: (result[2] as Map<Object?, Object?>?)?.cast<String?, String?>(),
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! LaunchAppRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(appId, other.appId) && _deepEquals(arguments, other.arguments) && _deepEquals(environment, other.environment);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'LaunchAppRequest(appId: $appId, arguments: $arguments, environment: $environment)';
-  }
-}
-
-class TapRequest {
-  TapRequest({
-    required this.point,
-    required this.count,
-  });
-
-  PointData point;
-
-  int count;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      point,
-      count,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static TapRequest decode(Object result) {
-    result as List<Object?>;
-    return TapRequest(
-      point: result[0]! as PointData,
-      count: result[1]! as int,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! TapRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(point, other.point) && _deepEquals(count, other.count);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'TapRequest(point: $point, count: $count)';
-  }
-}
-
-class LongPressRequest {
-  LongPressRequest({
-    required this.point,
-    required this.durationMs,
-  });
-
-  PointData point;
-
-  int durationMs;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      point,
-      durationMs,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static LongPressRequest decode(Object result) {
-    result as List<Object?>;
-    return LongPressRequest(
-      point: result[0]! as PointData,
-      durationMs: result[1]! as int,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! LongPressRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(point, other.point) && _deepEquals(durationMs, other.durationMs);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'LongPressRequest(point: $point, durationMs: $durationMs)';
-  }
-}
-
-class SwipeRequest {
-  SwipeRequest({
-    required this.from,
-    required this.to,
-    required this.durationMs,
-  });
-
-  PointData from;
-
-  PointData to;
-
-  int durationMs;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      from,
-      to,
-      durationMs,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static SwipeRequest decode(Object result) {
-    result as List<Object?>;
-    return SwipeRequest(
-      from: result[0]! as PointData,
-      to: result[1]! as PointData,
-      durationMs: result[2]! as int,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! SwipeRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(from, other.from) && _deepEquals(to, other.to) && _deepEquals(durationMs, other.durationMs);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'SwipeRequest(from: $from, to: $to, durationMs: $durationMs)';
-  }
-}
-
-class ScrollRequest {
-  ScrollRequest({
-    required this.deltaX,
-    required this.deltaY,
-    this.origin,
-  });
-
-  double deltaX;
-
-  double deltaY;
-
-  PointData? origin;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      deltaX,
-      deltaY,
-      origin,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static ScrollRequest decode(Object result) {
-    result as List<Object?>;
-    return ScrollRequest(
-      deltaX: result[0]! as double,
-      deltaY: result[1]! as double,
-      origin: result[2] as PointData?,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! ScrollRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(deltaX, other.deltaX) && _deepEquals(deltaY, other.deltaY) && _deepEquals(origin, other.origin);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'ScrollRequest(deltaX: $deltaX, deltaY: $deltaY, origin: $origin)';
-  }
-}
-
-class TypeTextRequest {
-  TypeTextRequest({
-    required this.text,
-    required this.clearFirst,
-  });
-
-  String text;
-
-  bool clearFirst;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      text,
-      clearFirst,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static TypeTextRequest decode(Object result) {
-    result as List<Object?>;
-    return TypeTextRequest(
-      text: result[0]! as String,
-      clearFirst: result[1]! as bool,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! TypeTextRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(text, other.text) && _deepEquals(clearFirst, other.clearFirst);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'TypeTextRequest(text: $text, clearFirst: $clearFirst)';
-  }
-}
-
-class KeyRequest {
-  KeyRequest({
-    required this.key,
-    required this.action,
-    required this.alt,
-    required this.control,
-    required this.shift,
-    required this.meta,
-  });
-
-  String key;
-
-  KeyAction action;
-
-  bool alt;
-
-  bool control;
-
-  bool shift;
-
-  bool meta;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      key,
-      action,
-      alt,
-      control,
-      shift,
-      meta,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static KeyRequest decode(Object result) {
-    result as List<Object?>;
-    return KeyRequest(
-      key: result[0]! as String,
-      action: result[1]! as KeyAction,
-      alt: result[2]! as bool,
-      control: result[3]! as bool,
-      shift: result[4]! as bool,
-      meta: result[5]! as bool,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! KeyRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(key, other.key) && _deepEquals(action, other.action) && _deepEquals(alt, other.alt) && _deepEquals(control, other.control) && _deepEquals(shift, other.shift) && _deepEquals(meta, other.meta);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'KeyRequest(key: $key, action: $action, alt: $alt, control: $control, shift: $shift, meta: $meta)';
-  }
-}
-
-class ScreenshotRequest {
-  ScreenshotRequest({
-    this.targetId,
-    required this.format,
-    required this.quality,
-  });
-
-  String? targetId;
-
-  ScreenshotFormat format;
-
-  int quality;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      targetId,
-      format,
-      quality,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static ScreenshotRequest decode(Object result) {
-    result as List<Object?>;
-    return ScreenshotRequest(
-      targetId: result[0] as String?,
-      format: result[1]! as ScreenshotFormat,
-      quality: result[2]! as int,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! ScreenshotRequest || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(targetId, other.targetId) && _deepEquals(format, other.format) && _deepEquals(quality, other.quality);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'ScreenshotRequest(targetId: $targetId, format: $format, quality: $quality)';
-  }
-}
-
-class ScreenshotData {
-  ScreenshotData({
-    required this.bytes,
-    required this.width,
-    required this.height,
-    required this.scale,
-    required this.format,
-  });
-
-  Uint8List bytes;
-
-  int width;
-
-  int height;
-
-  double scale;
-
-  ScreenshotFormat format;
-
-  List<Object?> _toList() {
-    return <Object?>[
-      bytes,
-      width,
-      height,
-      scale,
-      format,
-    ];
-  }
-
-  Object encode() {
-    return _toList();  }
-
-  static ScreenshotData decode(Object result) {
-    result as List<Object?>;
-    return ScreenshotData(
-      bytes: result[0]! as Uint8List,
-      width: result[1]! as int,
-      height: result[2]! as int,
-      scale: result[3]! as double,
-      format: result[4]! as ScreenshotFormat,
-    );
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  bool operator ==(Object other) {
-    if (other is! ScreenshotData || other.runtimeType != runtimeType) {
-      return false;
-    }
-    if (identical(this, other)) {
-      return true;
-    }
-    return _deepEquals(bytes, other.bytes) && _deepEquals(width, other.width) && _deepEquals(height, other.height) && _deepEquals(scale, other.scale) && _deepEquals(format, other.format);
-  }
-
-  @override
-  // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => _deepHash(<Object?>[runtimeType, ..._toList()]);
-
-  @override
-  String toString() {
-    return 'ScreenshotData(bytes: $bytes, width: $width, height: $height, scale: $scale, format: $format)';
-  }
-}
-
 
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
@@ -1628,104 +513,26 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    }    else if (value is AutomationCapability) {
+    }    else if (value is UiAction) {
       buffer.putUint8(129);
       writeValue(buffer, value.index);
-    }    else if (value is AutomationPermission) {
-      buffer.putUint8(130);
-      writeValue(buffer, value.index);
-    }    else if (value is PermissionState) {
-      buffer.putUint8(131);
-      writeValue(buffer, value.index);
-    }    else if (value is TargetType) {
-      buffer.putUint8(132);
-      writeValue(buffer, value.index);
-    }    else if (value is UiRole) {
-      buffer.putUint8(133);
-      writeValue(buffer, value.index);
-    }    else if (value is UiAction) {
-      buffer.putUint8(134);
-      writeValue(buffer, value.index);
-    }    else if (value is SystemAction) {
-      buffer.putUint8(135);
-      writeValue(buffer, value.index);
-    }    else if (value is KeyAction) {
-      buffer.putUint8(136);
-      writeValue(buffer, value.index);
-    }    else if (value is ScreenshotFormat) {
-      buffer.putUint8(137);
-      writeValue(buffer, value.index);
-    }    else if (value is PointData) {
-      buffer.putUint8(138);
-      writeValue(buffer, value.encode());
-    }    else if (value is RectData) {
-      buffer.putUint8(139);
-      writeValue(buffer, value.encode());
-    }    else if (value is SizeData) {
-      buffer.putUint8(140);
-      writeValue(buffer, value.encode());
     }    else if (value is DriverConfig) {
-      buffer.putUint8(141);
+      buffer.putUint8(130);
       writeValue(buffer, value.encode());
     }    else if (value is DeviceInfo) {
-      buffer.putUint8(142);
+      buffer.putUint8(131);
       writeValue(buffer, value.encode());
-    }    else if (value is ScreenInfo) {
-      buffer.putUint8(143);
-      writeValue(buffer, value.encode());
-    }    else if (value is CapabilityInfo) {
-      buffer.putUint8(144);
-      writeValue(buffer, value.encode());
-    }    else if (value is PermissionInfo) {
-      buffer.putUint8(145);
-      writeValue(buffer, value.encode());
-    }    else if (value is TargetInfo) {
-      buffer.putUint8(146);
+    }    else if (value is RectData) {
+      buffer.putUint8(132);
       writeValue(buffer, value.encode());
     }    else if (value is UiNode) {
-      buffer.putUint8(147);
+      buffer.putUint8(133);
       writeValue(buffer, value.encode());
     }    else if (value is UiSnapshot) {
-      buffer.putUint8(148);
-      writeValue(buffer, value.encode());
-    }    else if (value is DumpUiRequest) {
-      buffer.putUint8(149);
-      writeValue(buffer, value.encode());
-    }    else if (value is HitTestRequest) {
-      buffer.putUint8(150);
-      writeValue(buffer, value.encode());
-    }    else if (value is ElementActionRequest) {
-      buffer.putUint8(151);
+      buffer.putUint8(134);
       writeValue(buffer, value.encode());
     }    else if (value is ActionResult) {
-      buffer.putUint8(152);
-      writeValue(buffer, value.encode());
-    }    else if (value is LaunchAppRequest) {
-      buffer.putUint8(153);
-      writeValue(buffer, value.encode());
-    }    else if (value is TapRequest) {
-      buffer.putUint8(154);
-      writeValue(buffer, value.encode());
-    }    else if (value is LongPressRequest) {
-      buffer.putUint8(155);
-      writeValue(buffer, value.encode());
-    }    else if (value is SwipeRequest) {
-      buffer.putUint8(156);
-      writeValue(buffer, value.encode());
-    }    else if (value is ScrollRequest) {
-      buffer.putUint8(157);
-      writeValue(buffer, value.encode());
-    }    else if (value is TypeTextRequest) {
-      buffer.putUint8(158);
-      writeValue(buffer, value.encode());
-    }    else if (value is KeyRequest) {
-      buffer.putUint8(159);
-      writeValue(buffer, value.encode());
-    }    else if (value is ScreenshotRequest) {
-      buffer.putUint8(160);
-      writeValue(buffer, value.encode());
-    }    else if (value is ScreenshotData) {
-      buffer.putUint8(161);
+      buffer.putUint8(135);
       writeValue(buffer, value.encode());
     } else {
       super.writeValue(buffer, value);
@@ -1737,90 +544,30 @@ class _PigeonCodec extends StandardMessageCodec {
     switch (type) {
       case 129:
         final value = readValue(buffer) as int?;
-        return value == null ? null : AutomationCapability.values[value];
-      case 130:
-        final value = readValue(buffer) as int?;
-        return value == null ? null : AutomationPermission.values[value];
-      case 131:
-        final value = readValue(buffer) as int?;
-        return value == null ? null : PermissionState.values[value];
-      case 132:
-        final value = readValue(buffer) as int?;
-        return value == null ? null : TargetType.values[value];
-      case 133:
-        final value = readValue(buffer) as int?;
-        return value == null ? null : UiRole.values[value];
-      case 134:
-        final value = readValue(buffer) as int?;
         return value == null ? null : UiAction.values[value];
-      case 135:
-        final value = readValue(buffer) as int?;
-        return value == null ? null : SystemAction.values[value];
-      case 136:
-        final value = readValue(buffer) as int?;
-        return value == null ? null : KeyAction.values[value];
-      case 137:
-        final value = readValue(buffer) as int?;
-        return value == null ? null : ScreenshotFormat.values[value];
-      case 138:
-        return PointData.decode(readValue(buffer)!);
-      case 139:
-        return RectData.decode(readValue(buffer)!);
-      case 140:
-        return SizeData.decode(readValue(buffer)!);
-      case 141:
+      case 130:
         return DriverConfig.decode(readValue(buffer)!);
-      case 142:
+      case 131:
         return DeviceInfo.decode(readValue(buffer)!);
-      case 143:
-        return ScreenInfo.decode(readValue(buffer)!);
-      case 144:
-        return CapabilityInfo.decode(readValue(buffer)!);
-      case 145:
-        return PermissionInfo.decode(readValue(buffer)!);
-      case 146:
-        return TargetInfo.decode(readValue(buffer)!);
-      case 147:
+      case 132:
+        return RectData.decode(readValue(buffer)!);
+      case 133:
         return UiNode.decode(readValue(buffer)!);
-      case 148:
+      case 134:
         return UiSnapshot.decode(readValue(buffer)!);
-      case 149:
-        return DumpUiRequest.decode(readValue(buffer)!);
-      case 150:
-        return HitTestRequest.decode(readValue(buffer)!);
-      case 151:
-        return ElementActionRequest.decode(readValue(buffer)!);
-      case 152:
+      case 135:
         return ActionResult.decode(readValue(buffer)!);
-      case 153:
-        return LaunchAppRequest.decode(readValue(buffer)!);
-      case 154:
-        return TapRequest.decode(readValue(buffer)!);
-      case 155:
-        return LongPressRequest.decode(readValue(buffer)!);
-      case 156:
-        return SwipeRequest.decode(readValue(buffer)!);
-      case 157:
-        return ScrollRequest.decode(readValue(buffer)!);
-      case 158:
-        return TypeTextRequest.decode(readValue(buffer)!);
-      case 159:
-        return KeyRequest.decode(readValue(buffer)!);
-      case 160:
-        return ScreenshotRequest.decode(readValue(buffer)!);
-      case 161:
-        return ScreenshotData.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
     }
   }
 }
 
-class AutomationHostApi {
-  /// Constructor for [AutomationHostApi]. The [binaryMessenger] named argument is
+class DeviceKitHostApi {
+  /// Constructor for [DeviceKitHostApi]. The [binaryMessenger] named argument is
   /// available for dependency injection. If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  AutomationHostApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
+  DeviceKitHostApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
       : pigeonVar_binaryMessenger = binaryMessenger,
         pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
   final BinaryMessenger? pigeonVar_binaryMessenger;
@@ -1830,7 +577,7 @@ class AutomationHostApi {
   final String pigeonVar_messageChannelSuffix;
 
   Future<void> initialize(DriverConfig config) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.initialize$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.initialize$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -1847,8 +594,8 @@ class AutomationHostApi {
     ;
   }
 
-  Future<void> shutdown() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.shutdown$pigeonVar_messageChannelSuffix';
+  Future<void> dispose() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dispose$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -1866,7 +613,7 @@ class AutomationHostApi {
   }
 
   Future<DeviceInfo> getDeviceInfo() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getDeviceInfo$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getDeviceInfo$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -1884,128 +631,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as DeviceInfo;
   }
 
-  Future<ScreenInfo> getScreenInfo() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getScreenInfo$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> openAccessibilitySettings() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.openAccessibilitySettings$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return pigeonVar_replyValue! as ScreenInfo;
-  }
-
-  Future<CapabilityInfo> getCapabilities() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getCapabilities$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return pigeonVar_replyValue! as CapabilityInfo;
-  }
-
-  Future<List<PermissionInfo?>> getPermissions() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getPermissions$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return (pigeonVar_replyValue! as List<Object?>).cast<PermissionInfo?>();
-  }
-
-  Future<PermissionInfo> requestPermission(AutomationPermission permission) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.requestPermission$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[permission]);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return pigeonVar_replyValue! as PermissionInfo;
-  }
-
-  Future<List<TargetInfo?>> listTargets() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.listTargets$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return (pigeonVar_replyValue! as List<Object?>).cast<TargetInfo?>();
-  }
-
-  Future<TargetInfo?> getForegroundTarget() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getForegroundTarget$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: true,
-    )
-    ;
-    return pigeonVar_replyValue as TargetInfo?;
-  }
-
-  Future<ActionResult> launchApp(LaunchAppRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.launchApp$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2017,14 +650,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> terminateApp(String appId) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.terminateApp$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> launchApp(String packageName) async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.launchApp$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[appId]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[packageName]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2036,33 +669,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> activateTarget(String targetId) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.activateTarget$pigeonVar_messageChannelSuffix';
+  Future<UiSnapshot> dumpUi() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dumpUi$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[targetId]);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return pigeonVar_replyValue! as ActionResult;
-  }
-
-  Future<UiSnapshot> dumpUi(DumpUiRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.dumpUi$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2074,33 +688,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as UiSnapshot;
   }
 
-  Future<UiNode?> hitTest(HitTestRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.hitTest$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> performElementAction(String nodeId, int generation, UiAction action, String? value) async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.performElementAction$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: true,
-    )
-    ;
-    return pigeonVar_replyValue as UiNode?;
-  }
-
-  Future<ActionResult> performElementAction(ElementActionRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performElementAction$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[nodeId, generation, action, value]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2112,14 +707,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> tap(TapRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.tap$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> tap(double x, double y) async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.tap$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[x, y]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2131,14 +726,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> longPress(LongPressRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.longPress$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> swipe(double fromX, double fromY, double toX, double toY, int durationMs) async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.swipe$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[fromX, fromY, toX, toY, durationMs]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2150,14 +745,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> swipe(SwipeRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.swipe$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> typeText(String text) async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.typeText$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[text]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2169,14 +764,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> scroll(ScrollRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.scroll$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> pressBack() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressBack$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2188,14 +783,14 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> typeText(TypeTextRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.typeText$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> pressHome() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressHome$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2207,14 +802,33 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> pressKey(KeyRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.pressKey$pigeonVar_messageChannelSuffix';
+  Future<Uint8List> screenshot() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.screenshot$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
+    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
+
+    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
+        pigeonVar_replyList,
+        pigeonVar_channelName,
+        isNullValid: false,
+    )
+    ;
+    return pigeonVar_replyValue! as Uint8List;
+  }
+
+  Future<ActionResult> requestScreenCapture() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.requestScreenCapture$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channel = BasicMessageChannel<Object?>(
+      pigeonVar_channelName,
+      pigeonChannelCodec,
+      binaryMessenger: pigeonVar_binaryMessenger,
+    );
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
@@ -2226,46 +840,8 @@ class AutomationHostApi {
     return pigeonVar_replyValue! as ActionResult;
   }
 
-  Future<ActionResult> performSystemAction(SystemAction action) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performSystemAction$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[action]);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return pigeonVar_replyValue! as ActionResult;
-  }
-
-  Future<ScreenshotData> screenshot(ScreenshotRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.screenshot$pigeonVar_messageChannelSuffix';
-    final pigeonVar_channel = BasicMessageChannel<Object?>(
-      pigeonVar_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: pigeonVar_binaryMessenger,
-    );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
-    final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
-
-    final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
-    return pigeonVar_replyValue! as ScreenshotData;
-  }
-
-  Future<String?> getClipboardText() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getClipboardText$pigeonVar_messageChannelSuffix';
+  Future<String?> getClipboard() async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getClipboard$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -2283,8 +859,8 @@ class AutomationHostApi {
     return pigeonVar_replyValue as String?;
   }
 
-  Future<ActionResult> setClipboardText(String text) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.AutomationHostApi.setClipboardText$pigeonVar_messageChannelSuffix';
+  Future<ActionResult> setClipboard(String text) async {
+    final pigeonVar_channelName = 'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.setClipboard$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,

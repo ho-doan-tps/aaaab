@@ -1,58 +1,170 @@
-import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:device_kit_lib/device_kit_lib.dart';
+import 'package:flutter/material.dart';
+
+const _defaultTargetPackage = 'com.example.example_app';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const DeviceKitControllerApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _deviceKitLibPlugin = DeviceKitLib();
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _deviceKitLibPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
+class DeviceKitControllerApp extends StatelessWidget {
+  const DeviceKitControllerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Plugin example app')),
-        body: Center(child: Text('Running on: $_platformVersion\n')),
+      title: 'Device Kit Controller',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
+        useMaterial3: true,
+      ),
+      home: const ControllerPage(),
+    );
+  }
+}
+
+class ControllerPage extends StatefulWidget {
+  const ControllerPage({super.key});
+
+  @override
+  State<ControllerPage> createState() => _ControllerPageState();
+}
+
+class _ControllerPageState extends State<ControllerPage> {
+  final AutomationService _service = AutomationService(
+    AndroidDriver(),
+    defaultTimeout: const Duration(seconds: 10),
+  );
+  final TextEditingController _packageController = TextEditingController(
+    text: _defaultTargetPackage,
+  );
+  String _status = 'Ready. Enable Device Kit AccessibilityService.';
+  bool _started = false;
+
+  @override
+  void dispose() {
+    _packageController.dispose();
+    super.dispose();
+  }
+
+  String get _targetPackage => _packageController.text.trim();
+
+  Future<void> _start() async {
+    await _service.start(sessionId: 'controller-ui');
+    try {
+      await _service.dumpUi();
+      if (!mounted) return;
+      setState(() {
+        _started = true;
+        _status = 'Kit started. Target: $_targetPackage';
+      });
+    } on Object {
+      // The native preflight opens Android Settings when the service is off.
+      if (!mounted) return;
+      setState(() {
+        _started = true;
+        _status =
+            'Enable Device Kit AccessibilityService in the opened Settings screen.';
+      });
+    }
+  }
+
+  Future<void> _launch() async {
+    await _run(() async {
+      final packageName = _targetPackage;
+      if (packageName.isEmpty) {
+        throw ArgumentError('Enter a target Android package name.');
+      }
+      if (!_started) await _start();
+      await _service.launchApp(packageName);
+      return 'Launched $packageName';
+    });
+  }
+
+  Future<void> _dump() async {
+    await _run(() async {
+      final snapshot = await _service.dumpUi();
+      return 'Dumped ${snapshot.elements.length} UI nodes';
+    });
+  }
+
+  Future<void> _tapCounter() async {
+    await _run(() async {
+      await _service.tap(By.id('increment_button'));
+      return 'Tapped increment_button';
+    });
+  }
+
+  Future<void> _screenshot() async {
+    await _run(() async {
+      final bytes = await _service.screenshot();
+      return 'Screenshot captured (${bytes.length} bytes)';
+    });
+  }
+
+  Future<void> _requestScreenshotPermission() async {
+    await _run(() async {
+      if (!_started) await _start();
+      await _service.requestScreenCapture();
+      return 'Approve the Android screen-capture prompt';
+    });
+  }
+
+  Future<void> _run(Future<String> Function() action) async {
+    try {
+      final status = await action();
+      if (!mounted) return;
+      setState(() => _status = status);
+    } on Object catch (error) {
+      if (!mounted) return;
+      setState(() => _status = error.toString());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Device Kit Controller')),
+      body: ListView(
+        padding: const EdgeInsets.all(24),
+        children: <Widget>[
+          Text(
+            'Android automation kit',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 8),
+          Text(_status),
+          const SizedBox(height: 24),
+          TextField(
+            controller: _packageController,
+            autocorrect: false,
+            enableSuggestions: false,
+            decoration: const InputDecoration(
+              labelText: 'Target package name',
+              hintText: 'com.example.example_app',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 12),
+          FilledButton(onPressed: _start, child: const Text('Start Kit')),
+          OutlinedButton(
+            onPressed: _requestScreenshotPermission,
+            child: const Text('Request screenshot permission'),
+          ),
+          OutlinedButton(
+            onPressed: _launch,
+            child: const Text('Launch Example App'),
+          ),
+          OutlinedButton(onPressed: _dump, child: const Text('Dump UI')),
+          OutlinedButton(
+            onPressed: _tapCounter,
+            child: const Text('Tap increment_button'),
+          ),
+          OutlinedButton(
+            onPressed: _screenshot,
+            child: const Text('Take screenshot'),
+          ),
+        ],
       ),
     );
   }

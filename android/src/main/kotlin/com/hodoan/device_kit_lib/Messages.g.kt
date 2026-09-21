@@ -192,276 +192,17 @@ class FlutterError (
   val details: Any? = null
 ) : RuntimeException()
 
-enum class AutomationCapability(val raw: Int) {
-  UI_DUMP(0),
-  SEMANTIC_ACTION(1),
-  POINTER_INPUT(2),
-  KEYBOARD_INPUT(3),
-  SCREENSHOT(4),
-  CLIPBOARD(5),
-  APP_LIFECYCLE(6),
-  WINDOW_MANAGEMENT(7),
-  SYSTEM_ACTION(8);
-
-  companion object {
-    fun ofRaw(raw: Int): AutomationCapability? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
-enum class AutomationPermission(val raw: Int) {
-  ACCESSIBILITY(0),
-  SCREEN_RECORDING(1),
-  INPUT_MONITORING(2);
-
-  companion object {
-    fun ofRaw(raw: Int): AutomationPermission? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
-enum class PermissionState(val raw: Int) {
-  UNKNOWN(0),
-  DENIED(1),
-  GRANTED(2),
-  RESTRICTED(3);
-
-  companion object {
-    fun ofRaw(raw: Int): PermissionState? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
-enum class TargetType(val raw: Int) {
-  APPLICATION(0),
-  WINDOW(1),
-  SYSTEM_UI(2);
-
-  companion object {
-    fun ofRaw(raw: Int): TargetType? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
-enum class UiRole(val raw: Int) {
-  UNKNOWN(0),
-  APPLICATION(1),
-  WINDOW(2),
-  DIALOG(3),
-  BUTTON(4),
-  TEXT(5),
-  TEXT_FIELD(6),
-  IMAGE(7),
-  CHECKBOX(8),
-  RADIO(9),
-  SWITCH_CONTROL(10),
-  SLIDER(11),
-  LIST(12),
-  LIST_ITEM(13),
-  MENU(14),
-  MENU_ITEM(15),
-  TAB(16),
-  LINK(17),
-  SCROLL_VIEW(18);
-
-  companion object {
-    fun ofRaw(raw: Int): UiRole? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
 enum class UiAction(val raw: Int) {
   PRESS(0),
   FOCUS(1),
   SET_VALUE(2),
-  INCREMENT(3),
-  DECREMENT(4),
-  TOGGLE(5),
-  SELECT(6),
-  EXPAND(7),
-  COLLAPSE(8),
-  DISMISS(9),
-  SCROLL_FORWARD(10),
-  SCROLL_BACKWARD(11);
+  SCROLL_FORWARD(3),
+  SCROLL_BACKWARD(4);
 
   companion object {
     fun ofRaw(raw: Int): UiAction? {
       return values().firstOrNull { it.raw == raw }
     }
-  }
-}
-
-enum class SystemAction(val raw: Int) {
-  BACK(0),
-  HOME(1),
-  ESCAPE(2),
-  APP_SWITCHER(3),
-  NOTIFICATION_CENTER(4),
-  QUICK_SETTINGS(5);
-
-  companion object {
-    fun ofRaw(raw: Int): SystemAction? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
-enum class KeyAction(val raw: Int) {
-  PRESS(0),
-  DOWN(1),
-  UP(2);
-
-  companion object {
-    fun ofRaw(raw: Int): KeyAction? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
-enum class ScreenshotFormat(val raw: Int) {
-  PNG(0),
-  JPEG(1);
-
-  companion object {
-    fun ofRaw(raw: Int): ScreenshotFormat? {
-      return values().firstOrNull { it.raw == raw }
-    }
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class PointData (
-  val x: Double,
-  val y: Double
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): PointData {
-      val x = pigeonVar_list[0] as Double
-      val y = pigeonVar_list[1] as Double
-      return PointData(x, y)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      x,
-      y,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as PointData
-    return MessagesPigeonUtils.deepEquals(this.x, other.x) && MessagesPigeonUtils.deepEquals(this.y, other.y)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.x)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.y)
-    return result
-  }
-  override fun toString(): String {
-    return "PointData(x=$x, y=$y)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class RectData (
-  val x: Double,
-  val y: Double,
-  val width: Double,
-  val height: Double
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): RectData {
-      val x = pigeonVar_list[0] as Double
-      val y = pigeonVar_list[1] as Double
-      val width = pigeonVar_list[2] as Double
-      val height = pigeonVar_list[3] as Double
-      return RectData(x, y, width, height)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      x,
-      y,
-      width,
-      height,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as RectData
-    return MessagesPigeonUtils.deepEquals(this.x, other.x) && MessagesPigeonUtils.deepEquals(this.y, other.y) && MessagesPigeonUtils.deepEquals(this.width, other.width) && MessagesPigeonUtils.deepEquals(this.height, other.height)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.x)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.y)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.width)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.height)
-    return result
-  }
-  override fun toString(): String {
-    return "RectData(x=$x, y=$y, width=$width, height=$height)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class SizeData (
-  val width: Double,
-  val height: Double
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): SizeData {
-      val width = pigeonVar_list[0] as Double
-      val height = pigeonVar_list[1] as Double
-      return SizeData(width, height)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      width,
-      height,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as SizeData
-    return MessagesPigeonUtils.deepEquals(this.width, other.width) && MessagesPigeonUtils.deepEquals(this.height, other.height)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.width)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.height)
-    return result
-  }
-  override fun toString(): String {
-    return "SizeData(width=$width, height=$height)"
   }
 }
 
@@ -560,25 +301,28 @@ data class DeviceInfo (
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class ScreenInfo (
-  val size: SizeData,
-  val scale: Double,
-  val orientation: String
+data class RectData (
+  val x: Double,
+  val y: Double,
+  val width: Double,
+  val height: Double
 )
  {
   companion object {
-    fun fromList(pigeonVar_list: List<Any?>): ScreenInfo {
-      val size = pigeonVar_list[0] as SizeData
-      val scale = pigeonVar_list[1] as Double
-      val orientation = pigeonVar_list[2] as String
-      return ScreenInfo(size, scale, orientation)
+    fun fromList(pigeonVar_list: List<Any?>): RectData {
+      val x = pigeonVar_list[0] as Double
+      val y = pigeonVar_list[1] as Double
+      val width = pigeonVar_list[2] as Double
+      val height = pigeonVar_list[3] as Double
+      return RectData(x, y, width, height)
     }
   }
   fun toList(): List<Any?> {
     return listOf(
-      size,
-      scale,
-      orientation,
+      x,
+      y,
+      width,
+      height,
     )
   }
   override fun equals(other: Any?): Boolean {
@@ -588,170 +332,20 @@ data class ScreenInfo (
     if (this === other) {
       return true
     }
-    val other = other as ScreenInfo
-    return MessagesPigeonUtils.deepEquals(this.size, other.size) && MessagesPigeonUtils.deepEquals(this.scale, other.scale) && MessagesPigeonUtils.deepEquals(this.orientation, other.orientation)
+    val other = other as RectData
+    return MessagesPigeonUtils.deepEquals(this.x, other.x) && MessagesPigeonUtils.deepEquals(this.y, other.y) && MessagesPigeonUtils.deepEquals(this.width, other.width) && MessagesPigeonUtils.deepEquals(this.height, other.height)
   }
 
   override fun hashCode(): Int {
     var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.size)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.scale)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.orientation)
+    result = 31 * result + MessagesPigeonUtils.deepHash(this.x)
+    result = 31 * result + MessagesPigeonUtils.deepHash(this.y)
+    result = 31 * result + MessagesPigeonUtils.deepHash(this.width)
+    result = 31 * result + MessagesPigeonUtils.deepHash(this.height)
     return result
   }
   override fun toString(): String {
-    return "ScreenInfo(size=$size, scale=$scale, orientation=$orientation)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class CapabilityInfo (
-  val capabilities: List<AutomationCapability?>
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): CapabilityInfo {
-      val capabilities = pigeonVar_list[0] as List<AutomationCapability?>
-      return CapabilityInfo(capabilities)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      capabilities,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as CapabilityInfo
-    return MessagesPigeonUtils.deepEquals(this.capabilities, other.capabilities)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.capabilities)
-    return result
-  }
-  override fun toString(): String {
-    return "CapabilityInfo(capabilities=$capabilities)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class PermissionInfo (
-  val permission: AutomationPermission,
-  val state: PermissionState,
-  val canRequest: Boolean,
-  val message: String? = null
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): PermissionInfo {
-      val permission = pigeonVar_list[0] as AutomationPermission
-      val state = pigeonVar_list[1] as PermissionState
-      val canRequest = pigeonVar_list[2] as Boolean
-      val message = pigeonVar_list[3] as String?
-      return PermissionInfo(permission, state, canRequest, message)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      permission,
-      state,
-      canRequest,
-      message,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as PermissionInfo
-    return MessagesPigeonUtils.deepEquals(this.permission, other.permission) && MessagesPigeonUtils.deepEquals(this.state, other.state) && MessagesPigeonUtils.deepEquals(this.canRequest, other.canRequest) && MessagesPigeonUtils.deepEquals(this.message, other.message)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.permission)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.state)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.canRequest)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.message)
-    return result
-  }
-  override fun toString(): String {
-    return "PermissionInfo(permission=$permission, state=$state, canRequest=$canRequest, message=$message)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class TargetInfo (
-  val targetId: String,
-  val type: TargetType,
-  val appId: String? = null,
-  val name: String? = null,
-  val title: String? = null,
-  val processId: Long? = null,
-  val bounds: RectData? = null,
-  val foreground: Boolean
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): TargetInfo {
-      val targetId = pigeonVar_list[0] as String
-      val type = pigeonVar_list[1] as TargetType
-      val appId = pigeonVar_list[2] as String?
-      val name = pigeonVar_list[3] as String?
-      val title = pigeonVar_list[4] as String?
-      val processId = pigeonVar_list[5] as Long?
-      val bounds = pigeonVar_list[6] as RectData?
-      val foreground = pigeonVar_list[7] as Boolean
-      return TargetInfo(targetId, type, appId, name, title, processId, bounds, foreground)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      targetId,
-      type,
-      appId,
-      name,
-      title,
-      processId,
-      bounds,
-      foreground,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as TargetInfo
-    return MessagesPigeonUtils.deepEquals(this.targetId, other.targetId) && MessagesPigeonUtils.deepEquals(this.type, other.type) && MessagesPigeonUtils.deepEquals(this.appId, other.appId) && MessagesPigeonUtils.deepEquals(this.name, other.name) && MessagesPigeonUtils.deepEquals(this.title, other.title) && MessagesPigeonUtils.deepEquals(this.processId, other.processId) && MessagesPigeonUtils.deepEquals(this.bounds, other.bounds) && MessagesPigeonUtils.deepEquals(this.foreground, other.foreground)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.targetId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.type)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.appId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.name)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.title)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.processId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.bounds)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.foreground)
-    return result
-  }
-  override fun toString(): String {
-    return "TargetInfo(targetId=$targetId, type=$type, appId=$appId, name=$name, title=$title, processId=$processId, bounds=$bounds, foreground=$foreground)"
+    return "RectData(x=$x, y=$y, width=$width, height=$height)"
   }
 }
 
@@ -759,45 +353,41 @@ data class TargetInfo (
 data class UiNode (
   val nodeId: String,
   val parentNodeId: String? = null,
-  val childNodeIds: List<String?>? = null,
+  val childNodeIds: List<String>,
   val automationId: String? = null,
   val text: String? = null,
   val label: String? = null,
   val value: String? = null,
-  val role: UiRole,
+  val role: String,
   val bounds: RectData,
-  val visible: Boolean,
   val enabled: Boolean,
   val clickable: Boolean,
   val editable: Boolean,
   val focused: Boolean,
   val selected: Boolean,
   val checked: Boolean,
-  val scrollable: Boolean,
-  val actions: List<UiAction?>? = null
+  val scrollable: Boolean
 )
  {
   companion object {
     fun fromList(pigeonVar_list: List<Any?>): UiNode {
       val nodeId = pigeonVar_list[0] as String
       val parentNodeId = pigeonVar_list[1] as String?
-      val childNodeIds = pigeonVar_list[2] as List<String?>?
+      val childNodeIds = pigeonVar_list[2] as List<String>
       val automationId = pigeonVar_list[3] as String?
       val text = pigeonVar_list[4] as String?
       val label = pigeonVar_list[5] as String?
       val value = pigeonVar_list[6] as String?
-      val role = pigeonVar_list[7] as UiRole
+      val role = pigeonVar_list[7] as String
       val bounds = pigeonVar_list[8] as RectData
-      val visible = pigeonVar_list[9] as Boolean
-      val enabled = pigeonVar_list[10] as Boolean
-      val clickable = pigeonVar_list[11] as Boolean
-      val editable = pigeonVar_list[12] as Boolean
-      val focused = pigeonVar_list[13] as Boolean
-      val selected = pigeonVar_list[14] as Boolean
-      val checked = pigeonVar_list[15] as Boolean
-      val scrollable = pigeonVar_list[16] as Boolean
-      val actions = pigeonVar_list[17] as List<UiAction?>?
-      return UiNode(nodeId, parentNodeId, childNodeIds, automationId, text, label, value, role, bounds, visible, enabled, clickable, editable, focused, selected, checked, scrollable, actions)
+      val enabled = pigeonVar_list[9] as Boolean
+      val clickable = pigeonVar_list[10] as Boolean
+      val editable = pigeonVar_list[11] as Boolean
+      val focused = pigeonVar_list[12] as Boolean
+      val selected = pigeonVar_list[13] as Boolean
+      val checked = pigeonVar_list[14] as Boolean
+      val scrollable = pigeonVar_list[15] as Boolean
+      return UiNode(nodeId, parentNodeId, childNodeIds, automationId, text, label, value, role, bounds, enabled, clickable, editable, focused, selected, checked, scrollable)
     }
   }
   fun toList(): List<Any?> {
@@ -811,7 +401,6 @@ data class UiNode (
       value,
       role,
       bounds,
-      visible,
       enabled,
       clickable,
       editable,
@@ -819,7 +408,6 @@ data class UiNode (
       selected,
       checked,
       scrollable,
-      actions,
     )
   }
   override fun equals(other: Any?): Boolean {
@@ -830,7 +418,7 @@ data class UiNode (
       return true
     }
     val other = other as UiNode
-    return MessagesPigeonUtils.deepEquals(this.nodeId, other.nodeId) && MessagesPigeonUtils.deepEquals(this.parentNodeId, other.parentNodeId) && MessagesPigeonUtils.deepEquals(this.childNodeIds, other.childNodeIds) && MessagesPigeonUtils.deepEquals(this.automationId, other.automationId) && MessagesPigeonUtils.deepEquals(this.text, other.text) && MessagesPigeonUtils.deepEquals(this.label, other.label) && MessagesPigeonUtils.deepEquals(this.value, other.value) && MessagesPigeonUtils.deepEquals(this.role, other.role) && MessagesPigeonUtils.deepEquals(this.bounds, other.bounds) && MessagesPigeonUtils.deepEquals(this.visible, other.visible) && MessagesPigeonUtils.deepEquals(this.enabled, other.enabled) && MessagesPigeonUtils.deepEquals(this.clickable, other.clickable) && MessagesPigeonUtils.deepEquals(this.editable, other.editable) && MessagesPigeonUtils.deepEquals(this.focused, other.focused) && MessagesPigeonUtils.deepEquals(this.selected, other.selected) && MessagesPigeonUtils.deepEquals(this.checked, other.checked) && MessagesPigeonUtils.deepEquals(this.scrollable, other.scrollable) && MessagesPigeonUtils.deepEquals(this.actions, other.actions)
+    return MessagesPigeonUtils.deepEquals(this.nodeId, other.nodeId) && MessagesPigeonUtils.deepEquals(this.parentNodeId, other.parentNodeId) && MessagesPigeonUtils.deepEquals(this.childNodeIds, other.childNodeIds) && MessagesPigeonUtils.deepEquals(this.automationId, other.automationId) && MessagesPigeonUtils.deepEquals(this.text, other.text) && MessagesPigeonUtils.deepEquals(this.label, other.label) && MessagesPigeonUtils.deepEquals(this.value, other.value) && MessagesPigeonUtils.deepEquals(this.role, other.role) && MessagesPigeonUtils.deepEquals(this.bounds, other.bounds) && MessagesPigeonUtils.deepEquals(this.enabled, other.enabled) && MessagesPigeonUtils.deepEquals(this.clickable, other.clickable) && MessagesPigeonUtils.deepEquals(this.editable, other.editable) && MessagesPigeonUtils.deepEquals(this.focused, other.focused) && MessagesPigeonUtils.deepEquals(this.selected, other.selected) && MessagesPigeonUtils.deepEquals(this.checked, other.checked) && MessagesPigeonUtils.deepEquals(this.scrollable, other.scrollable)
   }
 
   override fun hashCode(): Int {
@@ -844,7 +432,6 @@ data class UiNode (
     result = 31 * result + MessagesPigeonUtils.deepHash(this.value)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.role)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.bounds)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.visible)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.enabled)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.clickable)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.editable)
@@ -852,39 +439,29 @@ data class UiNode (
     result = 31 * result + MessagesPigeonUtils.deepHash(this.selected)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.checked)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.scrollable)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.actions)
     return result
   }
   override fun toString(): String {
-    return "UiNode(nodeId=$nodeId, parentNodeId=$parentNodeId, childNodeIds=$childNodeIds, automationId=$automationId, text=$text, label=$label, value=$value, role=$role, bounds=$bounds, visible=$visible, enabled=$enabled, clickable=$clickable, editable=$editable, focused=$focused, selected=$selected, checked=$checked, scrollable=$scrollable, actions=$actions)"
+    return "UiNode(nodeId=$nodeId, parentNodeId=$parentNodeId, childNodeIds=$childNodeIds, automationId=$automationId, text=$text, label=$label, value=$value, role=$role, bounds=$bounds, enabled=$enabled, clickable=$clickable, editable=$editable, focused=$focused, selected=$selected, checked=$checked, scrollable=$scrollable)"
   }
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class UiSnapshot (
   val generation: Long,
-  val targetId: String? = null,
-  val rootNodeId: String? = null,
-  val screen: ScreenInfo,
-  val nodes: List<UiNode?>
+  val nodes: List<UiNode>
 )
  {
   companion object {
     fun fromList(pigeonVar_list: List<Any?>): UiSnapshot {
       val generation = pigeonVar_list[0] as Long
-      val targetId = pigeonVar_list[1] as String?
-      val rootNodeId = pigeonVar_list[2] as String?
-      val screen = pigeonVar_list[3] as ScreenInfo
-      val nodes = pigeonVar_list[4] as List<UiNode?>
-      return UiSnapshot(generation, targetId, rootNodeId, screen, nodes)
+      val nodes = pigeonVar_list[1] as List<UiNode>
+      return UiSnapshot(generation, nodes)
     }
   }
   fun toList(): List<Any?> {
     return listOf(
       generation,
-      targetId,
-      rootNodeId,
-      screen,
       nodes,
     )
   }
@@ -896,155 +473,17 @@ data class UiSnapshot (
       return true
     }
     val other = other as UiSnapshot
-    return MessagesPigeonUtils.deepEquals(this.generation, other.generation) && MessagesPigeonUtils.deepEquals(this.targetId, other.targetId) && MessagesPigeonUtils.deepEquals(this.rootNodeId, other.rootNodeId) && MessagesPigeonUtils.deepEquals(this.screen, other.screen) && MessagesPigeonUtils.deepEquals(this.nodes, other.nodes)
+    return MessagesPigeonUtils.deepEquals(this.generation, other.generation) && MessagesPigeonUtils.deepEquals(this.nodes, other.nodes)
   }
 
   override fun hashCode(): Int {
     var result = javaClass.hashCode()
     result = 31 * result + MessagesPigeonUtils.deepHash(this.generation)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.targetId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.rootNodeId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.screen)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.nodes)
     return result
   }
   override fun toString(): String {
-    return "UiSnapshot(generation=$generation, targetId=$targetId, rootNodeId=$rootNodeId, screen=$screen, nodes=$nodes)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class DumpUiRequest (
-  val targetId: String? = null,
-  val includeInvisible: Boolean
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): DumpUiRequest {
-      val targetId = pigeonVar_list[0] as String?
-      val includeInvisible = pigeonVar_list[1] as Boolean
-      return DumpUiRequest(targetId, includeInvisible)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      targetId,
-      includeInvisible,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as DumpUiRequest
-    return MessagesPigeonUtils.deepEquals(this.targetId, other.targetId) && MessagesPigeonUtils.deepEquals(this.includeInvisible, other.includeInvisible)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.targetId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.includeInvisible)
-    return result
-  }
-  override fun toString(): String {
-    return "DumpUiRequest(targetId=$targetId, includeInvisible=$includeInvisible)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class HitTestRequest (
-  val targetId: String? = null,
-  val point: PointData
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): HitTestRequest {
-      val targetId = pigeonVar_list[0] as String?
-      val point = pigeonVar_list[1] as PointData
-      return HitTestRequest(targetId, point)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      targetId,
-      point,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as HitTestRequest
-    return MessagesPigeonUtils.deepEquals(this.targetId, other.targetId) && MessagesPigeonUtils.deepEquals(this.point, other.point)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.targetId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.point)
-    return result
-  }
-  override fun toString(): String {
-    return "HitTestRequest(targetId=$targetId, point=$point)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class ElementActionRequest (
-  val targetId: String? = null,
-  val generation: Long,
-  val nodeId: String,
-  val action: UiAction,
-  val value: String? = null
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): ElementActionRequest {
-      val targetId = pigeonVar_list[0] as String?
-      val generation = pigeonVar_list[1] as Long
-      val nodeId = pigeonVar_list[2] as String
-      val action = pigeonVar_list[3] as UiAction
-      val value = pigeonVar_list[4] as String?
-      return ElementActionRequest(targetId, generation, nodeId, action, value)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      targetId,
-      generation,
-      nodeId,
-      action,
-      value,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as ElementActionRequest
-    return MessagesPigeonUtils.deepEquals(this.targetId, other.targetId) && MessagesPigeonUtils.deepEquals(this.generation, other.generation) && MessagesPigeonUtils.deepEquals(this.nodeId, other.nodeId) && MessagesPigeonUtils.deepEquals(this.action, other.action) && MessagesPigeonUtils.deepEquals(this.value, other.value)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.targetId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.generation)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.nodeId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.action)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.value)
-    return result
-  }
-  override fun toString(): String {
-    return "ElementActionRequest(targetId=$targetId, generation=$generation, nodeId=$nodeId, action=$action, value=$value)"
+    return "UiSnapshot(generation=$generation, nodes=$nodes)"
   }
 }
 
@@ -1092,585 +531,42 @@ data class ActionResult (
     return "ActionResult(success=$success, message=$message, uiChanged=$uiChanged)"
   }
 }
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class LaunchAppRequest (
-  val appId: String,
-  val arguments: List<String?>? = null,
-  val environment: Map<String?, String?>? = null
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): LaunchAppRequest {
-      val appId = pigeonVar_list[0] as String
-      val arguments = pigeonVar_list[1] as List<String?>?
-      val environment = pigeonVar_list[2] as Map<String?, String?>?
-      return LaunchAppRequest(appId, arguments, environment)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      appId,
-      arguments,
-      environment,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as LaunchAppRequest
-    return MessagesPigeonUtils.deepEquals(this.appId, other.appId) && MessagesPigeonUtils.deepEquals(this.arguments, other.arguments) && MessagesPigeonUtils.deepEquals(this.environment, other.environment)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.appId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.arguments)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.environment)
-    return result
-  }
-  override fun toString(): String {
-    return "LaunchAppRequest(appId=$appId, arguments=$arguments, environment=$environment)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class TapRequest (
-  val point: PointData,
-  val count: Long
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): TapRequest {
-      val point = pigeonVar_list[0] as PointData
-      val count = pigeonVar_list[1] as Long
-      return TapRequest(point, count)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      point,
-      count,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as TapRequest
-    return MessagesPigeonUtils.deepEquals(this.point, other.point) && MessagesPigeonUtils.deepEquals(this.count, other.count)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.point)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.count)
-    return result
-  }
-  override fun toString(): String {
-    return "TapRequest(point=$point, count=$count)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class LongPressRequest (
-  val point: PointData,
-  val durationMs: Long
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): LongPressRequest {
-      val point = pigeonVar_list[0] as PointData
-      val durationMs = pigeonVar_list[1] as Long
-      return LongPressRequest(point, durationMs)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      point,
-      durationMs,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as LongPressRequest
-    return MessagesPigeonUtils.deepEquals(this.point, other.point) && MessagesPigeonUtils.deepEquals(this.durationMs, other.durationMs)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.point)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.durationMs)
-    return result
-  }
-  override fun toString(): String {
-    return "LongPressRequest(point=$point, durationMs=$durationMs)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class SwipeRequest (
-  val from: PointData,
-  val to: PointData,
-  val durationMs: Long
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): SwipeRequest {
-      val from = pigeonVar_list[0] as PointData
-      val to = pigeonVar_list[1] as PointData
-      val durationMs = pigeonVar_list[2] as Long
-      return SwipeRequest(from, to, durationMs)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      from,
-      to,
-      durationMs,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as SwipeRequest
-    return MessagesPigeonUtils.deepEquals(this.from, other.from) && MessagesPigeonUtils.deepEquals(this.to, other.to) && MessagesPigeonUtils.deepEquals(this.durationMs, other.durationMs)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.from)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.to)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.durationMs)
-    return result
-  }
-  override fun toString(): String {
-    return "SwipeRequest(from=$from, to=$to, durationMs=$durationMs)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class ScrollRequest (
-  val deltaX: Double,
-  val deltaY: Double,
-  val origin: PointData? = null
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): ScrollRequest {
-      val deltaX = pigeonVar_list[0] as Double
-      val deltaY = pigeonVar_list[1] as Double
-      val origin = pigeonVar_list[2] as PointData?
-      return ScrollRequest(deltaX, deltaY, origin)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      deltaX,
-      deltaY,
-      origin,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as ScrollRequest
-    return MessagesPigeonUtils.deepEquals(this.deltaX, other.deltaX) && MessagesPigeonUtils.deepEquals(this.deltaY, other.deltaY) && MessagesPigeonUtils.deepEquals(this.origin, other.origin)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.deltaX)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.deltaY)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.origin)
-    return result
-  }
-  override fun toString(): String {
-    return "ScrollRequest(deltaX=$deltaX, deltaY=$deltaY, origin=$origin)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class TypeTextRequest (
-  val text: String,
-  val clearFirst: Boolean
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): TypeTextRequest {
-      val text = pigeonVar_list[0] as String
-      val clearFirst = pigeonVar_list[1] as Boolean
-      return TypeTextRequest(text, clearFirst)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      text,
-      clearFirst,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as TypeTextRequest
-    return MessagesPigeonUtils.deepEquals(this.text, other.text) && MessagesPigeonUtils.deepEquals(this.clearFirst, other.clearFirst)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.text)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.clearFirst)
-    return result
-  }
-  override fun toString(): String {
-    return "TypeTextRequest(text=$text, clearFirst=$clearFirst)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class KeyRequest (
-  val key: String,
-  val action: KeyAction,
-  val alt: Boolean,
-  val control: Boolean,
-  val shift: Boolean,
-  val meta: Boolean
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): KeyRequest {
-      val key = pigeonVar_list[0] as String
-      val action = pigeonVar_list[1] as KeyAction
-      val alt = pigeonVar_list[2] as Boolean
-      val control = pigeonVar_list[3] as Boolean
-      val shift = pigeonVar_list[4] as Boolean
-      val meta = pigeonVar_list[5] as Boolean
-      return KeyRequest(key, action, alt, control, shift, meta)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      key,
-      action,
-      alt,
-      control,
-      shift,
-      meta,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as KeyRequest
-    return MessagesPigeonUtils.deepEquals(this.key, other.key) && MessagesPigeonUtils.deepEquals(this.action, other.action) && MessagesPigeonUtils.deepEquals(this.alt, other.alt) && MessagesPigeonUtils.deepEquals(this.control, other.control) && MessagesPigeonUtils.deepEquals(this.shift, other.shift) && MessagesPigeonUtils.deepEquals(this.meta, other.meta)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.key)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.action)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.alt)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.control)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.shift)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.meta)
-    return result
-  }
-  override fun toString(): String {
-    return "KeyRequest(key=$key, action=$action, alt=$alt, control=$control, shift=$shift, meta=$meta)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class ScreenshotRequest (
-  val targetId: String? = null,
-  val format: ScreenshotFormat,
-  val quality: Long
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): ScreenshotRequest {
-      val targetId = pigeonVar_list[0] as String?
-      val format = pigeonVar_list[1] as ScreenshotFormat
-      val quality = pigeonVar_list[2] as Long
-      return ScreenshotRequest(targetId, format, quality)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      targetId,
-      format,
-      quality,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as ScreenshotRequest
-    return MessagesPigeonUtils.deepEquals(this.targetId, other.targetId) && MessagesPigeonUtils.deepEquals(this.format, other.format) && MessagesPigeonUtils.deepEquals(this.quality, other.quality)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.targetId)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.format)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.quality)
-    return result
-  }
-  override fun toString(): String {
-    return "ScreenshotRequest(targetId=$targetId, format=$format, quality=$quality)"
-  }
-}
-
-/** Generated class from Pigeon that represents data sent in messages. */
-data class ScreenshotData (
-  val bytes: ByteArray,
-  val width: Long,
-  val height: Long,
-  val scale: Double,
-  val format: ScreenshotFormat
-)
- {
-  companion object {
-    fun fromList(pigeonVar_list: List<Any?>): ScreenshotData {
-      val bytes = pigeonVar_list[0] as ByteArray
-      val width = pigeonVar_list[1] as Long
-      val height = pigeonVar_list[2] as Long
-      val scale = pigeonVar_list[3] as Double
-      val format = pigeonVar_list[4] as ScreenshotFormat
-      return ScreenshotData(bytes, width, height, scale, format)
-    }
-  }
-  fun toList(): List<Any?> {
-    return listOf(
-      bytes,
-      width,
-      height,
-      scale,
-      format,
-    )
-  }
-  override fun equals(other: Any?): Boolean {
-    if (other == null || other.javaClass != javaClass) {
-      return false
-    }
-    if (this === other) {
-      return true
-    }
-    val other = other as ScreenshotData
-    return MessagesPigeonUtils.deepEquals(this.bytes, other.bytes) && MessagesPigeonUtils.deepEquals(this.width, other.width) && MessagesPigeonUtils.deepEquals(this.height, other.height) && MessagesPigeonUtils.deepEquals(this.scale, other.scale) && MessagesPigeonUtils.deepEquals(this.format, other.format)
-  }
-
-  override fun hashCode(): Int {
-    var result = javaClass.hashCode()
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.bytes)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.width)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.height)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.scale)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.format)
-    return result
-  }
-  override fun toString(): String {
-    return "ScreenshotData(bytes=${bytes.contentToString()}, width=$width, height=$height, scale=$scale, format=$format)"
-  }
-}
 private open class MessagesPigeonCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
     return when (type) {
       129.toByte() -> {
         return (readValue(buffer) as Long?)?.let {
-          AutomationCapability.ofRaw(it.toInt())
-        }
-      }
-      130.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
-          AutomationPermission.ofRaw(it.toInt())
-        }
-      }
-      131.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
-          PermissionState.ofRaw(it.toInt())
-        }
-      }
-      132.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
-          TargetType.ofRaw(it.toInt())
-        }
-      }
-      133.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
-          UiRole.ofRaw(it.toInt())
-        }
-      }
-      134.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
           UiAction.ofRaw(it.toInt())
         }
       }
-      135.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
-          SystemAction.ofRaw(it.toInt())
-        }
-      }
-      136.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
-          KeyAction.ofRaw(it.toInt())
-        }
-      }
-      137.toByte() -> {
-        return (readValue(buffer) as Long?)?.let {
-          ScreenshotFormat.ofRaw(it.toInt())
-        }
-      }
-      138.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          PointData.fromList(it)
-        }
-      }
-      139.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          RectData.fromList(it)
-        }
-      }
-      140.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          SizeData.fromList(it)
-        }
-      }
-      141.toByte() -> {
+      130.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           DriverConfig.fromList(it)
         }
       }
-      142.toByte() -> {
+      131.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           DeviceInfo.fromList(it)
         }
       }
-      143.toByte() -> {
+      132.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
-          ScreenInfo.fromList(it)
+          RectData.fromList(it)
         }
       }
-      144.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          CapabilityInfo.fromList(it)
-        }
-      }
-      145.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          PermissionInfo.fromList(it)
-        }
-      }
-      146.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          TargetInfo.fromList(it)
-        }
-      }
-      147.toByte() -> {
+      133.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           UiNode.fromList(it)
         }
       }
-      148.toByte() -> {
+      134.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           UiSnapshot.fromList(it)
         }
       }
-      149.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          DumpUiRequest.fromList(it)
-        }
-      }
-      150.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          HitTestRequest.fromList(it)
-        }
-      }
-      151.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          ElementActionRequest.fromList(it)
-        }
-      }
-      152.toByte() -> {
+      135.toByte() -> {
         return (readValue(buffer) as? List<Any?>)?.let {
           ActionResult.fromList(it)
-        }
-      }
-      153.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          LaunchAppRequest.fromList(it)
-        }
-      }
-      154.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          TapRequest.fromList(it)
-        }
-      }
-      155.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          LongPressRequest.fromList(it)
-        }
-      }
-      156.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          SwipeRequest.fromList(it)
-        }
-      }
-      157.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          ScrollRequest.fromList(it)
-        }
-      }
-      158.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          TypeTextRequest.fromList(it)
-        }
-      }
-      159.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          KeyRequest.fromList(it)
-        }
-      }
-      160.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          ScreenshotRequest.fromList(it)
-        }
-      }
-      161.toByte() -> {
-        return (readValue(buffer) as? List<Any?>)?.let {
-          ScreenshotData.fromList(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -1678,136 +574,32 @@ private open class MessagesPigeonCodec : StandardMessageCodec() {
   }
   override fun writeValue(stream: ByteArrayOutputStream, value: Any?)   {
     when (value) {
-      is AutomationCapability -> {
+      is UiAction -> {
         stream.write(129)
         writeValue(stream, value.raw.toLong())
       }
-      is AutomationPermission -> {
-        stream.write(130)
-        writeValue(stream, value.raw.toLong())
-      }
-      is PermissionState -> {
-        stream.write(131)
-        writeValue(stream, value.raw.toLong())
-      }
-      is TargetType -> {
-        stream.write(132)
-        writeValue(stream, value.raw.toLong())
-      }
-      is UiRole -> {
-        stream.write(133)
-        writeValue(stream, value.raw.toLong())
-      }
-      is UiAction -> {
-        stream.write(134)
-        writeValue(stream, value.raw.toLong())
-      }
-      is SystemAction -> {
-        stream.write(135)
-        writeValue(stream, value.raw.toLong())
-      }
-      is KeyAction -> {
-        stream.write(136)
-        writeValue(stream, value.raw.toLong())
-      }
-      is ScreenshotFormat -> {
-        stream.write(137)
-        writeValue(stream, value.raw.toLong())
-      }
-      is PointData -> {
-        stream.write(138)
-        writeValue(stream, value.toList())
-      }
-      is RectData -> {
-        stream.write(139)
-        writeValue(stream, value.toList())
-      }
-      is SizeData -> {
-        stream.write(140)
-        writeValue(stream, value.toList())
-      }
       is DriverConfig -> {
-        stream.write(141)
+        stream.write(130)
         writeValue(stream, value.toList())
       }
       is DeviceInfo -> {
-        stream.write(142)
+        stream.write(131)
         writeValue(stream, value.toList())
       }
-      is ScreenInfo -> {
-        stream.write(143)
-        writeValue(stream, value.toList())
-      }
-      is CapabilityInfo -> {
-        stream.write(144)
-        writeValue(stream, value.toList())
-      }
-      is PermissionInfo -> {
-        stream.write(145)
-        writeValue(stream, value.toList())
-      }
-      is TargetInfo -> {
-        stream.write(146)
+      is RectData -> {
+        stream.write(132)
         writeValue(stream, value.toList())
       }
       is UiNode -> {
-        stream.write(147)
+        stream.write(133)
         writeValue(stream, value.toList())
       }
       is UiSnapshot -> {
-        stream.write(148)
-        writeValue(stream, value.toList())
-      }
-      is DumpUiRequest -> {
-        stream.write(149)
-        writeValue(stream, value.toList())
-      }
-      is HitTestRequest -> {
-        stream.write(150)
-        writeValue(stream, value.toList())
-      }
-      is ElementActionRequest -> {
-        stream.write(151)
+        stream.write(134)
         writeValue(stream, value.toList())
       }
       is ActionResult -> {
-        stream.write(152)
-        writeValue(stream, value.toList())
-      }
-      is LaunchAppRequest -> {
-        stream.write(153)
-        writeValue(stream, value.toList())
-      }
-      is TapRequest -> {
-        stream.write(154)
-        writeValue(stream, value.toList())
-      }
-      is LongPressRequest -> {
-        stream.write(155)
-        writeValue(stream, value.toList())
-      }
-      is SwipeRequest -> {
-        stream.write(156)
-        writeValue(stream, value.toList())
-      }
-      is ScrollRequest -> {
-        stream.write(157)
-        writeValue(stream, value.toList())
-      }
-      is TypeTextRequest -> {
-        stream.write(158)
-        writeValue(stream, value.toList())
-      }
-      is KeyRequest -> {
-        stream.write(159)
-        writeValue(stream, value.toList())
-      }
-      is ScreenshotRequest -> {
-        stream.write(160)
-        writeValue(stream, value.toList())
-      }
-      is ScreenshotData -> {
-        stream.write(161)
+        stream.write(135)
         writeValue(stream, value.toList())
       }
       else -> super.writeValue(stream, value)
@@ -1816,44 +608,35 @@ private open class MessagesPigeonCodec : StandardMessageCodec() {
 }
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface AutomationHostApi {
+interface DeviceKitHostApi {
   fun initialize(config: DriverConfig)
-  fun shutdown()
+  fun dispose()
   fun getDeviceInfo(): DeviceInfo
-  fun getScreenInfo(): ScreenInfo
-  fun getCapabilities(): CapabilityInfo
-  fun getPermissions(): List<PermissionInfo?>
-  fun requestPermission(permission: AutomationPermission): PermissionInfo
-  fun listTargets(): List<TargetInfo?>
-  fun getForegroundTarget(): TargetInfo?
-  fun launchApp(request: LaunchAppRequest): ActionResult
-  fun terminateApp(appId: String): ActionResult
-  fun activateTarget(targetId: String): ActionResult
-  fun dumpUi(request: DumpUiRequest): UiSnapshot
-  fun hitTest(request: HitTestRequest): UiNode?
-  fun performElementAction(request: ElementActionRequest): ActionResult
-  fun tap(request: TapRequest): ActionResult
-  fun longPress(request: LongPressRequest): ActionResult
-  fun swipe(request: SwipeRequest): ActionResult
-  fun scroll(request: ScrollRequest): ActionResult
-  fun typeText(request: TypeTextRequest): ActionResult
-  fun pressKey(request: KeyRequest): ActionResult
-  fun performSystemAction(action: SystemAction): ActionResult
-  fun screenshot(request: ScreenshotRequest): ScreenshotData
-  fun getClipboardText(): String?
-  fun setClipboardText(text: String): ActionResult
+  fun openAccessibilitySettings(): ActionResult
+  fun launchApp(packageName: String): ActionResult
+  fun dumpUi(): UiSnapshot
+  fun performElementAction(nodeId: String, generation: Long, action: UiAction, value: String?): ActionResult
+  fun tap(x: Double, y: Double): ActionResult
+  fun swipe(fromX: Double, fromY: Double, toX: Double, toY: Double, durationMs: Long): ActionResult
+  fun typeText(text: String): ActionResult
+  fun pressBack(): ActionResult
+  fun pressHome(): ActionResult
+  fun screenshot(): ByteArray
+  fun requestScreenCapture(): ActionResult
+  fun getClipboard(): String?
+  fun setClipboard(text: String): ActionResult
 
   companion object {
-    /** The codec used by AutomationHostApi. */
+    /** The codec used by DeviceKitHostApi. */
     val codec: MessageCodec<Any?> by lazy {
       MessagesPigeonCodec()
     }
-    /** Sets up an instance of `AutomationHostApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `DeviceKitHostApi` to handle messages through the `binaryMessenger`. */
     @JvmOverloads
-    fun setUp(binaryMessenger: BinaryMessenger, api: AutomationHostApi?, messageChannelSuffix: String = "") {
+    fun setUp(binaryMessenger: BinaryMessenger, api: DeviceKitHostApi?, messageChannelSuffix: String = "") {
       val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.initialize$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.initialize$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -1871,11 +654,11 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.shutdown$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dispose$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             val wrapped: List<Any?> = try {
-              api.shutdown()
+              api.dispose()
               listOf(null)
             } catch (exception: Throwable) {
               MessagesPigeonUtils.wrapError(exception)
@@ -1887,7 +670,7 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getDeviceInfo$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getDeviceInfo$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             val wrapped: List<Any?> = try {
@@ -1902,11 +685,11 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getScreenInfo$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.openAccessibilitySettings$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             val wrapped: List<Any?> = try {
-              listOf(api.getScreenInfo())
+              listOf(api.openAccessibilitySettings())
             } catch (exception: Throwable) {
               MessagesPigeonUtils.wrapError(exception)
             }
@@ -1917,11 +700,28 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getCapabilities$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.launchApp$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val packageNameArg = args[0] as String
+            val wrapped: List<Any?> = try {
+              listOf(api.launchApp(packageNameArg))
+            } catch (exception: Throwable) {
+              MessagesPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dumpUi$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             val wrapped: List<Any?> = try {
-              listOf(api.getCapabilities())
+              listOf(api.dumpUi())
             } catch (exception: Throwable) {
               MessagesPigeonUtils.wrapError(exception)
             }
@@ -1932,28 +732,16 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getPermissions$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            val wrapped: List<Any?> = try {
-              listOf(api.getPermissions())
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.requestPermission$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.performElementAction$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val permissionArg = args[0] as AutomationPermission
+            val nodeIdArg = args[0] as String
+            val generationArg = args[1] as Long
+            val actionArg = args[2] as UiAction
+            val valueArg = args[3] as String?
             val wrapped: List<Any?> = try {
-              listOf(api.requestPermission(permissionArg))
+              listOf(api.performElementAction(nodeIdArg, generationArg, actionArg, valueArg))
             } catch (exception: Throwable) {
               MessagesPigeonUtils.wrapError(exception)
             }
@@ -1964,43 +752,14 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.listTargets$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            val wrapped: List<Any?> = try {
-              listOf(api.listTargets())
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getForegroundTarget$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            val wrapped: List<Any?> = try {
-              listOf(api.getForegroundTarget())
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.launchApp$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.tap$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val requestArg = args[0] as LaunchAppRequest
+            val xArg = args[0] as Double
+            val yArg = args[1] as Double
             val wrapped: List<Any?> = try {
-              listOf(api.launchApp(requestArg))
+              listOf(api.tap(xArg, yArg))
             } catch (exception: Throwable) {
               MessagesPigeonUtils.wrapError(exception)
             }
@@ -2011,13 +770,17 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.terminateApp$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.swipe$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
-            val appIdArg = args[0] as String
+            val fromXArg = args[0] as Double
+            val fromYArg = args[1] as Double
+            val toXArg = args[2] as Double
+            val toYArg = args[3] as Double
+            val durationMsArg = args[4] as Long
             val wrapped: List<Any?> = try {
-              listOf(api.terminateApp(appIdArg))
+              listOf(api.swipe(fromXArg, fromYArg, toXArg, toYArg, durationMsArg))
             } catch (exception: Throwable) {
               MessagesPigeonUtils.wrapError(exception)
             }
@@ -2028,232 +791,105 @@ interface AutomationHostApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.activateTarget$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val targetIdArg = args[0] as String
-            val wrapped: List<Any?> = try {
-              listOf(api.activateTarget(targetIdArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.dumpUi$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as DumpUiRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.dumpUi(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.hitTest$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as HitTestRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.hitTest(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performElementAction$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as ElementActionRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.performElementAction(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.tap$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as TapRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.tap(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.longPress$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as LongPressRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.longPress(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.swipe$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as SwipeRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.swipe(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.scroll$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as ScrollRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.scroll(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.typeText$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as TypeTextRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.typeText(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.pressKey$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as KeyRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.pressKey(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.performSystemAction$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val actionArg = args[0] as SystemAction
-            val wrapped: List<Any?> = try {
-              listOf(api.performSystemAction(actionArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.screenshot$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { message, reply ->
-            val args = message as List<Any?>
-            val requestArg = args[0] as ScreenshotRequest
-            val wrapped: List<Any?> = try {
-              listOf(api.screenshot(requestArg))
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.getClipboardText$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            val wrapped: List<Any?> = try {
-              listOf(api.getClipboardText())
-            } catch (exception: Throwable) {
-              MessagesPigeonUtils.wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.AutomationHostApi.setClipboardText$separatedMessageChannelSuffix", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.typeText$separatedMessageChannelSuffix", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
             val textArg = args[0] as String
             val wrapped: List<Any?> = try {
-              listOf(api.setClipboardText(textArg))
+              listOf(api.typeText(textArg))
+            } catch (exception: Throwable) {
+              MessagesPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressBack$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped: List<Any?> = try {
+              listOf(api.pressBack())
+            } catch (exception: Throwable) {
+              MessagesPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.pressHome$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped: List<Any?> = try {
+              listOf(api.pressHome())
+            } catch (exception: Throwable) {
+              MessagesPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.screenshot$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped: List<Any?> = try {
+              listOf(api.screenshot())
+            } catch (exception: Throwable) {
+              MessagesPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.requestScreenCapture$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped: List<Any?> = try {
+              listOf(api.requestScreenCapture())
+            } catch (exception: Throwable) {
+              MessagesPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.getClipboard$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped: List<Any?> = try {
+              listOf(api.getClipboard())
+            } catch (exception: Throwable) {
+              MessagesPigeonUtils.wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.setClipboard$separatedMessageChannelSuffix", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val textArg = args[0] as String
+            val wrapped: List<Any?> = try {
+              listOf(api.setClipboard(textArg))
             } catch (exception: Throwable) {
               MessagesPigeonUtils.wrapError(exception)
             }
