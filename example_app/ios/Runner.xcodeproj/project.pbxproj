@@ -772,7 +772,7 @@
 		};
 		D10000010000000000000012 /* XCLocalSwiftPackageReference "device_kit_lib" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../ios/device_kit_lib;
+			relativePath = ../../darwin/device_kit_lib;
 		};
 /* End XCLocalSwiftPackageReference section */
 

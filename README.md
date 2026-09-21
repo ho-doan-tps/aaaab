@@ -4,10 +4,11 @@ This repository contains the `device_kit_lib` Flutter plugin plus the
 platform-independent Automation Kit MVP:
 
 ```text
-automation_core/  Pure Dart contracts, selectors, and service
-automation_web/   Chrome DevTools Protocol WebAutomationBackend
-automation_kit/   Local JSON-RPC CLI/server
-example_app/      Flutter Web counter app with semantics identifiers
+lib/src/web/automation_core/  Shared contracts, selectors, and service
+lib/src/web/automation_web/   Chrome DevTools Protocol backend
+lib/src/web/automation_kit/   Local JSON-RPC CLI/server
+bin/device_kit_lib.dart       Root-plugin JSON-RPC entrypoint
+example_app/                  Flutter Web counter app with semantics identifiers
 ```
 
 The Android implementation is a separate controller app and target app:
@@ -50,7 +51,7 @@ Accessibility XCTest    AX       UIA    AT-SPI   BiDi
 
 ```mermaid
 flowchart TD
-    codex["Codex / External Tool"] -->|JSON-RPC 2.0| kit["automation_kit<br/>Local JSON-RPC server"]
+    codex["Codex / External Tool"] -->|JSON-RPC 2.0| kit["lib/src/web/automation_kit<br/>Local JSON-RPC server"]
     kit --> service["AutomationService<br/>Dart"]
     service --> selectors["Selectors + wait/retry<br/>By.id / By.value / By.all"]
     selectors --> driver["AndroidDriver<br/>Dart"]
@@ -81,14 +82,40 @@ Kotlin, Swift, and C++ bindings are kept in their platform output folders.
 Selectors and retry/wait logic remain in Dart; Android only exposes
 AccessibilityService and OS capabilities.
 
+The root plugin adapts the Pigeon-backed Android/iOS/macOS `DeviceDriver`
+through `DeviceKitAutomationBackend`. The three Automation Kit layers now live
+under `lib/src/web/`, so the shared `AutomationService` can drive native
+devices and the CDP browser with the same selector contract.
+
+## Shared iOS/macOS implementation
+
+The iOS and macOS plugin sources share `darwin/device_kit_lib/` through
+`sharedDarwinSource: true`. Pigeon generates one Swift contract at
+`darwin/device_kit_lib/Sources/device_kit_lib/Messages.g.swift`; conditional
+Swift files select UIKit/XCTest behavior on iOS and the macOS Accessibility
+API (`AXUIElement`) on macOS. macOS automation requires the host application
+to be trusted under **System Settings > Privacy & Security > Accessibility**.
+
+Build or run the macOS example with Flutter:
+
+```bash
+cd example
+flutter run -d macos
+```
+
+Before calling cross-application AX actions, add the example app (or the
+host application that embeds this plugin) to the macOS Accessibility allowlist.
+The host process must also be allowed to use macOS Accessibility APIs; the
+example controller therefore disables App Sandbox in its macOS entitlements.
+
 ## iOS XCTest integration
 
 iOS cross-app input is implemented by XCTest/XCUITest in a separate product
 exported by the plugin:
 
 ```text
-ios/device_kit_lib/Sources/device_kit_lib/            Flutter/Pigeon runtime
-ios/device_kit_lib/Sources/device_kit_lib_xctest/    XCTest/XCUITest driver
+darwin/device_kit_lib/Sources/device_kit_lib/          Flutter/Pigeon runtime
+darwin/device_kit_lib/Sources/device_kit_lib_xctest/  XCTest/XCUITest driver
 ```
 
 The `device-kit-lib-xctest` Swift product is linked only by native UI-test
@@ -114,9 +141,8 @@ permission** button before calling **Take screenshot**.
 ## Run the tests
 
 ```bash
-cd automation_core && dart test
-cd ../automation_kit && dart test
-cd ../example_app && flutter test
+flutter test
+cd example_app && flutter test
 ```
 
 Build the example app for local browser automation:
@@ -129,8 +155,7 @@ flutter build web --no-web-resources-cdn
 Run the browser E2E (Chrome/Chromium is required):
 
 ```bash
-cd automation_kit
-RUN_WEB_E2E=1 dart test e2e/example_app_e2e_test.dart
+RUN_WEB_E2E=1 flutter test e2e/example_app_e2e_test.dart
 ```
 
 Run the Android self-test on a connected device (Patrol CLI is required):
@@ -160,10 +185,10 @@ XCTest target launches `com.example.exampleApp` itself; it is not a runtime
 accessibility service inside the production Flutter process.
 
 The local JSON-RPC app reads line-delimited JSON-RPC 2.0 requests from stdin by
-default. Use `dart run bin/automation_kit.dart --http --port 8787` for a
-loopback HTTP server.
+default. Start it with `dart run bin/device_kit_lib.dart --http --port 8787`
+for a loopback HTTP server.
 
 Selectors are represented by `By.id`, `By.text`, `By.label`, `By.role`,
 `By.value`, and `By.all`. They are matched in Dart against normalized
 `UiSnapshot` data; browser-specific DOM/CDP details remain inside
-`automation_web`.
+`lib/src/web/automation_web`.

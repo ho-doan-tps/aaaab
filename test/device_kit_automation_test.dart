@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:device_kit_lib/device_kit_lib.dart';
+import 'package:device_kit_lib/src/web/automation_core/automation_core.dart'
+    as core;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -32,6 +34,25 @@ void main() {
     );
 
     await service.waitUntilGone(By.id('increment_button'));
+  });
+
+  test('Pigeon device driver adapts to the shared core service', () async {
+    final nativeDriver = _FakeDriver();
+    final backend = DeviceKitAutomationBackend(nativeDriver);
+    final service = core.AutomationService(
+      backend,
+      pollInterval: const Duration(milliseconds: 1),
+    );
+
+    await service.start();
+    await service.launch('com.example.example_app');
+    await service.tap(core.By.id('increment_button'));
+    await service.stop();
+
+    expect(nativeDriver.actions, <String>[
+      'semantic:node-button',
+      'coordinate',
+    ]);
   });
 }
 

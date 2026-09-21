@@ -22,20 +22,8 @@
             "flutterMode": "release"
         },
         {
-            "name": "automation_core",
-            "cwd": "automation_core",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "automation_kit",
-            "cwd": "automation_kit",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "automation_web",
-            "cwd": "automation_web",
+            "name": "device_kit_lib automation server",
+            "program": "bin/device_kit_lib.dart",
             "request": "launch",
             "type": "dart"
         },

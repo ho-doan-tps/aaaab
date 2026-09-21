@@ -79,15 +79,16 @@ void main() {
         ),
       ]);
     });
-    messenger.setMockDecodedMessageHandler<Object?>(
-      actionChannel,
-      (message) {
-        actionRequest = message;
-        return Future<Object?>.value(<Object?>[
-          api.ActionResult(success: true, message: 'semantic_action', uiChanged: true),
-        ]);
-      },
-    );
+    messenger.setMockDecodedMessageHandler<Object?>(actionChannel, (message) {
+      actionRequest = message;
+      return Future<Object?>.value(<Object?>[
+        api.ActionResult(
+          success: true,
+          message: 'semantic_action',
+          uiChanged: true,
+        ),
+      ]);
+    });
 
     final driver = AndroidDriver(hostApi: api.DeviceKitHostApi());
     final snapshot = await driver.dumpUi();

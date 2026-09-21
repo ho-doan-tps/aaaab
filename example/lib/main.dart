@@ -1,7 +1,24 @@
 import 'package:device_kit_lib/device_kit_lib.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-const _defaultTargetPackage = 'com.example.example_app';
+String get _defaultTargetPackage => switch (defaultTargetPlatform) {
+  TargetPlatform.macOS || TargetPlatform.iOS => 'com.example.exampleApp',
+  _ => 'com.example.example_app',
+};
+
+String get _platformName => switch (defaultTargetPlatform) {
+  TargetPlatform.macOS => 'macOS',
+  TargetPlatform.iOS => 'iOS',
+  TargetPlatform.android => 'Android',
+  _ => 'device',
+};
+
+DeviceDriver _createDriver() => switch (defaultTargetPlatform) {
+  TargetPlatform.macOS => MacOSDriver(),
+  TargetPlatform.iOS => IosDriver(),
+  _ => AndroidDriver(),
+};
 
 void main() {
   runApp(const DeviceKitControllerApp());
@@ -13,7 +30,7 @@ class DeviceKitControllerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Device Kit Controller',
+      title: 'Device Kit $_platformName Controller',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2563EB)),
         useMaterial3: true,
@@ -31,11 +48,11 @@ class ControllerPage extends StatefulWidget {
 }
 
 class _ControllerPageState extends State<ControllerPage> {
-  final AutomationService _service = AutomationService(
-    AndroidDriver(),
+  late final AutomationService _service = AutomationService(
+    _createDriver(),
     defaultTimeout: const Duration(seconds: 10),
   );
-  final TextEditingController _packageController = TextEditingController(
+  late final TextEditingController _packageController = TextEditingController(
     text: _defaultTargetPackage,
   );
   String _status = 'Ready. Enable Device Kit AccessibilityService.';
@@ -64,7 +81,7 @@ class _ControllerPageState extends State<ControllerPage> {
       setState(() {
         _started = true;
         _status =
-            'Enable Device Kit AccessibilityService in the opened Settings screen.';
+            'Kit started. Enable $_platformName accessibility permission.';
       });
     }
   }
@@ -110,6 +127,13 @@ class _ControllerPageState extends State<ControllerPage> {
     });
   }
 
+  Future<void> _openAccessibilitySettings() async {
+    await _run(() async {
+      await _service.openAccessibilitySettings();
+      return 'Opened $_platformName Accessibility Settings';
+    });
+  }
+
   Future<void> _run(Future<String> Function() action) async {
     try {
       final status = await action();
@@ -129,7 +153,7 @@ class _ControllerPageState extends State<ControllerPage> {
         padding: const EdgeInsets.all(24),
         children: <Widget>[
           Text(
-            'Android automation kit',
+            '$_platformName automation kit',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 8),
@@ -147,6 +171,10 @@ class _ControllerPageState extends State<ControllerPage> {
           ),
           const SizedBox(height: 12),
           FilledButton(onPressed: _start, child: const Text('Start Kit')),
+          OutlinedButton(
+            onPressed: _openAccessibilitySettings,
+            child: const Text('Open Accessibility Settings'),
+          ),
           OutlinedButton(
             onPressed: _requestScreenshotPermission,
             child: const Text('Request screenshot permission'),

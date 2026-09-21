@@ -5,7 +5,7 @@ import 'package:pigeon/pigeon.dart';
     dartPackageName: 'device_kit_lib',
     dartOut: 'lib/src/messages.g.dart',
     swiftOut:
-        'ios/device_kit_lib/Sources/device_kit_lib/Messages.g.swift',
+        'darwin/device_kit_lib/Sources/device_kit_lib/Messages.g.swift',
     swiftOptions: SwiftOptions(),
     kotlinOut:
         'android/src/main/kotlin/com/hodoan/device_kit_lib/Messages.g.kt',

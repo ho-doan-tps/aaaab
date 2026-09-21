@@ -5,7 +5,7 @@ homepage:
 
 environment:
   sdk: ^3.11.1
-  flutter: '>=3.3.0'
+  flutter: '>=3.7.0'
 
 dependencies:
   flutter:
@@ -43,10 +43,12 @@ flutter:
         pluginClass: DeviceKitLibPlugin
       ios:
         pluginClass: DeviceKitLibPlugin
+        sharedDarwinSource: true
       linux:
         pluginClass: DeviceKitLibPlugin
       macos:
         pluginClass: DeviceKitLibPlugin
+        sharedDarwinSource: true
       windows:
         pluginClass: DeviceKitLibPluginCApi
       web:
