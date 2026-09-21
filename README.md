@@ -21,6 +21,36 @@ example_app/       Independent target counter app; does not depend on the kit
 `com.example.example_app` is only a demo target; the native `launchApp` API is
 dynamic and does not contain a target package allow-list.
 
+## Device-control flow
+
+```mermaid
+flowchart TD
+    codex["Codex / External Tool"] -->|JSON-RPC 2.0| kit["automation_kit<br/>Local JSON-RPC server"]
+    kit --> service["AutomationService<br/>Dart"]
+    service --> selectors["Selectors + wait/retry<br/>By.id / By.value / By.all"]
+    selectors --> driver["AndroidDriver<br/>Dart"]
+    driver -->|Pigeon generated API| host["DeviceKitHostApiImpl<br/>Kotlin"]
+    host --> accessibility["AccessibilityService<br/>Android OS APIs"]
+    accessibility --> app["Dynamic target app<br/>example_app or any package"]
+    app --> tree["AccessibilityNodeInfo tree"]
+    tree -->|normalized UiSnapshot| service
+
+    service -->|ui.tap / element.tap| action["Semantic ACTION_CLICK"]
+    action -->|unsupported or failed| fallback["Coordinate GestureDescription<br/>bounds.center"]
+    fallback --> accessibility
+
+    service -->|screen.screenshot| version{"Android version"}
+    version -->|Android 11+| accessibilityShot["AccessibilityService screenshot"]
+    version -->|Android <=10| mediaProjection["MediaProjection consent + capture"]
+    accessibilityShot --> png["PNG bytes"]
+    mediaProjection --> png
+    png --> codex
+
+    codex -->|session.start / app.launch| kit
+    codex -->|ui.dump / ui.find / ui.tap / ui.setValue| kit
+    codex -->|screen.screenshot / session.stop| kit
+```
+
 The Android plugin uses Pigeon from `pigeons/messages.dart`. Generated Dart,
 Kotlin, Swift, and C++ bindings are kept in their platform output folders.
 Selectors and retry/wait logic remain in Dart; Android only exposes
