@@ -106,4 +106,47 @@ void main() {
     expect(result.uiChanged, isTrue);
     expect(actionRequest, <Object?>['node-0-1', 7, api.UiAction.press, null]);
   });
+
+  test('IosDriver maps the same Pigeon UI contract', () async {
+    final dumpChannel = BasicMessageChannel<Object?>(
+      'dev.flutter.pigeon.device_kit_lib.DeviceKitHostApi.dumpUi',
+      api.DeviceKitHostApi.pigeonChannelCodec,
+    );
+    registeredChannels.add(dumpChannel.name);
+    messenger.setMockDecodedMessageHandler<Object?>(dumpChannel, (message) {
+      return Future<Object?>.value(<Object?>[
+        api.UiSnapshot(
+          generation: 3,
+          nodes: <api.UiNode>[
+            api.UiNode(
+              nodeId: 'ios-3-0',
+              parentNodeId: null,
+              childNodeIds: const <String>[],
+              automationId: 'counter_value',
+              text: 'Counter: 0',
+              label: 'Counter',
+              value: '0',
+              role: 'text',
+              bounds: api.RectData(x: 0, y: 0, width: 100, height: 40),
+              enabled: true,
+              clickable: false,
+              editable: false,
+              focused: false,
+              selected: false,
+              checked: false,
+              scrollable: false,
+            ),
+          ],
+        ),
+      ]);
+    });
+
+    final driver = IosDriver(hostApi: api.DeviceKitHostApi());
+    final snapshot = await driver.dumpUi();
+
+    expect(snapshot.generation, 3);
+    expect(snapshot.elements.single.automationId, 'counter_value');
+    expect(snapshot.elements.single.value, '0');
+    expect(snapshot.elements.single.role, UiRole.text);
+  });
 }

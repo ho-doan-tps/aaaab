@@ -23,6 +23,31 @@ dynamic and does not contain a target package allow-list.
 
 ## Device-control flow
 
+```text
+                    External tools
+                         │
+                    JSON-RPC
+                         │
+              ┌──────────▼──────────┐
+              │ Automation Agent    │
+              │ Dart Core           │
+              │                     │
+              │ socket server       │
+              │ session             │
+              │ selector            │
+              │ wait/retry          │
+              └──────────┬──────────┘
+                         │
+                    PlatformDriver
+                         │
+       ┌────────┬────────┼────────┬────────┬────────┐
+       │        │        │        │        │        │
+    Android   iOS      macOS    Windows  Linux     Web
+       │        │        │        │        │        │
+Accessibility XCTest    AX       UIA    AT-SPI   BiDi
+                   runner
+```
+
 ```mermaid
 flowchart TD
     codex["Codex / External Tool"] -->|JSON-RPC 2.0| kit["automation_kit<br/>Local JSON-RPC server"]
@@ -55,6 +80,22 @@ The Android plugin uses Pigeon from `pigeons/messages.dart`. Generated Dart,
 Kotlin, Swift, and C++ bindings are kept in their platform output folders.
 Selectors and retry/wait logic remain in Dart; Android only exposes
 AccessibilityService and OS capabilities.
+
+## iOS XCTest integration
+
+iOS cross-app input is implemented by XCTest/XCUITest in a separate product
+exported by the plugin:
+
+```text
+ios/device_kit_lib/Sources/device_kit_lib/            Flutter/Pigeon runtime
+ios/device_kit_lib/Sources/device_kit_lib_xctest/    XCTest/XCUITest driver
+```
+
+The `device-kit-lib-xctest` Swift product is linked only by native UI-test
+targets. `example_app/ios/RunnerUITests` imports that product and uses the
+driver's raw snapshot and primitive-action API; selector and wait/retry logic
+remain in Dart. XCTest is therefore reusable by native app test targets
+without being linked into the production Flutter plugin.
 
 ## Android permissions
 
@@ -103,6 +144,20 @@ The Patrol test is test-only setup. It can navigate Android Settings to enable
 the Device Kit AccessibilityService and can approve the MediaProjection dialog;
 the target-app UI dump, selectors, wait, tap, and screenshot calls still use
 the shared `device_kit_lib` Dart API.
+
+Build and run the iOS XCTest target on a booted simulator:
+
+```bash
+cd example_app/ios
+xcodebuild -project Runner.xcodeproj \
+  -scheme Runner \
+  -destination 'platform=iOS Simulator,name=<simulator-name>' \
+  test
+```
+
+Use `xcodebuild -showdestinations` to select an installed simulator. The
+XCTest target launches `com.example.exampleApp` itself; it is not a runtime
+accessibility service inside the production Flutter process.
 
 The local JSON-RPC app reads line-delimited JSON-RPC 2.0 requests from stdin by
 default. Use `dart run bin/automation_kit.dart --http --port 8787` for a

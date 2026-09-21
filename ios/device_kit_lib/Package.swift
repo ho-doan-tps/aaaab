@@ -9,7 +9,8 @@ let package = Package(
         .iOS("13.0")
     ],
     products: [
-        .library(name: "device-kit-lib", targets: ["device_kit_lib"])
+        .library(name: "device-kit-lib", targets: ["device_kit_lib"]),
+        .library(name: "device-kit-lib-xctest", targets: ["device_kit_lib_xctest"])
     ],
     dependencies: [],
     targets: [
@@ -26,6 +27,14 @@ let package = Package(
                 // If you have other resources that need to be bundled with your plugin, refer to
                 // the following instructions to add them:
                 // https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package
+            ]
+        ),
+        .target(
+            name: "device_kit_lib_xctest",
+            dependencies: [],
+            path: "Sources/device_kit_lib_xctest",
+            linkerSettings: [
+                .linkedFramework("XCTest")
             ]
         )
     ]

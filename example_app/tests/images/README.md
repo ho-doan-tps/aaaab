@@ -9,6 +9,12 @@ Captured from the connected Android device during the Device Kit scenario:
 4. `04_counter_1.png` — `example_app` after tapping `increment_button`.
 5. `05_screenshot.png` — final screen-capture artifact.
 
+The iOS XCTest evidence is also captured here:
+
+1. `06_ios_xctest_counter_1.png` — `example_app` after XCTest presses
+   `increment_button` and observes `counter_value = 1` on an iPhone Air
+   simulator.
+
 The screenshots are evidence artifacts only. The E2E interaction itself uses
 the shared Dart `AutomationService` API; no Flutter Finder, CSS, or XPath is
 used.
