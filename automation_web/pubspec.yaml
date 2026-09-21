@@ -1,0 +1,14 @@
+name: automation_web
+description: Chrome DevTools Protocol backend for the Automation Kit Web MVP.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  automation_core:
+    path: ../automation_core
+
+dev_dependencies:
+  test: ^1.25.0

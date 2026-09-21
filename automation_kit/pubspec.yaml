@@ -1,0 +1,16 @@
+name: automation_kit
+description: Local JSON-RPC Automation Kit application for the Web MVP.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  automation_core:
+    path: ../automation_core
+  automation_web:
+    path: ../automation_web
+
+dev_dependencies:
+  test: ^1.25.0
