@@ -3,12 +3,33 @@ import 'package:flutter/rendering.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SemanticsBinding.instance.ensureSemantics();
   runApp(const ExampleApp());
 }
 
-class ExampleApp extends StatelessWidget {
+class ExampleApp extends StatefulWidget {
   const ExampleApp({super.key});
+
+  @override
+  State<ExampleApp> createState() => _ExampleAppState();
+}
+
+class _ExampleAppState extends State<ExampleApp> {
+  // A SemanticsHandle is the explicit Flutter contract that keeps semantics
+  // collection enabled. Keep it for the target app's lifetime so the Windows
+  // engine publishes the UIA fragment tree below FLUTTERVIEW.
+  late final SemanticsHandle _semanticsHandle;
+
+  @override
+  void initState() {
+    super.initState();
+    _semanticsHandle = SemanticsBinding.instance.ensureSemantics();
+  }
+
+  @override
+  void dispose() {
+    _semanticsHandle.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
