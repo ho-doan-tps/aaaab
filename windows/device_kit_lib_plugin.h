@@ -108,7 +108,10 @@ class DeviceKitLibPlugin final : public flutter::Plugin, public DeviceKitHostApi
   std::mutex mutex_;
   Microsoft::WRL::ComPtr<IUIAutomation> automation_;
   Microsoft::WRL::ComPtr<IUIAutomationElement> target_root_;
-  Microsoft::WRL::ComPtr<IUIAutomationTreeWalker> control_view_walker_;
+  // Flutter's Windows UIA provider can omit semantic nodes from Control View.
+  // Raw View preserves the complete provider fragment; callers still filter
+  // the serialized nodes by role/name/id.
+  Microsoft::WRL::ComPtr<IUIAutomationTreeWalker> raw_view_walker_;
   std::map<std::string, AutomationElement> elements_by_node_id_;
   std::vector<PendingNode> pending_nodes_;
   std::string session_id_ = "default";

@@ -502,7 +502,7 @@ bool DeviceKitLibPlugin::EnsureAutomation(const char* operation) {
   if (!EnsureComInitialized(operation)) {
     return false;
   }
-  if (automation_ != nullptr && control_view_walker_ != nullptr) {
+  if (automation_ != nullptr && raw_view_walker_ != nullptr) {
     return true;
   }
 
@@ -518,14 +518,15 @@ bool DeviceKitLibPlugin::EnsureAutomation(const char* operation) {
     return false;
   }
 
-  hr = automation_->get_ControlViewWalker(&control_view_walker_);
-  if (FAILED(hr) || control_view_walker_ == nullptr) {
-    Log("ERROR", operation, "Unable to create the UI Automation control-view walker",
+  hr = automation_->get_RawViewWalker(&raw_view_walker_);
+  if (FAILED(hr) || raw_view_walker_ == nullptr) {
+    Log("ERROR", operation, "Unable to create the UI Automation raw-view walker",
         hr, GetLastError(), true);
     automation_.Reset();
     return false;
   }
-  Log("INFO", operation, "Windows UI Automation client initialized", hr);
+  Log("INFO", operation,
+      "Windows UI Automation client initialized; traversal=raw-view", hr);
   return true;
 }
 
@@ -914,7 +915,7 @@ std::optional<FlutterError> DeviceKitLibPlugin::Dispose() {
     crash_log_handler_ = nullptr;
   }
   ResetTarget();
-  control_view_walker_.Reset();
+  raw_view_walker_.Reset();
   automation_.Reset();
   initialized_ = false;
   if (com_initialized_ && com_init_result_ != RPC_E_CHANGED_MODE &&
@@ -1027,7 +1028,7 @@ ErrorOr<UiSnapshot> DeviceKitLibPlugin::DumpUi() {
   Log("TRACE", "dumpUi", "before AppendElementTree", S_OK, ERROR_SUCCESS,
       true);
   const std::optional<std::string> root_id =
-      AppendElementTree(target_root_, std::nullopt, control_view_walker_, "dumpUi");
+      AppendElementTree(target_root_, std::nullopt, raw_view_walker_, "dumpUi");
   Log("TRACE", "dumpUi",
       "after AppendElementTree; root=" +
           (root_id.has_value() ? *root_id : "<none>") + "; node_count=" +

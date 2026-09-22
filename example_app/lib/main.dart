@@ -82,6 +82,11 @@ class _CounterPageState extends State<CounterPage> {
               ),
               const SizedBox(height: 24),
               Semantics(
+                // Keep this as a standalone semantics node. Without a
+                // container boundary Flutter may merge it into its parent,
+                // leaving the Windows UIA fragment tree without a button
+                // element even though the widget test can find its action.
+                container: true,
                 identifier: 'increment_button',
                 label: 'Increment',
                 button: true,
