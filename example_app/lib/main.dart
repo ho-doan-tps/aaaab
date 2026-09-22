@@ -81,30 +81,19 @@ class _CounterPageState extends State<CounterPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              Semantics(
-                // Keep this as a standalone semantics node. Without a
-                // container boundary Flutter may merge it into its parent,
-                // leaving the Windows UIA fragment tree without a button
-                // element even though the widget test can find its action.
-                container: true,
-                identifier: 'increment_button',
-                label: 'Increment',
-                button: true,
-                onTap: _increment,
-                child: ExcludeSemantics(
-                  child: SizedBox(
-                    width: 56,
-                    height: 56,
-                    child: FilledButton(
-                      onPressed: _increment,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: colors.primary,
-                        foregroundColor: colors.onPrimary,
-                        padding: EdgeInsets.zero,
-                      ),
-                      child: const Text('+', style: TextStyle(fontSize: 24)),
-                    ),
+              // Let the Material button publish one actionable semantic node.
+              // A surrounding Semantics(identifier) produces a separate,
+              // non-actionable parent on Windows and is not an AutomationId.
+              SizedBox(
+                width: 128,
+                height: 56,
+                child: FilledButton(
+                  onPressed: _increment,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: colors.primary,
+                    foregroundColor: colors.onPrimary,
                   ),
+                  child: const Text('Increment'),
                 ),
               ),
             ],

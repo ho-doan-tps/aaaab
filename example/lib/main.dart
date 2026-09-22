@@ -110,13 +110,13 @@ class _ControllerPageState extends State<ControllerPage> {
 
   Future<void> _tapCounter() async {
     await _run(() async {
-      // Current Flutter Windows engines expose Semantics.label as the UIA
-      // Name property but may return an empty AutomationId. The target app
-      // declares this as an actionable button, so select the two stable UIA
-      // properties on Windows while retaining identifier selection elsewhere.
-      final selector = defaultTargetPlatform == TargetPlatform.windows
-          ? By.all(<By>[By.role(UiRole.button), By.text('Increment')])
-          : By.id('increment_button');
+      // Flutter Windows does not map Semantics.identifier to UIA AutomationId.
+      // Select the actual Material button by its standard semantic role/name
+      // on every platform rather than its unsupported test-only identifier.
+      final selector = By.all(<By>[
+        By.role(UiRole.button),
+        By.text('Increment'),
+      ]);
       await _service.tap(selector);
       return 'Tapped increment_button';
     });

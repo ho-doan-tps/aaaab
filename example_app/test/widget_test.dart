@@ -9,13 +9,13 @@ void main() {
 
     expect(SemanticsBinding.instance.semanticsEnabled, isTrue);
     expect(find.text('Counter: 0'), findsOneWidget);
-    expect(find.bySemanticsIdentifier('increment_button'), findsOneWidget);
+    expect(find.bySemanticsLabel('Increment'), findsOneWidget);
     expect(
-      tester.getSemantics(find.bySemanticsIdentifier('increment_button')),
-      matchesSemantics(label: 'Increment', isButton: true, hasTapAction: true),
+      tester.getSemantics(find.bySemanticsLabel('Increment')),
+      isSemantics(label: 'Increment', isButton: true, hasTapAction: true),
     );
 
-    await tester.tap(find.bySemanticsIdentifier('increment_button'));
+    await tester.tap(find.bySemanticsLabel('Increment'));
     await tester.pump();
 
     expect(find.text('Counter: 1'), findsOneWidget);
