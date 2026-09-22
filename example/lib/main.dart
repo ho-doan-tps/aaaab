@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:device_kit_lib/device_kit_lib.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +110,14 @@ class _ControllerPageState extends State<ControllerPage> {
 
   Future<void> _tapCounter() async {
     await _run(() async {
-      await _service.tap(By.id('increment_button'));
+      // Flutter Windows exposes a Semantics label through UIA's Name property.
+      // Its AutomationId support differs across the Flutter engine versions
+      // used by Windows builds, so use the stable, explicit label for this
+      // controller's Windows sample while other platforms keep the identifier.
+      final selector = defaultTargetPlatform == TargetPlatform.windows
+          ? By.all(<By>[By.role(UiRole.button), By.text('Increment')])
+          : By.id('increment_button');
+      await _service.tap(selector);
       return 'Tapped increment_button';
     });
   }
@@ -116,8 +125,29 @@ class _ControllerPageState extends State<ControllerPage> {
   Future<void> _screenshot() async {
     await _run(() async {
       final bytes = await _service.screenshot();
-      return 'Screenshot captured (${bytes.length} bytes)';
+      final screenshotDirectory = _screenshotDirectory();
+      await screenshotDirectory.create(recursive: true);
+      final timestamp = DateTime.now().toIso8601String().replaceAll(
+        RegExp(r'[^0-9]'),
+        '',
+      );
+      final screenshot = File(
+        '${screenshotDirectory.path}${Platform.pathSeparator}'
+        'device_kit_screenshot_$timestamp.png',
+      );
+      await screenshot.writeAsBytes(bytes, flush: true);
+      return 'Screenshot saved: ${screenshot.path} (${bytes.length} bytes)';
     });
+  }
+
+  Directory _screenshotDirectory() {
+    if (Platform.isWindows) {
+      final userProfile = Platform.environment['USERPROFILE'];
+      if (userProfile != null && userProfile.isNotEmpty) {
+        return Directory('$userProfile${Platform.pathSeparator}Pictures');
+      }
+    }
+    return Directory.systemTemp;
   }
 
   Future<void> _requestScreenshotPermission() async {

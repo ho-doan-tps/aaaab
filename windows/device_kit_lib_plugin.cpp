@@ -696,9 +696,10 @@ bool DeviceKitLibPlugin::ReadElement(const AutomationElement& element,
         ERROR_SUCCESS, true);
     BSTR value = nullptr;
     const HRESULT hr = getter(&value);
+    const std::string trace_value =
+        value == nullptr ? "<null>" : BstrToUtf8(value);
     Log("TRACE", "dumpUi",
-        trace_prefix + "after " + property + "; value=" +
-            (value == nullptr ? "null" : "present"),
+        trace_prefix + "after " + property + "; value=" + trace_value,
         hr, FAILED(hr) ? GetLastError() : ERROR_SUCCESS, true);
     if (FAILED(hr)) {
       if (hr != UIA_E_ELEMENTNOTAVAILABLE) {
