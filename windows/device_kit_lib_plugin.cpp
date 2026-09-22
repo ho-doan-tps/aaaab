@@ -619,9 +619,21 @@ bool DeviceKitLibPlugin::ReadElement(const AutomationElement& element,
     return false;
   }
 
-  auto read_bstr = [&](auto getter) -> std::optional<std::string> {
+  const std::string trace_prefix = "node=" + node->node_id + "; index=" +
+                                   std::to_string(pending_nodes_.size()) + "; ";
+  Log("TRACE", "dumpUi", trace_prefix + "ReadElement begin", S_OK,
+      ERROR_SUCCESS, true);
+
+  auto read_bstr = [&](const char* property,
+                       auto getter) -> std::optional<std::string> {
+    Log("TRACE", "dumpUi", trace_prefix + "before " + property, S_OK,
+        ERROR_SUCCESS, true);
     BSTR value = nullptr;
     const HRESULT hr = getter(&value);
+    Log("TRACE", "dumpUi",
+        trace_prefix + "after " + property + "; value=" +
+            (value == nullptr ? "null" : "present"),
+        hr, FAILED(hr) ? GetLastError() : ERROR_SUCCESS, true);
     if (FAILED(hr)) {
       if (hr != UIA_E_ELEMENTNOTAVAILABLE) {
         Log("DEBUG", "dumpUi", "UIA string property read failed", hr,
@@ -635,19 +647,32 @@ bool DeviceKitLibPlugin::ReadElement(const AutomationElement& element,
   };
 
   int control_type = UIA_CustomControlTypeId;
-  if (FAILED(element->get_CurrentControlType(&control_type))) {
+  Log("TRACE", "dumpUi", trace_prefix + "before CurrentControlType", S_OK,
+      ERROR_SUCCESS, true);
+  const HRESULT control_type_hr =
+      element->get_CurrentControlType(&control_type);
+  Log("TRACE", "dumpUi", trace_prefix + "after CurrentControlType; type=" +
+                            std::to_string(control_type),
+      control_type_hr,
+      FAILED(control_type_hr) ? GetLastError() : ERROR_SUCCESS, true);
+  if (FAILED(control_type_hr)) {
     control_type = UIA_CustomControlTypeId;
   }
   node->role = RoleForControlType(control_type);
-  node->automation_id = read_bstr(
+  node->automation_id = read_bstr("CurrentAutomationId",
       [&](BSTR* value) { return element->get_CurrentAutomationId(value); });
-  node->text = read_bstr(
+  node->text = read_bstr("CurrentName",
       [&](BSTR* value) { return element->get_CurrentName(value); });
-  node->label = read_bstr(
+  node->label = read_bstr("CurrentHelpText",
       [&](BSTR* value) { return element->get_CurrentHelpText(value); });
 
   RECT rectangle{};
-  if (FAILED(element->get_CurrentBoundingRectangle(&rectangle))) {
+  Log("TRACE", "dumpUi", trace_prefix + "before CurrentBoundingRectangle", S_OK,
+      ERROR_SUCCESS, true);
+  const HRESULT bounds_hr = element->get_CurrentBoundingRectangle(&rectangle);
+  Log("TRACE", "dumpUi", trace_prefix + "after CurrentBoundingRectangle",
+      bounds_hr, FAILED(bounds_hr) ? GetLastError() : ERROR_SUCCESS, true);
+  if (FAILED(bounds_hr)) {
     rectangle = RECT{};
   }
   node->bounds = RectData(
@@ -656,8 +681,16 @@ bool DeviceKitLibPlugin::ReadElement(const AutomationElement& element,
       static_cast<double>(std::max<LONG>(0, rectangle.bottom - rectangle.top)));
   BOOL enabled = TRUE;
   BOOL focused = FALSE;
-  element->get_CurrentIsEnabled(&enabled);
-  element->get_CurrentHasKeyboardFocus(&focused);
+  Log("TRACE", "dumpUi", trace_prefix + "before CurrentIsEnabled", S_OK,
+      ERROR_SUCCESS, true);
+  const HRESULT enabled_hr = element->get_CurrentIsEnabled(&enabled);
+  Log("TRACE", "dumpUi", trace_prefix + "after CurrentIsEnabled", enabled_hr,
+      FAILED(enabled_hr) ? GetLastError() : ERROR_SUCCESS, true);
+  Log("TRACE", "dumpUi", trace_prefix + "before CurrentHasKeyboardFocus", S_OK,
+      ERROR_SUCCESS, true);
+  const HRESULT focused_hr = element->get_CurrentHasKeyboardFocus(&focused);
+  Log("TRACE", "dumpUi", trace_prefix + "after CurrentHasKeyboardFocus", focused_hr,
+      FAILED(focused_hr) ? GetLastError() : ERROR_SUCCESS, true);
   node->enabled = enabled != FALSE;
   node->focused = focused != FALSE;
 
@@ -678,6 +711,8 @@ bool DeviceKitLibPlugin::ReadElement(const AutomationElement& element,
   if (node->label == std::nullopt && node->text.has_value()) {
     node->label = node->text;
   }
+  Log("TRACE", "dumpUi", trace_prefix + "ReadElement complete", S_OK,
+      ERROR_SUCCESS, true);
   return true;
 }
 
@@ -696,9 +731,15 @@ std::optional<std::string> DeviceKitLibPlugin::AppendElementTree(
   PendingNode node;
   node.node_id = "windows-" + std::to_string(generation_) + "-" +
                  std::to_string(pending_nodes_.size());
+  Log("TRACE", operation,
+      "before ReadElement; node=" + node.node_id + "; parent=" +
+          (parent_node_id.has_value() ? *parent_node_id : "<root>"),
+      S_OK, ERROR_SUCCESS, true);
   node.parent_node_id = parent_node_id;
   node.element = element;
   if (!ReadElement(element, &node)) {
+    Log("WARN", operation, "ReadElement returned false; node=" + node.node_id,
+        S_OK, ERROR_SUCCESS, true);
     return std::nullopt;
   }
   const std::string node_id = node.node_id;
@@ -706,8 +747,18 @@ std::optional<std::string> DeviceKitLibPlugin::AppendElementTree(
   elements_by_node_id_[node_id] = element;
 
   ComPtr<IUIAutomationElement> child;
+  Log("TRACE", operation, "before GetFirstChildElement; node=" + node_id,
+      S_OK, ERROR_SUCCESS, true);
   HRESULT hr = walker->GetFirstChildElement(element.Get(), &child);
+  Log("TRACE", operation,
+      "after GetFirstChildElement; node=" + node_id + "; child=" +
+          (child == nullptr ? "null" : "present"),
+      hr, FAILED(hr) ? GetLastError() : ERROR_SUCCESS, true);
   while (SUCCEEDED(hr) && child != nullptr) {
+    Log("TRACE", operation,
+        "before child recursion; parent=" + node_id + "; node_count=" +
+            std::to_string(pending_nodes_.size()),
+        S_OK, ERROR_SUCCESS, true);
     const std::optional<std::string> child_id =
         AppendElementTree(child, node_id, walker, operation);
     if (child_id.has_value()) {
@@ -723,7 +774,13 @@ std::optional<std::string> DeviceKitLibPlugin::AppendElementTree(
       break;
     }
     ComPtr<IUIAutomationElement> next_sibling;
+    Log("TRACE", operation, "before GetNextSiblingElement; node=" + node_id,
+        S_OK, ERROR_SUCCESS, true);
     hr = walker->GetNextSiblingElement(child.Get(), &next_sibling);
+    Log("TRACE", operation,
+        "after GetNextSiblingElement; node=" + node_id + "; sibling=" +
+            (next_sibling == nullptr ? "null" : "present"),
+        hr, FAILED(hr) ? GetLastError() : ERROR_SUCCESS, true);
     if (next_sibling.Get() == child.Get()) {
       Log("WARN", operation, "UIA provider returned the same sibling element");
       break;
@@ -741,7 +798,10 @@ std::optional<FlutterError> DeviceKitLibPlugin::Initialize(
     const DriverConfig& config) {
   std::lock_guard<std::mutex> lock(mutex_);
   session_id_ = config.session_id();
-  logging_enabled_ = config.enable_logs();
+  // Keep native diagnostic evidence even when the Dart configuration did not
+  // explicitly enable logs. This is needed to identify an in-process access
+  // violation, where Dart receives no error callback.
+  logging_enabled_ = true;
   wchar_t environment_value[8]{};
   if (GetEnvironmentVariableW(L"DEVICE_KIT_LIB_WINDOWS_LOG", environment_value,
                               static_cast<DWORD>(std::size(environment_value))) > 0 &&
@@ -754,6 +814,7 @@ std::optional<FlutterError> DeviceKitLibPlugin::Initialize(
   log_path_ = temp_length == 0 || temp_length >= temp_capacity
                   ? "device_kit_lib_windows.log"
                   : std::string(temp_path, temp_length) + "device_kit_lib_windows.log";
+  Log("INFO", "initialize", "log_file=" + log_path_, S_OK, ERROR_SUCCESS, true);
 
   ResetTarget();
   generation_ = 0;
@@ -868,6 +929,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::LaunchApp(
 
 ErrorOr<UiSnapshot> DeviceKitLibPlugin::DumpUi() {
   std::lock_guard<std::mutex> lock(mutex_);
+  Log("TRACE", "dumpUi", "DumpUi entered", S_OK, ERROR_SUCCESS, true);
   if (!initialized_) {
     return Failed<UiSnapshot>(OperationFailure(
         "dumpUi", "The Windows driver is not initialized"));
@@ -876,12 +938,21 @@ ErrorOr<UiSnapshot> DeviceKitLibPlugin::DumpUi() {
     return Failed<UiSnapshot>(OperationFailure(
         "dumpUi", "Unable to resolve the target window through UI Automation"));
   }
+  Log("TRACE", "dumpUi", "Target UIA root resolved", S_OK, ERROR_SUCCESS,
+      true);
 
   ++generation_;
   pending_nodes_.clear();
   elements_by_node_id_.clear();
+  Log("TRACE", "dumpUi", "before AppendElementTree", S_OK, ERROR_SUCCESS,
+      true);
   const std::optional<std::string> root_id =
       AppendElementTree(target_root_, std::nullopt, control_view_walker_, "dumpUi");
+  Log("TRACE", "dumpUi",
+      "after AppendElementTree; root=" +
+          (root_id.has_value() ? *root_id : "<none>") + "; node_count=" +
+          std::to_string(pending_nodes_.size()),
+      S_OK, ERROR_SUCCESS, true);
   if (!root_id.has_value() || pending_nodes_.empty()) {
     return Failed<UiSnapshot>(OperationFailure(
         "dumpUi", "UI Automation returned an empty target tree"));
@@ -889,6 +960,8 @@ ErrorOr<UiSnapshot> DeviceKitLibPlugin::DumpUi() {
 
   flutter::EncodableList nodes;
   nodes.reserve(pending_nodes_.size());
+  Log("TRACE", "dumpUi", "before Flutter node serialization", S_OK,
+      ERROR_SUCCESS, true);
   for (const PendingNode& pending : pending_nodes_) {
     flutter::EncodableList child_ids;
     child_ids.reserve(pending.child_node_ids.size());
@@ -910,6 +983,8 @@ ErrorOr<UiSnapshot> DeviceKitLibPlugin::DumpUi() {
                 pending.scrollable);
     nodes.emplace_back(flutter::CustomEncodableValue(std::move(node)));
   }
+  Log("TRACE", "dumpUi", "after Flutter node serialization", S_OK,
+      ERROR_SUCCESS, true);
   Log("INFO", "dumpUi", "nodes=" + std::to_string(nodes.size()) +
                               "; generation=" + std::to_string(generation_));
   return UiSnapshot(generation_, nodes);
@@ -1308,6 +1383,7 @@ void DeviceKitLibPlugin::Log(const char* level, const char* operation,
     std::ofstream file(log_path_, std::ios::app | std::ios::binary);
     if (file.is_open()) {
       file << output;
+      file.flush();
     }
   }
 }
