@@ -1,4 +1,7 @@
 // This must be included before many other Windows headers.
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <windows.h>
 
 #include "device_kit_lib_plugin.h"
@@ -297,7 +300,7 @@ ErrorOr<std::vector<uint8_t>> CaptureDesktopPng() {
   }
 
   ComPtr<IWICBitmap> wic_bitmap;
-  hr = factory->CreateBitmapFromHBITMAP(bitmap.value, nullptr, WICBitmapUseBGRA,
+  hr = factory->CreateBitmapFromHBITMAP(bitmap.value, nullptr, WICBitmapIgnoreAlpha,
                                         &wic_bitmap);
   if (FAILED(hr)) {
     return Failed<std::vector<uint8_t>>(
@@ -355,7 +358,7 @@ ErrorOr<std::vector<uint8_t>> CaptureDesktopPng() {
   STATSTG statistics{};
   hr = stream->Stat(&statistics, STATFLAG_NONAME);
   if (FAILED(hr) || statistics.cbSize.QuadPart <= 0 ||
-      statistics.cbSize.QuadPart > std::numeric_limits<size_t>::max()) {
+      statistics.cbSize.QuadPart > (std::numeric_limits<size_t>::max)()) {
     return Failed<std::vector<uint8_t>>(
         FormatOperationFailure("Unable to read encoded PNG size", hr, GetLastError()));
   }
@@ -530,7 +533,7 @@ bool DeviceKitLibPlugin::ActivateTargetWindow(const char* operation) {
         GetLastError(), true);
     return false;
   }
-  HWND window = reinterpret_cast<HWND>(static_cast<intptr_t>(window_handle));
+  HWND window = reinterpret_cast<HWND>(window_handle);
   ShowWindow(window, SW_RESTORE);
   SetForegroundWindow(window);
   hr = target_root_->SetFocus();
@@ -837,7 +840,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::OpenAccessibilitySettings() {
   const HINSTANCE result = ShellExecuteW(nullptr, L"open", L"ms-settings:easeofaccess",
                                          nullptr, nullptr, SW_SHOWNORMAL);
   if (reinterpret_cast<INT_PTR>(result) <= 32) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "openAccessibilitySettings", "Unable to open Windows Ease of Access settings",
         S_OK, GetLastError()));
   }
@@ -849,12 +852,12 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::LaunchApp(
     const std::string& package_name) {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!initialized_) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "launchApp", "The Windows driver is not initialized"));
   }
   const std::wstring target = Utf8ToWide(package_name);
   if (target.empty()) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "launchApp", "The Windows target path or executable name is empty"));
   }
   ResetTarget();
@@ -873,7 +876,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::LaunchApp(
     }
   }
   if (target_process_id_ == 0) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "launchApp", "Target was not launched and no matching process was found",
         S_OK, ERROR_FILE_NOT_FOUND));
   }
@@ -936,12 +939,12 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::PerformElementAction(
     const std::string* value) {
   std::lock_guard<std::mutex> lock(mutex_);
   if (requested_generation != generation_) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "performElementAction", "The UI snapshot is stale; dumpUi again"));
   }
   const auto iterator = elements_by_node_id_.find(node_id);
   if (iterator == elements_by_node_id_.end()) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "performElementAction", "The UI node is not present in the current snapshot"));
   }
   const AutomationElement& element = iterator->second;
@@ -975,7 +978,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::PerformElementAction(
       break;
     case UiAction::kSetValue: {
       if (value == nullptr) {
-        return Failure<ActionResult>(OperationFailure(
+        return Failed<ActionResult>(OperationFailure(
             "performElementAction", "setValue requires a value"));
       }
       ComPtr<IUIAutomationValuePattern> value_pattern;
@@ -1008,7 +1011,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::PerformElementAction(
     }
   }
   if (FAILED(hr)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "performElementAction", "The requested UIA pattern/action is unavailable",
         hr, GetLastError()));
   }
@@ -1120,11 +1123,11 @@ bool DeviceKitLibPlugin::SendUnicodeText(const std::wstring& text) {
 ErrorOr<ActionResult> DeviceKitLibPlugin::Tap(double x, double y) {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!ResolveTargetRoot("tap", false)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "tap", "Unable to activate the target window before coordinate input"));
   }
   if (!SendMouseClick(x, y)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "tap", "SendInput mouse click failed", S_OK, GetLastError()));
   }
   Log("INFO", "tap", "x=" + std::to_string(x) + "; y=" + std::to_string(y));
@@ -1135,11 +1138,11 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::Swipe(
     double from_x, double from_y, double to_x, double to_y, int64_t duration_ms) {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!ResolveTargetRoot("swipe", false)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "swipe", "Unable to activate the target window before coordinate input"));
   }
   if (!SendMouseSwipe(from_x, from_y, to_x, to_y, duration_ms)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "swipe", "SendInput mouse swipe failed", S_OK, GetLastError()));
   }
   Log("INFO", "swipe", "from=" + std::to_string(from_x) + "," +
@@ -1152,12 +1155,12 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::Swipe(
 ErrorOr<ActionResult> DeviceKitLibPlugin::TypeText(const std::string& text) {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!ResolveTargetRoot("typeText", false)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "typeText", "Unable to activate the target window before keyboard input"));
   }
   const std::wstring wide_text = Utf8ToWide(text);
   if (!SendUnicodeText(wide_text)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "typeText", "SendInput Unicode keyboard input failed", S_OK, GetLastError()));
   }
   Log("INFO", "typeText", "characters=" + std::to_string(wide_text.size()));
@@ -1167,7 +1170,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::TypeText(const std::string& text) {
 ErrorOr<ActionResult> DeviceKitLibPlugin::PressBack() {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!ResolveTargetRoot("pressBack", false) || !SendKey(VK_ESCAPE)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "pressBack", "SendInput Escape key failed", S_OK, GetLastError()));
   }
   return Success(true);
@@ -1176,7 +1179,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::PressBack() {
 ErrorOr<ActionResult> DeviceKitLibPlugin::PressHome() {
   std::lock_guard<std::mutex> lock(mutex_);
   if (!ResolveTargetRoot("pressHome", false) || !SendKey(VK_HOME)) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "pressHome", "SendInput Home key failed", S_OK, GetLastError()));
   }
   return Success(true);
@@ -1202,7 +1205,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::RequestScreenCapture() {
   std::lock_guard<std::mutex> lock(mutex_);
   HDC dc = GetDC(nullptr);
   if (dc == nullptr) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "requestScreenCapture", "The desktop screen is not accessible", S_OK,
         GetLastError()));
   }
@@ -1240,7 +1243,7 @@ ErrorOr<std::optional<std::string>> DeviceKitLibPlugin::GetClipboard() {
 ErrorOr<ActionResult> DeviceKitLibPlugin::SetClipboard(const std::string& text) {
   std::lock_guard<std::mutex> lock(mutex_);
   if (OpenClipboard(nullptr) == FALSE) {
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "setClipboard", "OpenClipboard failed", S_OK, GetLastError()));
   }
   EmptyClipboard();
@@ -1249,14 +1252,14 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::SetClipboard(const std::string& text) 
   HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, bytes);
   if (memory == nullptr) {
     CloseClipboard();
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "setClipboard", "GlobalAlloc clipboard data failed", S_OK, GetLastError()));
   }
   void* destination = GlobalLock(memory);
   if (destination == nullptr) {
     GlobalFree(memory);
     CloseClipboard();
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "setClipboard", "GlobalLock clipboard data failed", S_OK, GetLastError()));
   }
   memcpy(destination, wide_text.c_str(), bytes);
@@ -1264,7 +1267,7 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::SetClipboard(const std::string& text) 
   if (SetClipboardData(CF_UNICODETEXT, memory) == nullptr) {
     GlobalFree(memory);
     CloseClipboard();
-    return Failure<ActionResult>(OperationFailure(
+    return Failed<ActionResult>(OperationFailure(
         "setClipboard", "SetClipboardData failed", S_OK, GetLastError()));
   }
   CloseClipboard();

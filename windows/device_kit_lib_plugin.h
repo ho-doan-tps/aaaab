@@ -70,7 +70,7 @@ class DeviceKitLibPlugin final : public flutter::Plugin, public DeviceKitHostApi
     std::optional<std::string> label;
     std::optional<std::string> value;
     std::string role;
-    RectData bounds;
+    RectData bounds{0.0, 0.0, 0.0, 0.0};
     bool enabled = true;
     bool clickable = false;
     bool editable = false;
