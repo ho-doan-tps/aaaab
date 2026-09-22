@@ -70,21 +70,17 @@ class _ControllerPageState extends State<ControllerPage> {
   String get _targetPackage => _packageController.text.trim();
 
   Future<void> _start() async {
-    await _service.start(sessionId: 'controller-ui', enableLogs: true);
     try {
-      await _service.dumpUi();
+      await _service.start(sessionId: 'controller-ui', enableLogs: true);
       if (!mounted) return;
       setState(() {
         _started = true;
         _status = 'Kit started. Target: $_targetPackage';
       });
-    } on Object {
-      // The native preflight opens Android Settings when the service is off.
+    } on Object catch (error) {
       if (!mounted) return;
       setState(() {
-        _started = true;
-        _status =
-            'Kit started. Enable $_platformName accessibility permission.';
+        _status = error.toString();
       });
     }
   }

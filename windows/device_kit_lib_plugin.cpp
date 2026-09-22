@@ -415,7 +415,7 @@ bool DeviceKitLibPlugin::EnsureComInitialized(const char* operation) {
     return true;
   }
 
-  com_init_result_ = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+  com_init_result_ = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
   if (FAILED(com_init_result_) && com_init_result_ != RPC_E_CHANGED_MODE) {
     Log("ERROR", operation, "CoInitializeEx failed", com_init_result_,
         GetLastError(), true);
@@ -453,7 +453,7 @@ bool DeviceKitLibPlugin::EnsureAutomation(const char* operation) {
   }
 
   hr = automation_->get_ControlViewWalker(&control_view_walker_);
-  if (FAILED(hr)) {
+  if (FAILED(hr) || control_view_walker_ == nullptr) {
     Log("ERROR", operation, "Unable to create the UI Automation control-view walker",
         hr, GetLastError(), true);
     automation_.Reset();
@@ -661,46 +661,20 @@ bool DeviceKitLibPlugin::ReadElement(const AutomationElement& element,
   node->enabled = enabled != FALSE;
   node->focused = focused != FALSE;
 
-  ComPtr<IUIAutomationInvokePattern> invoke;
-  ComPtr<IUIAutomationValuePattern> value_pattern;
-  ComPtr<IUIAutomationScrollPattern> scroll_pattern;
-  ComPtr<IUIAutomationTogglePattern> toggle_pattern;
-  ComPtr<IUIAutomationSelectionItemPattern> selection_pattern;
-
-  HRESULT invoke_hr = element->GetCurrentPatternAs(
-      UIA_InvokePatternId, IID_PPV_ARGS(invoke.GetAddressOf()));
-  HRESULT value_hr = element->GetCurrentPatternAs(
-      UIA_ValuePatternId, IID_PPV_ARGS(value_pattern.GetAddressOf()));
-  HRESULT scroll_hr = element->GetCurrentPatternAs(
-      UIA_ScrollPatternId, IID_PPV_ARGS(scroll_pattern.GetAddressOf()));
-  HRESULT toggle_hr = element->GetCurrentPatternAs(
-      UIA_TogglePatternId, IID_PPV_ARGS(toggle_pattern.GetAddressOf()));
-  HRESULT selection_hr = element->GetCurrentPatternAs(
-      UIA_SelectionItemPatternId, IID_PPV_ARGS(selection_pattern.GetAddressOf()));
-
-  node->clickable = SUCCEEDED(invoke_hr) || SUCCEEDED(toggle_hr) ||
-                    SUCCEEDED(selection_hr);
-  node->editable = SUCCEEDED(value_hr);
-  node->scrollable = SUCCEEDED(scroll_hr);
-
-  if (SUCCEEDED(value_hr)) {
-    BSTR value = nullptr;
-    if (SUCCEEDED(value_pattern->get_CurrentValue(&value))) {
-      node->value = OptionalString(BstrToUtf8(value));
-      SysFreeString(value);
-    }
-  }
-  if (SUCCEEDED(toggle_hr)) {
-    ToggleState state = ToggleState_Off;
-    if (SUCCEEDED(toggle_pattern->get_CurrentToggleState(&state))) {
-      node->checked = state == ToggleState_On;
-    }
-  }
-  if (SUCCEEDED(selection_hr)) {
-    BOOL selected = FALSE;
-    selection_pattern->get_CurrentIsSelected(&selected);
-    node->selected = selected != FALSE;
-  }
+  // Querying every pattern through Flutter's Windows UIA provider is not safe:
+  // some provider implementations return a stale pattern proxy and crash the
+  // client instead of returning UIA_E_ELEMENTNOTAVAILABLE. Infer the common
+  // capabilities from the control type during a tree dump and resolve the
+  // actual pattern only when an action is requested.
+  node->clickable = control_type == UIA_ButtonControlTypeId ||
+                    control_type == UIA_HyperlinkControlTypeId ||
+                    control_type == UIA_MenuItemControlTypeId ||
+                    control_type == UIA_RadioButtonControlTypeId ||
+                    control_type == UIA_CheckBoxControlTypeId;
+  node->editable = control_type == UIA_EditControlTypeId;
+  node->scrollable = control_type == UIA_ListControlTypeId ||
+                     control_type == UIA_TreeControlTypeId ||
+                     control_type == UIA_ScrollBarControlTypeId;
   if (node->label == std::nullopt && node->text.has_value()) {
     node->label = node->text;
   }
@@ -712,7 +686,8 @@ std::optional<std::string> DeviceKitLibPlugin::AppendElementTree(
     const std::optional<std::string>& parent_node_id,
     ComPtr<IUIAutomationTreeWalker> walker,
     const char* operation) {
-  if (element == nullptr || pending_nodes_.size() >= kMaximumUiNodes) {
+  if (element == nullptr || walker == nullptr ||
+      pending_nodes_.size() >= kMaximumUiNodes) {
     Log("WARN", operation,
         "UIA tree traversal reached an invalid element or the node safety limit");
     return std::nullopt;
@@ -743,8 +718,16 @@ std::optional<std::string> DeviceKitLibPlugin::AppendElementTree(
         parent->child_node_ids.push_back(*child_id);
       }
     }
+    if (pending_nodes_.size() >= kMaximumUiNodes) {
+      Log("WARN", operation, "UIA tree traversal reached the node safety limit");
+      break;
+    }
     ComPtr<IUIAutomationElement> next_sibling;
     hr = walker->GetNextSiblingElement(child.Get(), &next_sibling);
+    if (next_sibling.Get() == child.Get()) {
+      Log("WARN", operation, "UIA provider returned the same sibling element");
+      break;
+    }
     child = next_sibling;
   }
   if (FAILED(hr) && hr != UIA_E_ELEMENTNOTAVAILABLE) {
