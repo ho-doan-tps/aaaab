@@ -108,6 +108,46 @@ host application that embeds this plugin) to the macOS Accessibility allowlist.
 The host process must also be allowed to use macOS Accessibility APIs; the
 example controller therefore disables App Sandbox in its macOS entitlements.
 
+## Windows UI Automation implementation
+
+The Windows plugin uses Microsoft UI Automation (UIA) for semantic tree dumps
+and element actions, `SendInput` for coordinate/key input, Win32 clipboard
+APIs, and Windows Imaging Component (WIC) for PNG desktop screenshots. Every
+operation includes the session, operation name, thread, target, process id,
+snapshot generation, and native error details in `OutputDebugString` and, when
+logging is enabled, in:
+
+```text
+%TEMP%\device_kit_lib_windows.log
+```
+
+The example controller enables Windows logging automatically. Set
+`DEVICE_KIT_LIB_WINDOWS_LOG=1` to force logging for another host. Windows
+automation may still be blocked when the controller and target run at
+different elevation levels or in different desktop sessions; the log records
+the UIA HRESULT and Win32 error needed to diagnose those cases.
+
+## One scenario for all platforms
+
+The shared counter flow is defined once in
+`packages/scenarios/ex_scenario_1.yaml`. The Android/iOS/macOS/Windows native
+integration test and the Web CDP E2E both consume that file. Override the
+Windows executable path on the real machine with
+`EXAMPLE_APP_WINDOWS_TARGET`.
+
+Native example run:
+
+```bash
+cd example
+flutter test integration_test/scenario_test.dart -d windows
+```
+
+Web E2E run:
+
+```bash
+RUN_WEB_E2E=1 flutter test e2e/example_app_e2e_test.dart
+```
+
 ## iOS XCTest integration
 
 iOS cross-app input is implemented by XCTest/XCUITest in a separate product

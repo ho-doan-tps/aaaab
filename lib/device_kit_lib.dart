@@ -5,3 +5,4 @@ export 'src/ios_driver.dart';
 export 'src/macos_driver.dart';
 export 'src/selector.dart';
 export 'src/ui_element.dart';
+export 'src/windows_driver.dart';

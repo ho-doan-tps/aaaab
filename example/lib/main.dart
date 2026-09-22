@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 String get _defaultTargetPackage => switch (defaultTargetPlatform) {
   TargetPlatform.macOS || TargetPlatform.iOS => 'com.example.exampleApp',
+  TargetPlatform.windows => 'example_app.exe',
   _ => 'com.example.example_app',
 };
 
@@ -11,12 +12,14 @@ String get _platformName => switch (defaultTargetPlatform) {
   TargetPlatform.macOS => 'macOS',
   TargetPlatform.iOS => 'iOS',
   TargetPlatform.android => 'Android',
+  TargetPlatform.windows => 'Windows',
   _ => 'device',
 };
 
 DeviceDriver _createDriver() => switch (defaultTargetPlatform) {
   TargetPlatform.macOS => MacOSDriver(),
   TargetPlatform.iOS => IosDriver(),
+  TargetPlatform.windows => WindowsDriver(),
   _ => AndroidDriver(),
 };
 
@@ -55,7 +58,7 @@ class _ControllerPageState extends State<ControllerPage> {
   late final TextEditingController _packageController = TextEditingController(
     text: _defaultTargetPackage,
   );
-  String _status = 'Ready. Enable Device Kit AccessibilityService.';
+  String _status = 'Ready. Start the Device Kit session.';
   bool _started = false;
 
   @override
@@ -67,7 +70,7 @@ class _ControllerPageState extends State<ControllerPage> {
   String get _targetPackage => _packageController.text.trim();
 
   Future<void> _start() async {
-    await _service.start(sessionId: 'controller-ui');
+    await _service.start(sessionId: 'controller-ui', enableLogs: true);
     try {
       await _service.dumpUi();
       if (!mounted) return;
@@ -90,7 +93,9 @@ class _ControllerPageState extends State<ControllerPage> {
     await _run(() async {
       final packageName = _targetPackage;
       if (packageName.isEmpty) {
-        throw ArgumentError('Enter a target Android package name.');
+        throw ArgumentError(
+          'Enter a target package, bundle id, or executable.',
+        );
       }
       if (!_started) await _start();
       await _service.launchApp(packageName);

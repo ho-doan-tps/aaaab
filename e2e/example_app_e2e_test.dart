@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:device_kit_lib/src/web/automation_core/automation_core.dart';
+import 'package:device_kit_lib/src/scenario_runner.dart';
+import 'package:device_kit_lib/src/web/automation_core/automation_core.dart'
+    as core;
 import 'package:device_kit_lib/src/web/automation_web/automation_web.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -38,30 +40,19 @@ void main() {
       final backend = WebAutomationBackend(
         browserExecutable: Platform.environment['CHROME_PATH'],
       );
-      final service = AutomationService(
+      final service = core.AutomationService(
         backend,
         defaultTimeout: const Duration(seconds: 45),
       );
       try {
-        await service.start();
-        await service.launch(url);
-
-        await service.waitFor(
-          By.all(<By>[By.id('counter_value'), By.value('0')]),
+        final screenshotPath = Platform.environment['E2E_SCREENSHOT'];
+        await const ScenarioRunner().runFile(
+          path: _scenarioPath(),
+          platform: 'web',
+          service: service,
+          targetOverride: url,
+          screenshotPathOverride: screenshotPath,
         );
-
-        final button = await service.waitFor(By.id('increment_button'));
-
-        await button.tap();
-
-        await service.waitFor(
-          By.all(<By>[By.id('counter_value'), By.value('1')]),
-        );
-
-        final screenshot = await service.screenshot();
-        final screenshotPath =
-            Platform.environment['E2E_SCREENSHOT'] ?? '/tmp/example_app.png';
-        await File(screenshotPath).writeAsBytes(screenshot);
       } finally {
         await service.stop();
         await appServer?.close(force: true);
@@ -69,6 +60,17 @@ void main() {
     },
     timeout: const Timeout(Duration(minutes: 2)),
   );
+}
+
+String _scenarioPath() {
+  final candidates = <String>[
+    '${Directory.current.path}/packages/scenarios/ex_scenario_1.yaml',
+    '${Directory.current.path}/../packages/scenarios/ex_scenario_1.yaml',
+  ];
+  for (final candidate in candidates) {
+    if (File(candidate).existsSync()) return candidate;
+  }
+  throw StateError('Unable to find packages/scenarios/ex_scenario_1.yaml.');
 }
 
 Future<HttpServer> _startStaticServer(Directory root) async {

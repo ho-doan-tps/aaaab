@@ -4,12 +4,14 @@ import 'device_driver.dart' as native_driver;
 import 'ui_element.dart' as native_ui;
 import 'web/automation_core/automation_core.dart' as core;
 
-/// Adapts the Android/iOS plugin driver to the shared Automation Kit backend.
+/// Adapts a native plugin driver to the shared Automation Kit backend.
 ///
 /// The native bridge remains responsible for Pigeon, AccessibilityService,
-/// and XCTest. This adapter only translates the native snapshot/action
+/// XCTest, macOS AX, or Windows UI Automation. This adapter only translates
+/// the native snapshot/action
 /// contract into the platform-independent [core.AutomationBackend] contract so
-/// the same [core.AutomationService] can drive Web, Android, or iOS.
+/// the same [core.AutomationService] can drive Web or any supported native
+/// platform.
 class DeviceKitAutomationBackend extends core.AutomationBackend {
   DeviceKitAutomationBackend(
     this.driver, {
