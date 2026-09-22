@@ -110,14 +110,34 @@ class _ControllerPageState extends State<ControllerPage> {
 
   Future<void> _tapCounter() async {
     await _run(() async {
-      // Flutter Windows exposes a Semantics label through UIA's Name property.
-      // Its AutomationId support differs across the Flutter engine versions
-      // used by Windows builds, so use the stable, explicit label for this
-      // controller's Windows sample while other platforms keep the identifier.
-      final selector = defaultTargetPlatform == TargetPlatform.windows
-          ? By.all(<By>[By.role(UiRole.button), By.text('Increment')])
-          : By.id('increment_button');
-      await _service.tap(selector);
+      if (defaultTargetPlatform != TargetPlatform.windows) {
+        await _service.tap(By.id('increment_button'));
+        return 'Tapped increment_button';
+      }
+
+      // Some Windows Flutter engine versions do not expose
+      // Semantics.identifier in a UIA query. The sample target deliberately
+      // contains exactly one actionable button, so invoke that node from the
+      // just-captured snapshot instead of repeatedly waiting for an absent ID.
+      final snapshot = await _service.dumpUi();
+      for (var element in snapshot.elements) {
+        print(
+          'element: ${element.label} ${element.automationId} ${element.clickable} ${element.enabled}',
+        );
+      }
+      final buttons = snapshot.elements
+          .where((element) => element.clickable && element.enabled)
+          .toList(growable: false);
+      if (buttons.length != 1) {
+        throw StateError(
+          'Expected one actionable button, found ${buttons.length}.',
+        );
+      }
+      await AutomationElement(
+        driver: _service.driver,
+        snapshot: snapshot,
+        element: buttons.single,
+      ).tap();
       return 'Tapped increment_button';
     });
   }
