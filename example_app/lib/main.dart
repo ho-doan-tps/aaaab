@@ -85,6 +85,7 @@ class _CounterPageState extends State<CounterPage> {
                 identifier: 'increment_button',
                 label: 'Increment',
                 button: true,
+                onTap: _increment,
                 child: ExcludeSemantics(
                   child: SizedBox(
                     width: 56,
