@@ -118,6 +118,7 @@ class DeviceKitLibPlugin final : public flutter::Plugin, public DeviceKitHostApi
   int64_t generation_ = 0;
   bool initialized_ = false;
   bool logging_enabled_ = false;
+  PVOID crash_log_handler_ = nullptr;
   bool com_initialized_ = false;
   HRESULT com_init_result_ = E_NOTIMPL;
   DWORD com_thread_id_ = 0;

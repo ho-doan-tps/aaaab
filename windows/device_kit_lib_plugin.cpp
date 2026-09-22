@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <cstdio>
 #include <cstring>
 #include <fstream>
 #include <cwctype>
@@ -39,6 +40,71 @@ using Microsoft::WRL::ComPtr;
 constexpr size_t kMaximumUiNodes = 5000;
 constexpr int kTargetWindowRetries = 40;
 constexpr int kTargetWindowRetryDelayMs = 250;
+
+char g_diagnostic_log_path[MAX_PATH]{};
+
+void WriteCrashDiagnostic(EXCEPTION_POINTERS* exception_pointers) noexcept {
+  if (exception_pointers == nullptr ||
+      exception_pointers->ExceptionRecord == nullptr) {
+    return;
+  }
+  const EXCEPTION_RECORD* record = exception_pointers->ExceptionRecord;
+  if (record->ExceptionCode != EXCEPTION_ACCESS_VIOLATION &&
+      record->ExceptionCode != EXCEPTION_ILLEGAL_INSTRUCTION &&
+      record->ExceptionCode != EXCEPTION_STACK_OVERFLOW) {
+    return;
+  }
+
+  const char* path = g_diagnostic_log_path[0] == '\0'
+                         ? "device_kit_lib_windows.log"
+                         : g_diagnostic_log_path;
+  HANDLE file = CreateFileA(path, FILE_APPEND_DATA,
+                            FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr,
+                            OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+  if (file == INVALID_HANDLE_VALUE) {
+    return;
+  }
+
+  const HMODULE module = GetModuleHandleA("device_kit_lib_plugin.dll");
+  char line[1024]{};
+  const int length = std::snprintf(
+      line, sizeof(line),
+      "[CRASH] exception=0x%08lX; exception_address=%p; module_base=%p; "
+      "thread=%lu; access_type=%llu; access_address=%p\r\n",
+      static_cast<unsigned long>(record->ExceptionCode), record->ExceptionAddress,
+      module, static_cast<unsigned long>(GetCurrentThreadId()),
+      static_cast<unsigned long long>(record->NumberParameters >= 1
+                                          ? record->ExceptionInformation[0]
+                                          : 0),
+      reinterpret_cast<void*>(record->NumberParameters >= 2
+                                  ? record->ExceptionInformation[1]
+                                  : 0));
+  if (length > 0) {
+    DWORD written = 0;
+    WriteFile(file, line, static_cast<DWORD>(std::min<int>(length, sizeof(line) - 1)),
+              &written, nullptr);
+  }
+
+  PVOID frames[32]{};
+  const USHORT frame_count = CaptureStackBackTrace(0, std::size(frames), frames, nullptr);
+  for (USHORT index = 0; index < frame_count; ++index) {
+    const int frame_length = std::snprintf(line, sizeof(line),
+                                           "[CRASH] frame[%u]=%p\r\n", index,
+                                           frames[index]);
+    if (frame_length > 0) {
+      DWORD written = 0;
+      WriteFile(file, line,
+                static_cast<DWORD>(std::min<int>(frame_length, sizeof(line) - 1)),
+                &written, nullptr);
+    }
+  }
+  CloseHandle(file);
+}
+
+LONG CALLBACK VectoredExceptionLogger(EXCEPTION_POINTERS* exception_pointers) {
+  WriteCrashDiagnostic(exception_pointers);
+  return EXCEPTION_CONTINUE_SEARCH;
+}
 
 std::string WideToUtf8(const std::wstring& value) {
   if (value.empty()) {
@@ -814,7 +880,16 @@ std::optional<FlutterError> DeviceKitLibPlugin::Initialize(
   log_path_ = temp_length == 0 || temp_length >= temp_capacity
                   ? "device_kit_lib_windows.log"
                   : std::string(temp_path, temp_length) + "device_kit_lib_windows.log";
+  strncpy_s(g_diagnostic_log_path, log_path_.c_str(), _TRUNCATE);
   Log("INFO", "initialize", "log_file=" + log_path_, S_OK, ERROR_SUCCESS, true);
+  if (crash_log_handler_ == nullptr) {
+    crash_log_handler_ = AddVectoredExceptionHandler(1, VectoredExceptionLogger);
+    Log(crash_log_handler_ == nullptr ? "ERROR" : "INFO", "initialize",
+        crash_log_handler_ == nullptr ? "Unable to register crash diagnostics"
+                                      : "Crash diagnostics registered",
+        crash_log_handler_ == nullptr ? E_FAIL : S_OK,
+        crash_log_handler_ == nullptr ? GetLastError() : ERROR_SUCCESS, true);
+  }
 
   ResetTarget();
   generation_ = 0;
@@ -833,6 +908,10 @@ std::optional<FlutterError> DeviceKitLibPlugin::Initialize(
 std::optional<FlutterError> DeviceKitLibPlugin::Dispose() {
   std::lock_guard<std::mutex> lock(mutex_);
   Log("INFO", "dispose", "Releasing Windows UI Automation session");
+  if (crash_log_handler_ != nullptr) {
+    RemoveVectoredExceptionHandler(crash_log_handler_);
+    crash_log_handler_ = nullptr;
+  }
   ResetTarget();
   control_view_walker_.Reset();
   automation_.Reset();
@@ -1009,6 +1088,36 @@ ErrorOr<ActionResult> DeviceKitLibPlugin::PerformElementAction(
   HRESULT hr = E_NOTIMPL;
   switch (action) {
     case UiAction::kPress: {
+      // Flutter's Windows semantics provider can acknowledge IInvokeProvider::Invoke
+      // without dispatching the widget callback. Prefer an actual pointer click when
+      // UIA provides bounds; this also follows the same path as a user click.
+      if (ResolveTargetRoot("performElementAction", false)) {
+        RECT rectangle{};
+        const HRESULT bounds_hr = element->get_CurrentBoundingRectangle(&rectangle);
+        const LONG width = rectangle.right - rectangle.left;
+        const LONG height = rectangle.bottom - rectangle.top;
+        Log("TRACE", "performElementAction",
+            "press bounds; node=" + node_id + "; left=" +
+                std::to_string(rectangle.left) + "; top=" +
+                std::to_string(rectangle.top) + "; width=" +
+                std::to_string(width) + "; height=" + std::to_string(height),
+            bounds_hr, FAILED(bounds_hr) ? GetLastError() : ERROR_SUCCESS, true);
+        if (SUCCEEDED(bounds_hr) && width > 0 && height > 0) {
+          const double x = static_cast<double>(rectangle.left) + width / 2.0;
+          const double y = static_cast<double>(rectangle.top) + height / 2.0;
+          if (SendMouseClick(x, y)) {
+            Log("INFO", "performElementAction",
+                "node=" + node_id + "; action=press; method=coordinate; x=" +
+                    std::to_string(x) + "; y=" + std::to_string(y),
+                S_OK, ERROR_SUCCESS, true);
+            return Success(true);
+          }
+          return Failed<ActionResult>(OperationFailure(
+              "performElementAction", "SendInput mouse click failed", S_OK,
+              GetLastError()));
+        }
+      }
+
       ComPtr<IUIAutomationInvokePattern> invoke;
       hr = element->GetCurrentPatternAs(UIA_InvokePatternId,
                                         IID_PPV_ARGS(invoke.GetAddressOf()));
