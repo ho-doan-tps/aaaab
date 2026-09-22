@@ -110,34 +110,7 @@ class _ControllerPageState extends State<ControllerPage> {
 
   Future<void> _tapCounter() async {
     await _run(() async {
-      if (defaultTargetPlatform != TargetPlatform.windows) {
-        await _service.tap(By.id('increment_button'));
-        return 'Tapped increment_button';
-      }
-
-      // Some Windows Flutter engine versions do not expose
-      // Semantics.identifier in a UIA query. The sample target deliberately
-      // contains exactly one actionable button, so invoke that node from the
-      // just-captured snapshot instead of repeatedly waiting for an absent ID.
-      final snapshot = await _service.dumpUi();
-      for (var element in snapshot.elements) {
-        print(
-          'element: ${element.label} ${element.automationId} ${element.clickable} ${element.enabled}',
-        );
-      }
-      final buttons = snapshot.elements
-          .where((element) => element.clickable && element.enabled)
-          .toList(growable: false);
-      if (buttons.length != 1) {
-        throw StateError(
-          'Expected one actionable button, found ${buttons.length}.',
-        );
-      }
-      await AutomationElement(
-        driver: _service.driver,
-        snapshot: snapshot,
-        element: buttons.single,
-      ).tap();
+      await _service.tap(By.id('increment_button'));
       return 'Tapped increment_button';
     });
   }
